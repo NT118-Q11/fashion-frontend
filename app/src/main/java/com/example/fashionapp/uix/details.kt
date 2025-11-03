@@ -10,7 +10,7 @@ import com.example.fashionapp.R
 class Detail : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.xml.details)
+        setContentView(R.layout.details)
 
         val img = findViewById<ImageView>(R.id.imgDetail)
         val name = findViewById<TextView>(R.id.txtDetailName)

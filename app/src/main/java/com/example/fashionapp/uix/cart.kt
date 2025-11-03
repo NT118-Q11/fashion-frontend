@@ -17,7 +17,7 @@ class Cart : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.xml.cart)
+        setContentView(R.layout.cart)
 
         recyclerView = findViewById(R.id.recyclerCart)
         tvTotal = findViewById(R.id.tvTotal)

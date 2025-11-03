@@ -11,7 +11,7 @@ import com.example.fashionapp.adapter.Adapter
 class Home : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.xml.home)
+        setContentView(R.layout.home)
 
         val recycler = findViewById<RecyclerView>(R.id.recyclerProducts)
         recycler.layoutManager = GridLayoutManager(this, 2)

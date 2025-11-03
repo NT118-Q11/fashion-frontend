@@ -10,7 +10,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         // Có thể dùng layout splash riêng, hoặc chuyển thẳng sang Home
-        // setContentView(R.layout.activity_main)
+         setContentView(R.layout.home)
 
         // Chuyển sang HomeActivity ngay sau khi mở app
         val intent = Intent(this, Home::class.java)

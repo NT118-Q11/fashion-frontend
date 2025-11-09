@@ -7,6 +7,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.fashionapp.R
 import com.example.fashionapp.product.Product
 import com.example.fashionapp.adapter.Adapter
+import com.example.fashionapp.network.RetrofitClient
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class Home : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -16,14 +20,19 @@ class Home : AppCompatActivity() {
         val recycler = findViewById<RecyclerView>(R.id.recyclerProducts)
         recycler.layoutManager = GridLayoutManager(this, 2)
 
-        val products = listOf(
-            Product(1, "Áo thun trắng", 199000.0, R.drawable.shirt_white, "Áo thun cotton thoáng mát"),
-            Product(2, "Váy hoa mùa hè", 299000.0, R.drawable.dress_flower, "Váy hoa chất vải nhẹ, phù hợp đi chơi"),
-            Product(3, "Giày sneaker", 499000.0, R.drawable.sneaker, "Sneaker unisex, năng động"),
-        )
+        RetrofitClient.instance.getProducts().enqueue(object : Callback<List<Product>> {
+            override fun onResponse(call: Call<List<Product>>, response: Response<List<Product>>) {
+                if (response.isSuccessful) {
+                    val products = response.body() ?: emptyList()
+                    recycler.adapter = Adapter(products)
+                } else {
+                    Log.e("Home", "Response failed: ${response.code()}")
+                }
+            }
 
-        recycler.adapter = Adapter(products) { product ->
-            // TODO: chuyển sang màn hình chi tiết
-        }
+            override fun onFailure(call: Call<List<Product>>, t: Throwable) {
+                Log.e("Home", "API call failed: ${t.message}")
+            }
+        })
     }
 }

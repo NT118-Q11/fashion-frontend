@@ -21,11 +21,11 @@ class Detail : AppCompatActivity() {
         val bundle = intent.extras
         img.setImageResource(bundle?.getInt("image") ?: 0)
         name.text = bundle?.getString("name")
-        price.text = bundle?.getDouble("price").toString() + " VND"
+        price.text = bundle?.getInt("price").toString() + " VND"
         desc.text = bundle?.getString("desc")
 
         btn.setOnClickListener {
-            // TODO: thêm vào giỏ (tạm thời có thể Toast)
+
         }
     }
 }

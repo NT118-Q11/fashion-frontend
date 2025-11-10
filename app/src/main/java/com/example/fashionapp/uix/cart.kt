@@ -23,16 +23,12 @@ class Cart : AppCompatActivity() {
         tvTotal = findViewById(R.id.tvTotal)
         btnCheckout = findViewById(R.id.btnCheckout)
 
-        // Thiết lập RecyclerView
         recyclerView.layoutManager = LinearLayoutManager(this)
 
-        // ⚙️ Giả lập dữ liệu giỏ hàng (sinh viên có thể thay bằng dữ liệu thật sau)
         val cartItems = listOf("Áo thun", "Quần jeans", "Giày thể thao")
 
-        // Tính tổng đơn giản
         tvTotal.text = "Tổng: 950.000 VNĐ"
 
-        // Bắt sự kiện nút thanh toán
         btnCheckout.setOnClickListener {
             Toast.makeText(this, "Thanh toán thành công 🎉", Toast.LENGTH_SHORT).show()
         }

@@ -2,6 +2,7 @@ package com.example.fashionapp.uix
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.content.Intent
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fashionapp.R
@@ -20,19 +21,19 @@ class Home : AppCompatActivity() {
         val recycler = findViewById<RecyclerView>(R.id.recyclerProducts)
         recycler.layoutManager = GridLayoutManager(this, 2)
 
-        RetrofitClient.instance.getProducts().enqueue(object : Callback<List<Product>> {
-            override fun onResponse(call: Call<List<Product>>, response: Response<List<Product>>) {
-                if (response.isSuccessful) {
-                    val products = response.body() ?: emptyList()
-                    recycler.adapter = Adapter(products)
-                } else {
-                    Log.e("Home", "Response failed: ${response.code()}")
-                }
-            }
-
-            override fun onFailure(call: Call<List<Product>>, t: Throwable) {
-                Log.e("Home", "API call failed: ${t.message}")
-            }
-        })
+        val products = listOf(
+            Product(id = 1, name = "Áo thun trắng", price = 199000, imageRes = R.drawable.shirt_white, description = "..."),
+            Product(id = 2, name = "Váy hoa mùa hè", price = 299000, imageRes = R.drawable.dress_flower, description = "..."),
+            Product(id = 3, name = "Giày sneaker", price = 499000, imageRes = R.drawable.sneaker, description = "...")
+        )
+        recycler.adapter = Adapter(products) { product ->
+            val intent = Intent(this@Home, Detail::class.java)
+            intent.putExtra("id", product.id)
+            intent.putExtra("name", product.name)
+            intent.putExtra("price", product.price)
+            intent.putExtra("image", product.imageRes)
+            intent.putExtra("desc", product.description)
+            startActivity(intent)
+        }
     }
 }

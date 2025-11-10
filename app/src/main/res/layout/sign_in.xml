@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/floral_white">
+
+    <LinearLayout
+        android:id="@+id/tab_layout"
+        android:layout_width="0dp"
+        android:layout_height="86dp"
+        android:layout_marginTop="80dp"
+        android:orientation="horizontal"
+        android:paddingTop="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <!-- Các TextView bên trong không thay đổi -->
+        <TextView
+            android:id="@+id/tv_sign_in"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="SIGN IN"
+            android:fontFamily="@font/tenorsans"
+            android:textAlignment="center"
+            android:textColor="#333333"
+            android:textSize="17sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_register"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="REGISTER"
+            android:fontFamily="@font/tenorsans"
+            android:textAlignment="center"
+            android:textColor="#999999"
+            android:textSize="17sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/et_email"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="40dp"
+        android:hint="Email Address"
+        android:inputType="textEmailAddress"
+        android:textColor="#999999"
+        android:padding="10dp"
+        android:textSize="15sp"
+        android:fontFamily="@font/tenorsans"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tab_layout" />
+
+    <EditText
+        android:id="@+id/et_password"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="10dp"
+        android:hint="Password"
+        android:inputType="textPassword"
+        android:textColor="#999999"
+        android:fontFamily="@font/tenorsans"
+        android:textSize="15sp"
+        android:padding="10dp"
+        app:layout_constraintEnd_toEndOf="@id/et_email"
+        app:layout_constraintStart_toStartOf="@id/et_email"
+        app:layout_constraintTop_toBottomOf="@id/et_email" />
+
+    <TextView
+        android:id="@+id/forget_password"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/tenorsans"
+        android:text="Forgot password?"
+        android:textColor="@color/orange"
+        app:layout_constraintStart_toStartOf="@id/et_password"
+        app:layout_constraintTop_toBottomOf="@id/et_password"/>
+
+    <Button
+        android:id="@+id/button_sign_in"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="30dp"
+        android:backgroundTint="@color/gray"
+        android:fontFamily="@font/tenorsans"
+        android:text="SIGN IN"
+        android:textColor="@color/floral_white"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/forget_password" /> <!-- SỬA LỖI: Ràng buộc lại vào forget_password -->
+
+    <TextView
+        android:id="@+id/text_or"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:fontFamily="@font/tenorsans"
+        android:text="OR"
+        android:textColor="#999999"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/button_sign_in"
+        app:layout_constraintStart_toStartOf="@+id/button_sign_in"
+        app:layout_constraintTop_toBottomOf="@+id/button_sign_in" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_sign_in_facebook"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:text="SIGN IN WITH FACEBOOK"
+        android:textColor="#333333"
+        android:backgroundTint="#ffffff"
+        android:layout_marginTop="30dp"
+        android:fontFamily="@font/tenorsans"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        app:strokeColor="#cccccc"
+        app:strokeWidth="1dp"
+        app:icon="@drawable/ic_facebook"
+        app:iconTint="@null"
+        app:iconGravity=""
+        app:layout_constraintTop_toBottomOf="@id/text_or"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:iconSize="24dp"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_sign_in_google"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:text="SIGN IN WITH GOOGLE"
+        android:textColor="#333333"
+        android:backgroundTint="#ffffff"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/tenorsans"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        app:strokeColor="#cccccc"
+        app:strokeWidth="1dp"
+        app:icon="@drawable/ic_google"
+        app:iconTint="@null"
+        app:iconGravity=""
+        app:layout_constraintTop_toBottomOf="@id/button_sign_in_facebook"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:iconSize="24dp"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

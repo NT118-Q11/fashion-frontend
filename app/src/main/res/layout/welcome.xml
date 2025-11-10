@@ -58,7 +58,7 @@
         android:layout_marginTop="16dp"
         android:fontFamily="@font/tenorsans"
         android:text="OR"
-        android:textColor="@color/black"
+        android:textColor="#999999"
         android:textSize="13sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/button_sign_in"

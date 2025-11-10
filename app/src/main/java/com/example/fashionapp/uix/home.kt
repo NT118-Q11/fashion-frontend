@@ -2,6 +2,7 @@ package com.example.fashionapp.uix
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fashionapp.R
@@ -24,7 +25,9 @@ class Home : AppCompatActivity() {
             override fun onResponse(call: Call<List<Product>>, response: Response<List<Product>>) {
                 if (response.isSuccessful) {
                     val products = response.body() ?: emptyList()
-                    recycler.adapter = Adapter(products)
+                    recycler.adapter = Adapter(products) {
+                        selectedProduct -> Log.d("Home", "Selected product: ${selectedProduct.name}")
+                    }
                 } else {
                     Log.e("Home", "Response failed: ${response.code()}")
                 }

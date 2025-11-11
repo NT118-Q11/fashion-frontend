@@ -8,14 +8,8 @@ import com.example.fashionapp.uix.Home
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        // Có thể dùng layout splash riêng, hoặc chuyển thẳng sang Home
-        setContentView(R.layout.home)
-
-        // Chuyển sang HomeActivity ngay sau khi mở app
-        val intent = Intent(this, Home::class.java)
-        startActivity(intent)
-        finish() // Đóng MainActivity để không quay lại khi bấm nút Back
+        // Dòng này sẽ liên kết file layout welcome.xml với Activity này
+        setContentView(R.layout.welcome)
     }
 }
 

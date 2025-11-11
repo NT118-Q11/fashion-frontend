@@ -1,3 +1,10 @@
 <resources>
-    <string name="app_name">FashionApp</string>
+    <string name="app_name">Noivé</string>
+    <string name="login">Sign In</string>
+    <string name="register">Create Account</string>
+    <string name="email_hint">Email or Username</string>
+    <string name="password_hint">Password</string>
+    <string name="forgot_password">Forgot password?</string>
+    <string name="dont_have_account">Don’t have an account? Sign up</string>
+    <string name="back">Back</string>
 </resources>

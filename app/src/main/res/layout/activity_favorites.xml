@@ -39,7 +39,6 @@
 
     <!-- RecyclerView (constrain trên cùng tới dưới title và dưới cùng tới top của bottom nav) -->
 
-    <!-- Pagination row just above bottom nav -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_favorites"
         android:layout_width="0dp"
@@ -133,9 +132,7 @@
             app:tint="#000000"/>
     </LinearLayout>
 
-    <!-- ============================
-         BOTTOM NAV: trực tiếp gộp vào đây (cố định ở dưới)
-         ============================ -->
+    <!-- BOTTOM NAV: (cố định ở dưới) -->
     <LinearLayout
         android:id="@+id/black_nav_bar"
         android:layout_width="0dp"

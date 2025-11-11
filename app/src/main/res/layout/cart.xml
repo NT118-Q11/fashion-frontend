@@ -1,46 +1,314 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp"
-    tools:context=".ui.CartActivity">
+    android:background="@color/yellow_skin"
+    tools:context=".uix.Cart">
 
-    <TextView
-        android:id="@+id/tvCartTitle"
+    <!-- Main Content Container -->
+    <LinearLayout
+        android:id="@+id/mainContentLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="🛒 Giỏ hàng của bạn"
-        android:textSize="20sp"
-        android:textStyle="bold"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bottomNavBar"
+        android:orientation="vertical"
+        android:background="@color/white">
+
+        <!-- Cart Title -->
+        <RelativeLayout
+            android:id="@+id/headerLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="24dp">
+
+            <!-- Clear All Button (left side) -->
+            <TextView
+                android:id="@+id/btnClearAll"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:text="Clear All"
+                android:textSize="13sp"
+                android:textColor="@color/orange"
+                android:padding="8dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:visibility="gone" />
+
+            <!-- Cart Title (center) -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="CART"
+                    android:textSize="18sp"
+                    android:textStyle="normal"
+                    android:letterSpacing="0.3"
+                    android:textColor="@color/black" />
+
+                <View
+                    android:layout_width="60dp"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/gray" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <!-- Empty Cart State -->
+        <LinearLayout
+            android:id="@+id/emptyCartLayout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="32dp"
+            android:visibility="visible">
+
+            <!-- Shopping Bag Icon -->
+            <FrameLayout
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_gravity="center">
+
+                <View
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:background="@drawable/ic_launcher_background"
+                    android:alpha="0.1" />
+
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center"
+                    android:src="@android:drawable/ic_menu_search"
+                    android:tint="@color/black"
+                    android:importantForAccessibility="no" />
+
+            </FrameLayout>
+
+            <!-- Empty Message -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="YOU HAVE NOTHING IN CART!"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:letterSpacing="0.05"
+                android:layout_marginTop="32dp"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Please continue shopping to see your\nproducts here!"
+                android:textSize="13sp"
+                android:layout_marginTop="12dp"
+                android:gravity="center"
+                android:textColor="@color/gray" />
+
+            <!-- Shopping Now Button -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnShoppingNow"
+                android:layout_width="220dp"
+                android:layout_height="56dp"
+                android:layout_marginTop="48dp"
+                android:text="SHOPPING NOW"
+                android:textSize="14sp"
+                android:letterSpacing="0.05"
+                android:textColor="@color/white"
+                app:backgroundTint="@color/black"
+                app:cornerRadius="0dp" />
+
+        </LinearLayout>
+
+        <!-- Cart Items State -->
+        <FrameLayout
+            android:id="@+id/cartContentLayout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:visibility="gone">
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fillViewport="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <!-- Cart Items RecyclerView -->
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerCart"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="16dp"
+                        android:clipToPadding="false"
+                        tools:listitem="@layout/cart_item" />
+
+                    <!-- Spacer to push bottom section down if needed -->
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1" />
+
+                </LinearLayout>
+
+            </ScrollView>
+
+        </FrameLayout>
+
+        <!-- Bottom Section (Subtotal and Checkout) -->
+        <LinearLayout
+            android:id="@+id/bottomSection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="20dp"
+            android:paddingTop="20dp"
+            android:paddingBottom="16dp"
+            android:visibility="gone"
+            android:background="@color/white">
+
+            <!-- Divider Line -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/gray"
+                android:alpha="0.3"
+                android:layout_marginBottom="16dp" />
+
+            <!-- Subtotal Section -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="4dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="SUB TOTAL"
+                    android:textSize="14sp"
+                    android:letterSpacing="0.1"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/tvSubtotal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="$240"
+                    android:textSize="20sp"
+                    android:textStyle="normal"
+                    android:textColor="@color/orange" />
+
+            </LinearLayout>
+
+            <!-- Disclaimer Text -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="*shipping charges, taxes and discount codes\nare calculated at the time of accounting."
+                android:textSize="11sp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="20dp"
+                android:textColor="@color/gray"
+                android:alpha="0.7" />
+
+            <!-- Checkout Button -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnCheckout"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:text="CHECKOUT NOW"
+                android:textSize="14sp"
+                android:letterSpacing="0.05"
+                android:textColor="@color/white"
+                app:icon="@android:drawable/ic_menu_search"
+                app:iconTint="@color/white"
+                app:iconGravity="textStart"
+                app:iconPadding="8dp"
+                app:backgroundTint="@color/black"
+                app:cornerRadius="0dp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- Bottom Navigation Bar -->
+    <LinearLayout
+        android:id="@+id/bottomNavBar"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:background="@color/black"
         android:gravity="center"
-        android:paddingBottom="12dp" />
+        android:paddingHorizontal="24dp">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerCart"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        tools:listitem="@xml/items" />
+        <!-- Home Icon -->
+        <ImageView
+            android:id="@+id/navHome"
+            android:layout_width="0dp"
+            android:layout_height="28dp"
+            android:layout_weight="1"
+            android:src="@android:drawable/ic_menu_compass"
+            android:tint="@color/white"
+            android:clickable="true"
+            android:focusable="true"
+            android:importantForAccessibility="no" />
 
-    <TextView
-        android:id="@+id/tvTotal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Tổng: 0 VNĐ"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:paddingVertical="8dp"
-        android:gravity="end" />
+        <!-- Notifications Icon -->
+        <ImageView
+            android:id="@+id/navNotifications"
+            android:layout_width="0dp"
+            android:layout_height="28dp"
+            android:layout_weight="1"
+            android:src="@android:drawable/ic_popup_reminder"
+            android:tint="@color/white"
+            android:clickable="true"
+            android:focusable="true"
+            android:importantForAccessibility="no" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnCheckout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Thanh toán"
-        android:backgroundTint="@color/teal_700"
-        android:textAllCaps="false"
-        android:textColor="@android:color/white" />
+        <!-- Cart Icon -->
+        <ImageView
+            android:id="@+id/navCart"
+            android:layout_width="0dp"
+            android:layout_height="28dp"
+            android:layout_weight="1"
+            android:src="@android:drawable/ic_menu_search"
+            android:tint="@color/white"
+            android:clickable="true"
+            android:focusable="true"
+            android:importantForAccessibility="no" />
 
-</LinearLayout>
+        <!-- Profile Icon -->
+        <ImageView
+            android:id="@+id/navProfile"
+            android:layout_width="0dp"
+            android:layout_height="28dp"
+            android:layout_weight="1"
+            android:src="@android:drawable/ic_menu_myplaces"
+            android:tint="@color/white"
+            android:clickable="true"
+            android:focusable="true"
+            android:importantForAccessibility="no" />
+
+    </LinearLayout>
+
+</RelativeLayout>

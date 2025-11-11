@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/floral_white">
+    android:background="@color/white">
 
     <LinearLayout
         android:id="@+id/tab_layout"
@@ -134,7 +134,7 @@
         android:backgroundTint="@color/gray"
         android:fontFamily="@font/tenorsans"
         android:text="SIGN IN"
-        android:textColor="@color/floral_white"
+        android:textColor="@color/white"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"

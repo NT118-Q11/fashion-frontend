@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/floral_white">
+    android:background="@color/white">
 
 
     <TextView
@@ -36,7 +36,7 @@
         android:text="SIGN IN"
         android:textSize="18sp"
         android:textStyle="bold"
-        android:textColor="@color/floral_white"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -68,7 +68,7 @@
         android:text="SIGN UP"
         android:textSize="18sp"
         android:textStyle="bold"
-        android:textColor="@color/floral_white"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="@+id/button_sign_in"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/button_sign_in"

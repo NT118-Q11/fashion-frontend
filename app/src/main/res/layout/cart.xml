@@ -259,23 +259,24 @@
         android:orientation="horizontal"
         android:background="@color/black"
         android:gravity="center"
-        android:paddingHorizontal="24dp">
+        android:paddingHorizontal="0dp">
 
         <!-- Home Icon -->
+
+        <!-- Notifications Icon -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/navHome"
-            android:backgroundTint="@color/black"
             style="?attr/materialIconButtonStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:backgroundTint="@color/black"
+            android:contentDescription="Home"
             app:icon="@drawable/home_normal"
-            app:iconSize="28dp"
-            app:tint="@color/white"
             app:iconGravity="textStart"
-            android:contentDescription="Home" />
+            app:iconSize="28dp"
+            app:tint="@color/white" />
 
-        <!-- Notifications Icon -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/navNotifications"
             android:backgroundTint="@color/black"

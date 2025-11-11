@@ -9,7 +9,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // Dòng này sẽ liên kết file layout welcome.xml với Activity này
-        setContentView(R.layout.welcome)
+        setContentView(R.layout.settings)
     }
 }
 

@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/yellow_skin"
+    android:background="@color/white"
+    android:fitsSystemWindows="true"
     tools:context=".uix.Cart">
 
     <!-- Main Content Container -->
@@ -49,6 +50,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/tenorsans"
+                    android:layout_marginTop="20dp"
                     android:text="CART"
                     android:textSize="18sp"
                     android:textStyle="normal"
@@ -82,19 +85,13 @@
                 android:layout_height="120dp"
                 android:layout_gravity="center">
 
-                <View
+                <ImageView
                     android:layout_width="120dp"
                     android:layout_height="120dp"
-                    android:background="@drawable/ic_launcher_background"
-                    android:alpha="0.1" />
-
-                <ImageView
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
                     android:layout_gravity="center"
-                    android:src="@android:drawable/ic_menu_search"
-                    android:tint="@color/black"
-                    android:importantForAccessibility="no" />
+                    android:backgroundTint="@color/white"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/glass" />
 
             </FrameLayout>
 
@@ -102,6 +99,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/tenorsans"
                 android:text="YOU HAVE NOTHING IN CART!"
                 android:textSize="16sp"
                 android:textStyle="bold"
@@ -112,6 +110,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/tenorsans"
                 android:text="Please continue shopping to see your\nproducts here!"
                 android:textSize="13sp"
                 android:layout_marginTop="12dp"
@@ -122,8 +121,9 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnShoppingNow"
                 android:layout_width="220dp"
-                android:layout_height="56dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="48dp"
+                android:fontFamily="@font/tenorsans"
                 android:text="SHOPPING NOW"
                 android:textSize="14sp"
                 android:letterSpacing="0.05"
@@ -254,7 +254,7 @@
     <LinearLayout
         android:id="@+id/bottomNavBar"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="50dp"
         android:layout_alignParentBottom="true"
         android:orientation="horizontal"
         android:background="@color/black"
@@ -262,53 +262,62 @@
         android:paddingHorizontal="24dp">
 
         <!-- Home Icon -->
-        <ImageView
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/navHome"
+            android:backgroundTint="@color/black"
+            style="?attr/materialIconButtonStyle"
             android:layout_width="0dp"
-            android:layout_height="28dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@android:drawable/ic_menu_compass"
-            android:tint="@color/white"
-            android:clickable="true"
-            android:focusable="true"
-            android:importantForAccessibility="no" />
+            app:icon="@drawable/home_normal"
+            app:iconSize="28dp"
+            app:tint="@color/white"
+            app:iconGravity="textStart"
+            android:contentDescription="Home" />
 
         <!-- Notifications Icon -->
-        <ImageView
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/navNotifications"
+            android:backgroundTint="@color/black"
+            style="?attr/materialIconButtonStyle"
             android:layout_width="0dp"
-            android:layout_height="28dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@android:drawable/ic_popup_reminder"
-            android:tint="@color/white"
-            android:clickable="true"
-            android:focusable="true"
-            android:importantForAccessibility="no" />
+            app:icon="@drawable/notification_normal"
+            app:iconSize="28dp"
+            app:tint="@color/white"
+            app:iconGravity="textStart"
+            android:contentDescription="Notifications" />
 
         <!-- Cart Icon -->
-        <ImageView
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/navCart"
+            android:backgroundTint="@color/black"
+            style="?attr/materialIconButtonStyle"
             android:layout_width="0dp"
-            android:layout_height="28dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@android:drawable/ic_menu_search"
-            android:tint="@color/white"
-            android:clickable="true"
-            android:focusable="true"
-            android:importantForAccessibility="no" />
+            app:icon="@drawable/cart_click"
+            app:iconSize="28dp"
+            app:tint="@color/white"
+            app:iconGravity="textStart"
+            android:contentDescription="Cart" />
 
         <!-- Profile Icon -->
-        <ImageView
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/navProfile"
+            style="?attr/materialIconButtonStyle"
             android:layout_width="0dp"
-            android:layout_height="28dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@android:drawable/ic_menu_myplaces"
-            android:tint="@color/white"
-            android:clickable="true"
-            android:focusable="true"
-            android:importantForAccessibility="no" />
+            android:backgroundTint="@color/black"
+            android:contentDescription="Profile"
+            app:icon="@drawable/account_normal"
+            app:iconGravity="textStart"
+            app:iconSize="30dp"
+            app:tint="@color/white" />
 
     </LinearLayout>
+
 
 </RelativeLayout>

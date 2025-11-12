@@ -316,119 +316,127 @@
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/replv4vcyoq9"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="end"
                 android:layout_marginBottom="10dp"
+                android:gravity="end"
                 android:orientation="vertical">
+
                 <LinearLayout
                     android:id="@+id/ry20lqf6721l"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
                     android:layout_marginEnd="63dp"
+                    android:gravity="center_vertical"
                     android:orientation="horizontal">
+
                     <LinearLayout
                         android:id="@+id/rm6bpnoe64ll"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="#333333"
-                        android:paddingVertical="3dp"
-                        android:paddingHorizontal="13dp"
                         android:layout_marginEnd="12dp"
-                        android:orientation="vertical">
+                        android:background="#333333"
+                        android:orientation="vertical"
+                        android:paddingHorizontal="13dp"
+                        android:paddingVertical="3dp">
+
                         <TextView
                             android:id="@+id/rhrxo9t5ia28"
-                            android:textColor="#FCFCFC"
-                            android:textSize="16sp"
-                            android:layout_height="wrap_content"
                             android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:text="1"
-                            />
+                            android:textColor="#FCFCFC"
+                            android:textSize="16sp" />
                     </LinearLayout>
+
                     <LinearLayout
                         android:id="@+id/rzr62zr2ezi8"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="#888888"
-                        android:paddingVertical="3dp"
-                        android:paddingHorizontal="12dp"
                         android:layout_marginEnd="12dp"
-                        android:orientation="vertical">
+                        android:background="#888888"
+                        android:orientation="vertical"
+                        android:paddingHorizontal="12dp"
+                        android:paddingVertical="3dp">
+
                         <TextView
                             android:id="@+id/r19ozdtfhjrd"
-                            android:textColor="#555555"
-                            android:textSize="16sp"
-                            android:layout_height="wrap_content"
                             android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:text="2"
-                            />
+                            android:textColor="#555555"
+                            android:textSize="16sp" />
                     </LinearLayout>
+
                     <LinearLayout
                         android:id="@+id/rm0vxrbu025"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="#888888"
-                        android:paddingVertical="3dp"
-                        android:paddingHorizontal="11dp"
                         android:layout_marginEnd="12dp"
-                        android:orientation="vertical">
+                        android:background="#888888"
+                        android:orientation="vertical"
+                        android:paddingHorizontal="11dp"
+                        android:paddingVertical="3dp">
+
                         <TextView
                             android:id="@+id/r4g4omg0uwps"
-                            android:textColor="#555555"
-                            android:textSize="16sp"
-                            android:layout_height="wrap_content"
                             android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:text="3"
-                            />
+                            android:textColor="#555555"
+                            android:textSize="16sp" />
                     </LinearLayout>
+
                     <LinearLayout
                         android:id="@+id/r1ldclrur85s"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="#888888"
-                        android:paddingVertical="3dp"
-                        android:paddingHorizontal="12dp"
                         android:layout_marginEnd="12dp"
-                        android:orientation="vertical">
+                        android:background="#888888"
+                        android:orientation="vertical"
+                        android:paddingHorizontal="12dp"
+                        android:paddingVertical="3dp">
+
                         <TextView
                             android:id="@+id/rw76xh73c13m"
-                            android:textColor="#555555"
-                            android:textSize="16sp"
-                            android:layout_height="wrap_content"
                             android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:text="4"
-                            />
+                            android:textColor="#555555"
+                            android:textSize="16sp" />
                     </LinearLayout>
+
                     <LinearLayout
                         android:id="@+id/ra197aq98y39"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="#888888"
-                        android:paddingVertical="3dp"
-                        android:paddingHorizontal="11dp"
                         android:layout_marginEnd="9dp"
-                        android:orientation="vertical">
+                        android:background="#888888"
+                        android:orientation="vertical"
+                        android:paddingHorizontal="11dp"
+                        android:paddingVertical="3dp">
+
                         <TextView
                             android:id="@+id/rbh8yyoo6r64"
-                            android:textColor="#555555"
-                            android:textSize="16sp"
-                            android:layout_height="wrap_content"
                             android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:text="5"
-                            />
+                            android:textColor="#555555"
+                            android:textSize="16sp" />
                     </LinearLayout>
+
                     <ImageView
                         android:id="@+id/r0w2zpjxbq0mg"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
-                        android:src="@mipmap/ic_launcher"
                         android:scaleType="fitXY"
-                        />
+                        android:src="@mipmap/ic_launcher" />
                 </LinearLayout>
             </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/r9x85wgc17q9"
                 android:layout_width="match_parent"

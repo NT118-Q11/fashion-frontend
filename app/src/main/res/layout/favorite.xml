@@ -22,71 +22,17 @@
             android:clipChildren="false"
             android:clipToPadding="false"
             android:orientation="vertical">
-            <LinearLayout
-                android:id="@+id/rf14wj2cllp4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:layout_marginTop="14dp"
-                android:layout_marginBottom="22dp"
-                android:layout_marginStart="35dp"
-                android:layout_marginEnd="16dp"
-                android:orientation="horizontal">
-                <LinearLayout
-                    android:id="@+id/r4wcgqzn13fu"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                    <TextView
-                        android:id="@+id/rr37r1arp9v"
-                        android:textColor="#000000"
-                        android:textSize="15sp"
-                        android:textStyle="bold"
-                        android:layout_height="wrap_content"
-                        android:layout_width="wrap_content"
-                        android:text="9:41"
-                        />
-                </LinearLayout>
-                <LinearLayout
-                    android:id="@+id/rjfyap12p4pk"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-                </LinearLayout>
-                <ImageView
-                    android:id="@+id/rnpkcyu7rhkg"
-                    android:layout_width="17dp"
-                    android:layout_height="10dp"
-                    android:layout_marginEnd="5dp"
-                    android:src="@mipmap/ic_launcher"
-                    android:scaleType="fitXY"
-                    />
-                <ImageView
-                    android:id="@+id/rdupv3arr5o8"
-                    android:layout_width="15dp"
-                    android:layout_height="10dp"
-                    android:layout_marginEnd="7dp"
-                    android:src="@mipmap/ic_launcher"
-                    android:scaleType="fitXY"
-                    />
-                <ImageView
-                    android:id="@+id/rn7xmiidlox"
-                    android:layout_width="24dp"
-                    android:layout_height="11dp"
-                    android:src="@mipmap/ic_launcher"
-                    android:scaleType="fitXY"
-                    />
-            </LinearLayout>
+
             <ImageView
                 android:id="@+id/rwh4gix1iotl"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:layout_marginBottom="37dp"
+                android:layout_marginTop="30dp"
                 android:layout_marginStart="26dp"
-                android:src="@mipmap/ic_launcher"
+                android:layout_marginBottom="37dp"
                 android:scaleType="fitXY"
-                />
+                android:src="@drawable/arrow_left" />
+
             <LinearLayout
                 android:id="@+id/r6rogk8uvd47"
                 android:layout_width="match_parent"
@@ -114,7 +60,7 @@
                     android:id="@+id/robisyq2ugls"
                     android:layout_width="124dp"
                     android:layout_height="9dp"
-                    android:src="@mipmap/ic_launcher"
+                    android:src="@drawable/underline"
                     android:scaleType="fitXY"
                     />
             </LinearLayout>

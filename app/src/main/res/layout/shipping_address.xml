@@ -4,10 +4,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fitsSystemWindows="true"
     android:background="@color/white">
 
     <LinearLayout
-        android:id="@+id/setting"
+        android:id="@+id/shipping_address"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="90dp"
@@ -21,7 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/tenorsans"
-            android:text="SETTINGS"
+            android:text="SHIPPING ADDRESS"
             android:textColor="@color/black"
             android:textAlignment="center"
             android:textSize="20sp" />
@@ -41,40 +42,28 @@
         android:paddingBottom="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/setting">
-
-        <TextView
-            android:id="@+id/profile"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="16dp"
-            android:fontFamily="@font/tenorsans"
-            android:text="Profile"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/shipping_address">
 
         <TextView
             android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginStart="40dp"
             android:fontFamily="@font/tenorsans"
             android:text="Name"
             android:textColor="@color/gray"
             android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="@id/profile"
-            app:layout_constraintTop_toBottomOf="@id/profile" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/gmail"
+            android:id="@+id/address"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:fontFamily="@font/tenorsans"
-            android:text="example@gmail.com"
+            android:text="2365 Green Street, D2, California"
             android:textColor="@color/gray"
             android:textSize="16sp"
             app:layout_constraintStart_toStartOf="@id/name"
@@ -89,20 +78,23 @@
             android:text="096 0000 000"
             android:textColor="@color/gray"
             android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="@id/gmail"
-            app:layout_constraintTop_toBottomOf="@id/gmail" />
+            app:layout_constraintStart_toStartOf="@id/address"
+            app:layout_constraintTop_toBottomOf="@id/address" />
 
         <ImageButton
             android:id="@+id/imageButton1"
             android:layout_width="30dp"
-            android:layout_height="48dp"
-            android:layout_marginEnd="30dp"
+            android:layout_height="20dp"
+            android:layout_marginEnd="40dp"
+            android:layout_marginTop="20dp"
             android:backgroundTint="@color/white"
             android:contentDescription="@string/edit_profile"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:scaleType="fitCenter"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/arrow_right" />
+            app:srcCompat="@drawable/edit_pen" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -117,55 +109,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>
 
-    <!-- FIX: Constrained below line1 to prevent overlap -->
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/password_constraint"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:paddingBottom="16dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/line1">
-
-        <TextView
-            android:id="@+id/password"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="16dp"
-            android:fontFamily="@font/tenorsans"
-            android:text="Password"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/change_password"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:fontFamily="@font/tenorsans"
-            android:text="@string/change_password_settings"
-            android:textColor="@color/gray"
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="@id/password"
-            app:layout_constraintTop_toBottomOf="@id/password" />
-
-
-        <ImageButton
-            android:id="@+id/imageButton2"
-            android:layout_width="30dp"
-            android:layout_height="48dp"
-            android:layout_marginEnd="30dp"
-            android:backgroundTint="@color/white"
-            android:contentDescription="@string/change_password_settings"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/arrow_right" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <!-- FIX: Constrained to the bottom of the correct view -->
     <ImageView
@@ -174,46 +117,11 @@
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
         android:src="@drawable/straight_line"
-        app:layout_constraintTop_toBottomOf="@id/password_constraint"
+        app:layout_constraintTop_toBottomOf="@id/profile_container"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>
 
-    <!-- FIX: Constrained below line2 and height changed to wrap_content -->
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/logout_constraint"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:paddingVertical="20dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/line2">
 
-        <TextView
-            android:id="@+id/logout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
-            android:fontFamily="@font/tenorsans"
-            android:text="@string/log_out"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
-
-        <ImageButton
-            android:id="@+id/imageButton3"
-            android:layout_width="30dp"
-            android:layout_height="48dp"
-            android:layout_marginEnd="30dp"
-            android:backgroundTint="@color/white"
-            android:contentDescription="@string/log_out"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/arrow_right" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <!-- Bottom Navigation Bar -->
     <LinearLayout

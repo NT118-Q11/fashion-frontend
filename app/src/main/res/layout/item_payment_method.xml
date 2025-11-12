@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingHorizontal="20dp"
+    android:paddingVertical="8dp">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardPayment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="8dp"
+        app:cardElevation="2dp"
+        app:cardCornerRadius="8dp"
+        app:cardBackgroundColor="@color/white"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="?attr/selectableItemBackground">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="20dp">
+
+            <!-- Payment Icon -->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/iconContainer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="16dp"
+                app:cardElevation="0dp"
+                app:cardCornerRadius="6dp"
+                app:cardBackgroundColor="@color/yellow_skin">
+
+                <ImageView
+                    android:id="@+id/imgPaymentIcon"
+                    android:layout_width="52dp"
+                    android:layout_height="52dp"
+                    android:padding="10dp"
+                    android:src="@android:drawable/ic_menu_search"
+                    android:importantForAccessibility="no" />
+
+            </androidx.cardview.widget.CardView>
+
+            <!-- Payment Name -->
+            <TextView
+                android:id="@+id/tvPaymentName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/iconContainer"
+                android:layout_toStartOf="@+id/imgCheckPayment"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="16dp"
+                android:text="Visa - •••• •••• 2940"
+                android:textSize="16sp"
+                android:textStyle="normal"
+                android:textColor="@color/black" />
+
+            <!-- Checkmark -->
+            <ImageView
+                android:id="@+id/imgCheckPayment"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:src="@android:drawable/checkbox_on_background"
+                android:tint="@color/black"
+                android:visibility="gone"
+                android:importantForAccessibility="no" />
+
+            <!-- Selection Border Overlay -->
+            <View
+                android:id="@+id/selectionBorderPayment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/selected_border"
+                android:visibility="gone" />
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>

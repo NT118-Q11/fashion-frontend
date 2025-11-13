@@ -30,7 +30,7 @@
                     android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
                     android:src="@android:drawable/ic_menu_revert"
-                    android:tint="@color/black"
+                    app:tint="@color/black"
                     android:padding="8dp"
                     android:clickable="true"
                     android:focusable="true"
@@ -82,7 +82,7 @@
                         android:layout_height="20dp"
                         android:src="@android:drawable/ic_menu_more"
                         android:rotation="270"
-                        android:tint="@color/black"
+                        app:tint="@color/black"
                         android:importantForAccessibility="no" />
 
                 </LinearLayout>
@@ -138,7 +138,7 @@
                         android:layout_height="20dp"
                         android:src="@android:drawable/ic_menu_more"
                         android:rotation="270"
-                        android:tint="@color/black"
+                        app:tint="@color/black"
                         android:importantForAccessibility="no" />
 
                 </LinearLayout>
@@ -194,7 +194,7 @@
                         android:layout_height="20dp"
                         android:src="@android:drawable/ic_menu_more"
                         android:rotation="270"
-                        android:tint="@color/black"
+                        app:tint="@color/black"
                         android:importantForAccessibility="no" />
 
                 </LinearLayout>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/btnDone"
+        android:orientation="vertical">
+
+        <!-- Header -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:background="@color/white">
+
+            <ImageView
+                android:id="@+id/btnBackDelivery"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:src="@android:drawable/ic_menu_revert"
+                android:tint="@color/black"
+                android:padding="8dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:importantForAccessibility="no" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="DELIVERY METHOD"
+                android:textSize="16sp"
+                android:letterSpacing="0.1"
+                android:textColor="@color/black" />
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray"
+            android:alpha="0.2" />
+
+        <!-- Delivery Methods List -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerDeliveryMethods"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="16dp" />
+
+    </LinearLayout>
+
+    <!-- Done Button -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnDone"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_alignParentBottom="true"
+        android:text="DONE"
+        android:textSize="14sp"
+        android:letterSpacing="0.1"
+        android:textColor="@color/white"
+        app:backgroundTint="@color/black"
+        app:cornerRadius="0dp" />
+
+</RelativeLayout>
+

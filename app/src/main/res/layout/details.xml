@@ -31,6 +31,7 @@
                 android:id="@+id/tab_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:contentDescription="tab lay out"
                 app:tabGravity="center"
                 app:tabMode="fixed"/>
 
@@ -57,5 +58,19 @@
             android:textColor="@color/white"
             android:background="@color/black"/>
     </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/imageButton1"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="30dp"
+        android:background="?android:attr/selectableItemBackgroundBorderless"
+        android:scaleType="fitCenter"
+        android:backgroundTint="@color/white"
+        android:contentDescription="Arrow left"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/arrow_left" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

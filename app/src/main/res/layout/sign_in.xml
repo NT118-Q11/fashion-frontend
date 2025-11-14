@@ -82,6 +82,7 @@
         android:fontFamily="@font/tenorsans"
         android:text="Forgot password?"
         android:textColor="@color/orange"
+        android:clickable="true"
         app:layout_constraintStart_toStartOf="@id/et_password"
         app:layout_constraintTop_toBottomOf="@id/et_password"/>
 
@@ -127,6 +128,7 @@
         android:fontFamily="@font/tenorsans"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
+        android:clickable="true"
         app:strokeColor="#cccccc"
         app:strokeWidth="1dp"
         app:icon="@drawable/ic_facebook"
@@ -147,6 +149,7 @@
         android:fontFamily="@font/tenorsans"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
+        android:clickable="true"
         app:strokeColor="#cccccc"
         app:strokeWidth="1dp"
         app:icon="@drawable/ic_google"

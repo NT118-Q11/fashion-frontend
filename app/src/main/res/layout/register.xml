@@ -140,7 +140,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_confirm_password" /> <!-- SỬA LỖI: Ràng buộc lại vào forget_password -->
+        app:layout_constraintTop_toBottomOf="@+id/et_confirm_password" />
 
     <TextView
         android:id="@+id/text_or"

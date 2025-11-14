@@ -1,63 +1,10 @@
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
-
-    <LinearLayout
-        android:id="@+id/bottom"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_gravity="bottom">
-
-        <LinearLayout
-            android:id="@+id/bottom_sheet"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="@android:color/white"
-            app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
-
-            <View
-                android:layout_width="40dp"
-                android:layout_height="4dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="8dp"
-                android:background="@android:color/black"/>
-
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tab_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:contentDescription="tab lay out"
-                app:tabGravity="center"
-                app:tabMode="fixed"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Dress"
-                android:textSize="24sp"
-                android:padding="16dp"
-                android:textColor="@color/black"
-                android:layout_gravity="center_horizontal"/>
-
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/add_to_cart"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:fontFamily="@font/tenorsans"
-            android:text="ADD TO CART • $200"
-            android:gravity="center_horizontal"
-            android:padding="16dp"
-            android:textColor="@color/white"
-            android:background="@color/black"/>
-    </LinearLayout>
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/yellow_white"
+    android:fitsSystemWindows="true">
 
     <ImageButton
         android:id="@+id/imageButton1"
@@ -69,8 +16,96 @@
         android:scaleType="fitCenter"
         android:backgroundTint="@color/white"
         android:contentDescription="Arrow left"
+        android:clickable="true"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/arrow_left" />
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/add_to_cart_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@null"
+        android:background="@drawable/button_state_selector"
+        android:text="ADD TO CART"
+        android:textColor="@color/white"
+        android:fontFamily="@font/tenorsans"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+    
+    <LinearLayout
+        android:id="@+id/navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/add_to_cart_button">
+        
+        <com.google.android.material.button.MaterialButton
+            style="?attr/materialIconButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textAllCaps="false"
+            android:backgroundTint="@color/yellow_white"
+            android:text="Information"
+            android:textColor="@color/for_small_text"
+            android:textSize="15sp"
+            app:cornerRadius="0dp"
+            app:strokeWidth="0dp"/>
+
+        <com.google.android.material.button.MaterialButton
+            style="?attr/materialIconButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="@color/yellow_white"
+            android:text="Description"
+            android:textColor="@color/for_small_text"
+            android:textAllCaps="false"
+            android:textSize="15sp"
+            app:cornerRadius="0dp"
+            app:strokeWidth="0dp"/>
+
+        <com.google.android.material.button.MaterialButton
+            style="?attr/materialIconButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="@color/yellow_white"
+            android:text="Rating"
+            android:textAllCaps="false"
+            android:textColor="@color/for_small_text"
+            android:textSize="15sp"
+            app:cornerRadius="0dp"
+            app:strokeWidth="0dp"/>
+        
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/imageButton1"
+        app:layout_constraintBottom_toTopOf="@id/navigation">
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/viewPagerMain"/>
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLayoutMain"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:tabIndicatorHeight="0dp"
+            app:tabGravity="center"
+            app:tabBackground="@drawable/selector"
+            app:tabIndicatorAnimationMode="elastic"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

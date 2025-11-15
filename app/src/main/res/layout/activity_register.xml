@@ -3,8 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/white">
+    android:background="@color/noive_background">
 
     <LinearLayout
         android:id="@+id/tab_layout"
@@ -22,10 +23,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="SIGN IN"
+            android:text="            SIGN IN"
             android:fontFamily="@font/tenorsans"
             android:textAlignment="center"
-            android:textColor="#333333"
+            android:textColor="#999999"
             android:textSize="17sp"
             android:textStyle="bold" />
 
@@ -34,13 +35,48 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="REGISTER"
+            android:text="      REGISTER"
             android:fontFamily="@font/tenorsans"
             android:textAlignment="center"
-            android:textColor="#999999"
+            android:textColor="#333333"
             android:textSize="17sp"
             android:textStyle="bold" />
     </LinearLayout>
+
+    <EditText
+        android:id="@+id/first_name"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="20dp"
+        android:hint="First Name"
+        android:textSize="18sp"
+        android:padding="10dp"
+        android:inputType="textPersonName"
+        android:fontFamily="@font/tenorsans"
+        android:textColor="#979797"
+        app:layout_constraintTop_toBottomOf="@id/tab_layout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/last_name"
+        tools:layout_editor_absoluteY="189dp" />
+
+    <EditText
+        android:id="@+id/last_name"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="20dp"
+        android:hint="Last Name"
+        android:textSize="18sp"
+        android:padding="10dp"
+        android:inputType="textPersonName"
+        android:fontFamily="@font/tenorsans"
+        android:textColor="#979797"
+        app:layout_constraintStart_toEndOf="@id/first_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/first_name"
+        app:layout_constraintBottom_toBottomOf="@id/first_name"
+        tools:layout_editor_absoluteY="189dp" />
 
     <EditText
         android:id="@+id/et_email"
@@ -48,16 +84,16 @@
         android:layout_height="48dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="10dp"
         android:hint="Email Address"
         android:inputType="textEmailAddress"
         android:textColor="#979797"
         android:padding="10dp"
-        android:textSize="15sp"
+        android:textSize="18sp"
         android:fontFamily="@font/tenorsans"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tab_layout" />
+        app:layout_constraintTop_toBottomOf="@id/first_name" />
 
     <EditText
         android:id="@+id/et_password"
@@ -68,45 +104,64 @@
         android:inputType="textPassword"
         android:textColor="#979797"
         android:fontFamily="@font/tenorsans"
-        android:textSize="15sp"
+        android:textSize="18sp"
         android:padding="10dp"
         app:layout_constraintEnd_toEndOf="@id/et_email"
         app:layout_constraintStart_toStartOf="@id/et_email"
         app:layout_constraintTop_toBottomOf="@id/et_email" />
 
-    <TextView
-        android:id="@+id/forget_password"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+    <EditText
+        android:id="@+id/et_confirm_password"
+        android:layout_width="0dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="10dp"
+        android:hint="Confirm Password"
+        android:inputType="textPassword"
+        android:textColor="#979797"
         android:fontFamily="@font/tenorsans"
-        android:text="Forgot password?"
-        android:textColor="@color/orange"
-        app:layout_constraintStart_toStartOf="@id/et_password"
-        app:layout_constraintTop_toBottomOf="@id/et_password"/>
+        android:textSize="18sp"
+        android:padding="10dp"
+        app:layout_constraintEnd_toEndOf="@id/et_email"
+        app:layout_constraintStart_toStartOf="@id/et_email"
+        app:layout_constraintTop_toBottomOf="@id/et_password" />
+    <!-- Terms -->
+    <TextView
+        android:id="@+id/tvTerms"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginStart="29dp"
+        android:text="By clicking Register Now, you agree to our                             Terms &amp; Conditions and Privacy Policy."
+        android:textColor="#000000"
+        android:textSize="12sp"
+        android:fontFamily="@font/tenorsans"
+        android:textAlignment="center"
+        app:layout_constraintTop_toBottomOf="@id/et_confirm_password"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
 
     <Button
         android:id="@+id/button_sign_in"
         android:layout_width="0dp"
         android:layout_height="60dp"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="40dp"
         android:layout_marginEnd="30dp"
-        android:backgroundTint="@color/gray"
+        android:backgroundTint="@color/vintage_gray"
         android:fontFamily="@font/tenorsans"
-        android:text="SIGN IN"
+        android:text="REGISTER NOW"
         android:textColor="@color/white"
         android:textSize="18sp"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/forget_password" />
+        app:layout_constraintTop_toBottomOf="@+id/et_confirm_password" /> <!-- SỬA LỖI: Ràng buộc lại vào forget_password -->
 
     <TextView
         android:id="@+id/text_or"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="10dp"
         android:fontFamily="@font/tenorsans"
         android:text="OR"
         android:textColor="#999999"
@@ -123,7 +178,7 @@
         android:text="SIGN IN WITH FACEBOOK"
         android:textColor="#333333"
         android:backgroundTint="#ffffff"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="10dp"
         android:fontFamily="@font/tenorsans"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
@@ -131,6 +186,7 @@
         app:strokeWidth="1dp"
         app:icon="@drawable/ic_facebook"
         app:iconTint="@null"
+        app:iconGravity=""
         app:layout_constraintTop_toBottomOf="@id/text_or"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -151,6 +207,7 @@
         app:strokeWidth="1dp"
         app:icon="@drawable/ic_google"
         app:iconTint="@null"
+        app:iconGravity=""
         app:layout_constraintTop_toBottomOf="@id/button_sign_in_facebook"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

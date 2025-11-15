@@ -8,5 +8,16 @@
     <string name="change_password_settings">Change your password</string>
     <string name="edit_profile">EDIT PROFILE</string>
     <string name="log_out">Log out</string>
+    <string name="forgot_password_title">FORGOT PASSWORD</string>
+    <string name="enter_your_code">Enter your code</string>
+    <string name="otp_label">OTP</string>
+    <string name="resend">Resend</string>
+    <string name="otp_sent_info">We sent a 6-digit OTP to abc****@gmail.com</string>
+    <string name="continue_upper">CONTINUE</string>
+    <string name="not_now">NOT NOW</string>
+    <string name="checkout_now" />
+    <string name="desc_back">Back</string>
+    <string name="desc_selected">Selected</string>
+    <string name="desc_not_selected">Not selected</string>
 
 </resources>

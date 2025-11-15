@@ -25,12 +25,6 @@
             <activity android:name=".uix.Home" android:exported="true" />
             <activity android:name=".uix.Cart" android:exported="true" />
             <activity android:name=".uix.Detail" android:exported="true" />
-            <activity android:name=".uix.CheckoutMainActivity" android:exported="true" />
-            <activity android:name=".uix.DeliveryMethodActivity" android:exported="false" />
-            <activity android:name=".uix.ShippingAddressActivity" android:exported="false" />
-            <activity android:name=".uix.AddAddressActivity" android:exported="false" />
-            <activity android:name=".uix.PaymentMethodActivity" android:exported="false" />
-            <activity android:name=".uix.CheckoutSummaryActivity" android:exported="false" />
     </application>
 
 </manifest>

@@ -164,8 +164,11 @@ class Cart : AppCompatActivity() {
         // Checkout button
         btnCheckout.setOnClickListener {
             if (cartItems.isNotEmpty()) {
-                val intent = Intent(this, CheckoutMainActivity::class.java)
-                startActivity(intent)
+                Toast.makeText(
+                    this,
+                    "Checkout feature - Total: $${cartAdapter.getTotalPrice()}",
+                    Toast.LENGTH_LONG
+                ).show()
             } else {
                 Toast.makeText(this, "Cart is empty", Toast.LENGTH_SHORT).show()
             }

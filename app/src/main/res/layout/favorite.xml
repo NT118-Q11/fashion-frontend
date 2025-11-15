@@ -11,7 +11,7 @@
     <ScrollView
         android:clipChildren="false"
         android:clipToPadding="false"
-        android:id="@+id/rjltztxak3eh"
+        android:id="@+id/screen"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -22,111 +22,49 @@
             android:clipChildren="false"
             android:clipToPadding="false"
             android:orientation="vertical">
-            <LinearLayout
-                android:id="@+id/rf14wj2cllp4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:layout_marginTop="14dp"
-                android:layout_marginBottom="22dp"
-                android:layout_marginStart="35dp"
-                android:layout_marginEnd="16dp"
-                android:orientation="horizontal">
-                <LinearLayout
-                    android:id="@+id/r4wcgqzn13fu"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                    <TextView
-                        android:id="@+id/rr37r1arp9v"
-                        android:textColor="#000000"
-                        android:textSize="15sp"
-                        android:textStyle="bold"
-                        android:layout_height="wrap_content"
-                        android:layout_width="wrap_content"
-                        android:text="9:41"
-                        />
-                </LinearLayout>
-                <LinearLayout
-                    android:id="@+id/rjfyap12p4pk"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-                </LinearLayout>
-                <ImageView
-                    android:id="@+id/rnpkcyu7rhkg"
-                    android:layout_width="17dp"
-                    android:layout_height="10dp"
-                    android:layout_marginEnd="5dp"
-                    android:src="@mipmap/ic_launcher"
-                    android:scaleType="fitXY"
-                    />
-                <ImageView
-                    android:id="@+id/rdupv3arr5o8"
-                    android:layout_width="15dp"
-                    android:layout_height="10dp"
-                    android:layout_marginEnd="7dp"
-                    android:src="@mipmap/ic_launcher"
-                    android:scaleType="fitXY"
-                    />
-                <ImageView
-                    android:id="@+id/rn7xmiidlox"
-                    android:layout_width="24dp"
-                    android:layout_height="11dp"
-                    android:src="@mipmap/ic_launcher"
-                    android:scaleType="fitXY"
-                    />
-            </LinearLayout>
             <ImageView
-                android:id="@+id/rwh4gix1iotl"
+                android:id="@+id/back_button"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_marginBottom="37dp"
                 android:layout_marginStart="26dp"
-                android:src="@mipmap/ic_launcher"
+                android:src="@drawable/arrow_left"
                 android:scaleType="fitXY"
                 />
-            <LinearLayout
-                android:id="@+id/r6rogk8uvd47"
+
+            <TextView
+                android:id="@+id/text_favorite"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:layout_marginBottom="6dp"
-                android:orientation="vertical">
-                <TextView
-                    android:id="@+id/rcuoj9ejsvog"
-                    android:textColor="#000000"
-                    android:textSize="18sp"
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:text="My favorites"
-                    />
-            </LinearLayout>
+                android:text="My favorites"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:gravity="center"/>
+
             <LinearLayout
-                android:id="@+id/roqse375pdd"
+                android:id="@+id/border"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:layout_marginBottom="21dp"
                 android:orientation="vertical">
                 <ImageView
-                    android:id="@+id/robisyq2ugls"
+                    android:id="@+id/underline"
                     android:layout_width="124dp"
                     android:layout_height="9dp"
-                    android:src="@mipmap/ic_launcher"
+                    android:src="@drawable/underline"
                     android:scaleType="fitXY"
                     />
             </LinearLayout>
             <LinearLayout
-                android:id="@+id/rhqcty7b6bu8"
+                android:id="@+id/favorite_row_1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="19dp"
                 android:layout_marginHorizontal="21dp"
                 android:orientation="horizontal">
                 <LinearLayout
-                    android:id="@+id/rqvowk4xr50c"
+                    android:id="@+id/item_1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -134,7 +72,7 @@
                     android:layout_marginEnd="12dp"
                     android:orientation="vertical">
                     <ImageView
-                        android:id="@+id/rgv4ssqyued8"
+                        android:id="@+id/item_1_img"
                         android:layout_width="165dp"
                         android:layout_height="220dp"
                         android:layout_marginBottom="8dp"
@@ -142,13 +80,13 @@
                         android:scaleType="fitXY"
                         />
                     <LinearLayout
-                        android:id="@+id/r60cpuhh0gk"
+                        android:id="@+id/item_1_detail"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingRight="4dp"
                         android:orientation="vertical">
                         <LinearLayout
-                            android:id="@+id/rypbp9sdz3e"
+                            android:id="@+id/item_1_text"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingTop="4dp"
@@ -156,7 +94,7 @@
                             android:layout_marginStart="4dp"
                             android:orientation="vertical">
                             <TextView
-                                android:id="@+id/rfnkbinhb1pg"
+                                android:id="@+id/item_1_name"
                                 android:textColor="#000000"
                                 android:textSize="12sp"
                                 android:layout_marginBottom="7dp"
@@ -165,7 +103,7 @@
                                 android:text="21WN "
                                 />
                             <TextView
-                                android:id="@+id/r7ql5yfbqsyu"
+                                android:id="@+id/item_1_desc"
                                 android:textColor="#555555"
                                 android:textSize="12sp"
                                 android:layout_height="wrap_content"
@@ -174,7 +112,7 @@
                                 />
                         </LinearLayout>
                         <TextView
-                            android:id="@+id/rb9xsku3bqnh"
+                            android:id="@+id/item_1_price"
                             android:textColor="#DD8560"
                             android:textSize="15sp"
                             android:layout_marginStart="4dp"
@@ -185,14 +123,14 @@
                     </LinearLayout>
                 </LinearLayout>
                 <LinearLayout
-                    android:id="@+id/r6bvklxjn6j8"
+                    android:id="@+id/item_2"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center_horizontal"
                     android:orientation="vertical">
                     <ImageView
-                        android:id="@+id/r8cfrmo9zbs7"
+                        android:id="@+id/item_2_img"
                         android:layout_width="165dp"
                         android:layout_height="220dp"
                         android:layout_marginBottom="8dp"
@@ -200,13 +138,13 @@
                         android:scaleType="fitXY"
                         />
                     <LinearLayout
-                        android:id="@+id/rhifb2h0ilhu"
+                        android:id="@+id/item_2_detail"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingRight="4dp"
                         android:orientation="vertical">
                         <LinearLayout
-                            android:id="@+id/ru92zknud9jf"
+                            android:id="@+id/item_2_text"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingTop="4dp"
@@ -214,7 +152,7 @@
                             android:layout_marginStart="4dp"
                             android:orientation="vertical">
                             <TextView
-                                android:id="@+id/rpwsehzkdxvq"
+                                android:id="@+id/item_2_name"
                                 android:textColor="#000000"
                                 android:textSize="12sp"
                                 android:layout_marginBottom="7dp"
@@ -224,7 +162,7 @@
                                 android:text="lamerei"
                                 />
                             <TextView
-                                android:id="@+id/rjk7lcdakm9m"
+                                android:id="@+id/item_2_desc"
                                 android:textColor="#555555"
                                 android:textSize="12sp"
                                 android:layout_height="wrap_content"
@@ -233,7 +171,7 @@
                                 />
                         </LinearLayout>
                         <TextView
-                            android:id="@+id/rehfl2613y2q"
+                            android:id="@+id/item_2_price"
                             android:textColor="#DD8560"
                             android:textSize="15sp"
                             android:layout_marginStart="4dp"
@@ -245,14 +183,14 @@
                 </LinearLayout>
             </LinearLayout>
             <LinearLayout
-                android:id="@+id/runtgharezfm"
+                android:id="@+id/favorite_row_2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="9dp"
                 android:layout_marginHorizontal="21dp"
                 android:orientation="horizontal">
                 <LinearLayout
-                    android:id="@+id/r0oatawbvfzfb"
+                    android:id="@+id/item_3"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -260,7 +198,7 @@
                     android:layout_marginEnd="12dp"
                     android:orientation="vertical">
                     <ImageView
-                        android:id="@+id/rs9fttfom5h8"
+                        android:id="@+id/item_3_img"
                         android:layout_width="165dp"
                         android:layout_height="220dp"
                         android:layout_marginBottom="8dp"
@@ -268,13 +206,13 @@
                         android:scaleType="fitXY"
                         />
                     <LinearLayout
-                        android:id="@+id/r7ht0a7pvqqs"
+                        android:id="@+id/item_3_detail"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingRight="4dp"
                         android:orientation="vertical">
                         <LinearLayout
-                            android:id="@+id/refffwfqe0tf"
+                            android:id="@+id/item_3_text"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingTop="4dp"
@@ -282,7 +220,7 @@
                             android:layout_marginStart="4dp"
                             android:orientation="vertical">
                             <TextView
-                                android:id="@+id/rwcs2xmk04e"
+                                android:id="@+id/item_3_name"
                                 android:textColor="#000000"
                                 android:textSize="12sp"
                                 android:layout_marginBottom="7dp"
@@ -291,7 +229,7 @@
                                 android:text="21WN "
                                 />
                             <TextView
-                                android:id="@+id/rd8fx03qb79q"
+                                android:id="@+id/item_3_desc"
                                 android:textColor="#555555"
                                 android:textSize="12sp"
                                 android:layout_height="wrap_content"
@@ -300,7 +238,7 @@
                                 />
                         </LinearLayout>
                         <TextView
-                            android:id="@+id/r7eomq9reimt"
+                            android:id="@+id/item_3_price"
                             android:textColor="#DD8560"
                             android:textSize="15sp"
                             android:layout_marginStart="4dp"
@@ -311,14 +249,14 @@
                     </LinearLayout>
                 </LinearLayout>
                 <LinearLayout
-                    android:id="@+id/robuf04dsvlc"
+                    android:id="@+id/item_4"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center_horizontal"
                     android:orientation="vertical">
                     <ImageView
-                        android:id="@+id/r5f17m7g52ch"
+                        android:id="@+id/item_4_img"
                         android:layout_width="165dp"
                         android:layout_height="220dp"
                         android:layout_marginBottom="8dp"
@@ -326,13 +264,13 @@
                         android:scaleType="fitXY"
                         />
                     <LinearLayout
-                        android:id="@+id/re5qzsoc78c"
+                        android:id="@+id/item_4_detail"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingRight="4dp"
                         android:orientation="vertical">
                         <LinearLayout
-                            android:id="@+id/rpvvpjv5ump"
+                            android:id="@+id/item_4_text"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:paddingTop="4dp"
@@ -340,7 +278,7 @@
                             android:layout_marginStart="4dp"
                             android:orientation="vertical">
                             <TextView
-                                android:id="@+id/rvnnf3vpkf9"
+                                android:id="@+id/item_4_name"
                                 android:textColor="#000000"
                                 android:textSize="12sp"
                                 android:layout_marginBottom="7dp"
@@ -350,7 +288,7 @@
                                 android:text="lamerei"
                                 />
                             <TextView
-                                android:id="@+id/rnyqlha0c7co"
+                                android:id="@+id/item_4_desc"
                                 android:textColor="#555555"
                                 android:textSize="12sp"
                                 android:layout_height="wrap_content"
@@ -359,7 +297,7 @@
                                 />
                         </LinearLayout>
                         <TextView
-                            android:id="@+id/r30iswj4ef3r"
+                            android:id="@+id/item_4_price"
                             android:textColor="#DD8560"
                             android:textSize="15sp"
                             android:layout_marginStart="4dp"
@@ -371,21 +309,21 @@
                 </LinearLayout>
             </LinearLayout>
             <LinearLayout
-                android:id="@+id/replv4vcyoq9"
+                android:id="@+id/page_number_struct"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="end"
                 android:layout_marginBottom="10dp"
                 android:orientation="vertical">
                 <LinearLayout
-                    android:id="@+id/ry20lqf6721l"
+                    android:id="@+id/page_number_border"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
                     android:layout_marginEnd="63dp"
                     android:orientation="horizontal">
                     <LinearLayout
-                        android:id="@+id/rm6bpnoe64ll"
+                        android:id="@+id/page_number_1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="#333333"
@@ -394,7 +332,7 @@
                         android:layout_marginEnd="12dp"
                         android:orientation="vertical">
                         <TextView
-                            android:id="@+id/rhrxo9t5ia28"
+                            android:id="@+id/page_number_1_text"
                             android:textColor="#FCFCFC"
                             android:textSize="16sp"
                             android:layout_height="wrap_content"
@@ -403,7 +341,7 @@
                             />
                     </LinearLayout>
                     <LinearLayout
-                        android:id="@+id/rzr62zr2ezi8"
+                        android:id="@+id/page_number_2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="#888888"
@@ -412,7 +350,7 @@
                         android:layout_marginEnd="12dp"
                         android:orientation="vertical">
                         <TextView
-                            android:id="@+id/r19ozdtfhjrd"
+                            android:id="@+id/page_number_2_text"
                             android:textColor="#555555"
                             android:textSize="16sp"
                             android:layout_height="wrap_content"
@@ -421,7 +359,7 @@
                             />
                     </LinearLayout>
                     <LinearLayout
-                        android:id="@+id/rm0vxrbu025"
+                        android:id="@+id/page_number_3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="#888888"
@@ -430,7 +368,7 @@
                         android:layout_marginEnd="12dp"
                         android:orientation="vertical">
                         <TextView
-                            android:id="@+id/r4g4omg0uwps"
+                            android:id="@+id/page_number_3_text"
                             android:textColor="#555555"
                             android:textSize="16sp"
                             android:layout_height="wrap_content"
@@ -439,7 +377,7 @@
                             />
                     </LinearLayout>
                     <LinearLayout
-                        android:id="@+id/r1ldclrur85s"
+                        android:id="@+id/page_number_4"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="#888888"
@@ -448,7 +386,7 @@
                         android:layout_marginEnd="12dp"
                         android:orientation="vertical">
                         <TextView
-                            android:id="@+id/rw76xh73c13m"
+                            android:id="@+id/page_number_4_text"
                             android:textColor="#555555"
                             android:textSize="16sp"
                             android:layout_height="wrap_content"
@@ -457,7 +395,7 @@
                             />
                     </LinearLayout>
                     <LinearLayout
-                        android:id="@+id/ra197aq98y39"
+                        android:id="@+id/page_number_5"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="#888888"
@@ -466,7 +404,7 @@
                         android:layout_marginEnd="9dp"
                         android:orientation="vertical">
                         <TextView
-                            android:id="@+id/rbh8yyoo6r64"
+                            android:id="@+id/page_number_5_text"
                             android:textColor="#555555"
                             android:textSize="16sp"
                             android:layout_height="wrap_content"
@@ -475,16 +413,11 @@
                             />
                     </LinearLayout>
                     <ImageView
-                        android:id="@+id/r0w2zpjxbq0mg"
+                        android:id="@+id/month_navigation_next"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
-                        android:src="@mipmap/ic_launcher"
+                        android:src="@drawable/arrow_right"
                         android:scaleType="fitXY"
-<<<<<<< Updated upstream
-                        />
-=======
-                        android:src="@drawable/arrow_right" />
->>>>>>> Stashed changes
                 </LinearLayout>
             </LinearLayout>
             <LinearLayout

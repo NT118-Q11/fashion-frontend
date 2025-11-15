@@ -5,7 +5,7 @@
     android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5EFE6">
+    android:background="#F5F1E8">
 
     <!-- Top bar -->
     <LinearLayout
@@ -88,7 +88,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="WOMEN"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 android:textColor="#000000"
                 android:fontFamily="@font/tenorsans" />
 
@@ -99,7 +99,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="MAN"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 android:textColor="#000000"
                 android:fontFamily="@font/tenorsans" />
 
@@ -110,7 +110,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="KIDS"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 android:textColor="#000000"
                 android:fontFamily="@font/tenorsans" />
         </LinearLayout>
@@ -131,6 +131,7 @@
                 android:alpha="0.95"
                 android:fontFamily="@font/tenorsans"
                 android:text="MOHAN"
+                android:textStyle="bold"
                 android:textColor="#FFFFFF"
                 android:textSize="22sp" />
 

@@ -5,7 +5,7 @@
     android:id="@+id/favorites_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FAF6F1">
+    android:background="#F4F1EC">
 
     <!-- Back button -->
     <ImageView
@@ -20,24 +20,23 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Title centered -->
+    <!-- RecyclerView -->
     <TextView
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="MY FAVORITES"
         android:fontFamily="@font/tenorsans"
-        android:textColor="#000000"
-        android:textStyle="bold"
-        android:textSize="18sp"
         android:letterSpacing="0.1"
-        app:layout_constraintTop_toTopOf="parent"
+        android:text="MY FAVORITES"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@id/iv_back"
-        app:layout_constraintStart_toEndOf="@id/iv_back"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.45"/>
-
-    <!-- RecyclerView (constrain trên cùng tới dưới title và dưới cùng tới top của bottom nav) -->
+        app:layout_constraintHorizontal_bias="0.391"
+        app:layout_constraintStart_toEndOf="@id/iv_back"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.695" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_favorites"
@@ -47,12 +46,16 @@
         android:clipToPadding="false"
         android:paddingStart="12dp"
         android:paddingEnd="12dp"
-        app:layout_constraintBottom_toTopOf="@id/black_nav_bar"
+
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:layout_constraintBottom_toTopOf="@id/pagination_container"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/iv_back"
         app:layout_constraintVertical_bias="0.0"
+        app:spanCount="2"
         tools:listitem="@layout/item_favorite" />
 
     <LinearLayout
@@ -132,7 +135,7 @@
             app:tint="#000000"/>
     </LinearLayout>
 
-    <!-- BOTTOM NAV: (cố định ở dưới) -->
+    <!-- NAV BAR -->
     <LinearLayout
         android:id="@+id/black_nav_bar"
         android:layout_width="0dp"

@@ -1,11 +1,14 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.FashionApp" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">@color/purple_500</item>
+        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorOnPrimary">@color/white</item>
 
-    <style name="Theme.FashionApp" parent="Theme.Material3.Light.NoActionBar">
-        <!-- Màu nền vintage mà bạn đang dùng -->
-        <item name="android:windowBackground">@color/vintage_beige</item>
-        <item name="android:textColor">@color/black</item>
-        <item name="android:statusBarColor">@color/vintage_beige</item>
-        <item name="android:navigationBarColor">@color/vintage_beige</item>
     </style>
 
+    <style name="circleImageView" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
 </resources>

@@ -19,6 +19,13 @@
     <string name="desc_back">Back</string>
     <string name="desc_selected">Selected</string>
     <string name="desc_not_selected">Not selected</string>
+    <string name="example_for_details_2">detail2</string>
+    <item name="welcome_text" type="id" />
+    <item name="button_sign_up" type="id" />
+    <item name="favorites_root" type="id" />
+    <item name="iv_back" type="id" />
+    <item name="rv_favorites" type="id" />
+
     <string name="details_back_desc">Back</string>
     <string name="add_to_cart_upper">ADD TO CART</string>
     <string name="tab_information">Information</string>
@@ -49,4 +56,5 @@
     <string name="details2_care_do_not_iron">• Do not iron</string>
     <string name="details2_care_do_not_dry_clean">• Do not dry clean</string>
     <string name="details2_care_do_not_tumble_dry">• Do not tumble dry</string>
+
 </resources>

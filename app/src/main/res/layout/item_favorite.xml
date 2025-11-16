@@ -23,12 +23,12 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-
             app:layout_constraintTop_toTopOf="parent"
             app:spanCount="2"
             tools:ignore="SpeakableTextPresentCheck"
             tools:itemCount="6"
             tools:listitem="@layout/item_product_grid" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout
@@ -58,7 +58,8 @@
                 android:padding="3dp"
                 android:layout_gravity="top|end"
                 app:srcCompat="@drawable/ic_favorite_filled"
-                app:tint="#E07A5F"/>
+                app:tint="#E07A5F" />
+
         </FrameLayout>
 
         <TextView
@@ -70,7 +71,7 @@
             android:textStyle="bold"
             android:textColor="#000"
             android:textSize="14sp"
-            android:layout_marginTop="6dp"/>
+            android:layout_marginTop="6dp" />
 
         <TextView
             android:id="@+id/tv_product_desc"
@@ -79,7 +80,7 @@
             android:text="reversible angora cardigan"
             android:fontFamily="@font/tenorsans"
             android:textSize="15sp"
-            android:textColor="#666"/>
+            android:textColor="#666" />
 
         <TextView
             android:id="@+id/tv_product_price"
@@ -89,7 +90,7 @@
             android:fontFamily="@font/tenorsans"
             android:textColor="#D47A52"
             android:textSize="15sp"
-            android:layout_marginTop="4dp"/>
+            android:layout_marginTop="4dp" />
 
     </LinearLayout>
 

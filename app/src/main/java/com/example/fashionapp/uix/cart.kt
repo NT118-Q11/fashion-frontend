@@ -38,7 +38,7 @@ class Cart : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.cart)
+        setContentView(R.layout.cart_nothing)
 
         initViews()
         setupRecyclerView()
@@ -166,12 +166,11 @@ class Cart : AppCompatActivity() {
             if (cartItems.isNotEmpty()) {
                 Toast.makeText(
                     this,
-                    "Proceeding to checkout... Total: $${cartAdapter.getTotalPrice()}",
+                    "Checkout feature - Total: $${cartAdapter.getTotalPrice()}",
                     Toast.LENGTH_LONG
                 ).show()
-                // Navigate to checkout screen here
-                // val intent = Intent(this, CheckoutActivity::class.java)
-                // startActivity(intent)
+            } else {
+                Toast.makeText(this, "Cart is empty", Toast.LENGTH_SHORT).show()
             }
         }
 

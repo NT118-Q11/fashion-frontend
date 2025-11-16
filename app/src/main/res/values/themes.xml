@@ -7,9 +7,7 @@
 
     </style>
 
-<!--    Phan duoi nay giup anh cua profile thanh hinh tron-->
-
-    <style name="circleImageView" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+    <style name="circleImageView" parent="">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">50%</item>
     </style>

@@ -157,4 +157,67 @@
         android:label="Profile"
         tools:layout="@layout/profile" />
 
+    <!-- Added: Search -> Search View -> Details -> Details 1 -> Details 2 -> Details 3 flow -->
+    <fragment
+        android:id="@+id/activitySearchFragment"
+        android:name="com.example.fashionapp.uix.ActivitySearchFragment"
+        android:label="Search"
+        tools:layout="@layout/activity_search">
+        <action
+            android:id="@+id/action_activitySearchFragment_to_activitySearchViewFragment"
+            app:destination="@id/activitySearchViewFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/activitySearchViewFragment"
+        android:name="com.example.fashionapp.uix.ActivitySearchViewFragment"
+        android:label="Search View"
+        tools:layout="@layout/activity_search_view">
+        <action
+            android:id="@+id/action_activitySearchViewFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/detailsFragment"
+        android:name="com.example.fashionapp.uix.DetailsFragment"
+        android:label="Details"
+        tools:layout="@layout/details">
+        <action
+            android:id="@+id/action_detailsFragment_to_details2Fragment"
+            app:destination="@id/details2Fragment" />
+        <action
+            android:id="@+id/action_detailsFragment_to_details3Fragment"
+            app:destination="@id/details3Fragment" />
+        <action
+            android:id="@+id/action_detailsFragment_to_details1Fragment"
+            app:destination="@id/details1Fragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/details1Fragment"
+        android:name="com.example.fashionapp.uix.Details1Fragment"
+        android:label="Details 1"
+        tools:layout="@layout/details_1">
+        <action
+            android:id="@+id/action_details1Fragment_to_details2Fragment"
+            app:destination="@id/details2Fragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/details2Fragment"
+        android:name="com.example.fashionapp.uix.Details2Fragment"
+        android:label="Details 2"
+        tools:layout="@layout/details_2">
+        <action
+            android:id="@+id/action_details2Fragment_to_details3Fragment"
+            app:destination="@id/details3Fragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/details3Fragment"
+        android:name="com.example.fashionapp.uix.Details3Fragment"
+        android:label="Details 3"
+        tools:layout="@layout/details_3" />
+
 </navigation>

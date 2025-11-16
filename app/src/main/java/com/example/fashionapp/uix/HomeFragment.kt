@@ -1,35 +1,39 @@
 package com.example.fashionapp.uix
 
+import androidx.fragment.app.Fragment
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
+import com.example.fashionapp.R
 import androidx.navigation.fragment.findNavController
-import com.example.fashionapp.databinding.ChangePasswordBinding
+import com.example.fashionapp.databinding.ActivityHomeBinding
 
-class ChangePasswordFragment: Fragment() {
 
-    private var _binding: ChangePasswordBinding? = null
+
+class HomeFragment : Fragment() {
+    private var _binding: ActivityHomeBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Sử dụng View Binding để inflate layout
-        _binding = ChangePasswordBinding.inflate(inflater, container, false)
-        // Trả về view gốc của layout
+        _binding = ActivityHomeBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.backButton.setOnClickListener {
-            // Lệnh này sẽ quay lại màn hình trước đó trong Back Stack (tức là MyAccountFragment)
-            findNavController().popBackStack()
+        binding.navProfile.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_myAccountFragment)
         }
+
+        binding.navCart.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_cartFragment)
+        }
+
 
     }
 
@@ -38,5 +42,4 @@ class ChangePasswordFragment: Fragment() {
         // Dọn dẹp binding để tránh rò rỉ bộ nhớ
         _binding = null
     }
-
 }

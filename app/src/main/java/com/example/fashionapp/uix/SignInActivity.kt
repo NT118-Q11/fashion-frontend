@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.fashionapp.databinding.ActivitySignInBinding
 
 class SignInActivity : AppCompatActivity() {
+<<<<<<< HEAD
 
     private lateinit var binding: ActivitySignInBinding
 
@@ -21,4 +22,10 @@ class SignInActivity : AppCompatActivity() {
             finish() // không quay lại login
         }
     }
+=======
+//    override fun onCreate(savedInstanceState: Bundle?) {
+//        super.onCreate(savedInstanceState)
+//        setContentView(R.layout.activity_sign_in)
+//    }
+>>>>>>> main
 }

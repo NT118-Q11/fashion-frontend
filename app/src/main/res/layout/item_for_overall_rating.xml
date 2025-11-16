@@ -84,7 +84,6 @@
             android:text="Worth the money. Highly recommend. 10/10 for comfort and looks"
             android:textColor="@color/black"
             android:gravity="start"
-            android:fontFamily="@font/tenorsans"
             android:textSize="16dp"
             />
     </LinearLayout>

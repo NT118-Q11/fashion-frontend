@@ -3,7 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph"
     xmlns:tools="http://schemas.android.com/tools"
-    app:startDestination="@id/myAccountFragment">
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.fashionapp.uix.HomeFragment"
+        android:label="Home"
+        tools:layout="@layout/activity_home">
+
+        <action
+            android:id="@+id/action_homeFragment_to_myAccountFragment"
+            app:destination="@id/myAccountFragment" />
+
+        <action
+            android:id="@+id/action_homeFragment_to_cartFragment"
+            app:destination="@id/cartFragment"/>
+    </fragment>
 
     <fragment
         android:id="@+id/myAccountFragment"
@@ -24,6 +39,98 @@
             android:id="@+id/action_myAccountFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
 
+        <action
+            android:id="@+id/action_myAccountFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+
+        <action
+            android:id="@+id/action_myAccountFragment_to_cartFragment"
+            app:destination="@id/cartFragment"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/cartFragment"
+        android:name="com.example.fashionapp.uix.CartFragment"
+        android:label="Cart"
+        tools:layout="@layout/activity_cart">
+
+        <action
+            android:id="@+id/action_cartFragment_to_checkoutFragment"
+            app:destination="@id/checkoutFragment" />
+
+        <action
+            android:id="@+id/action_cartFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+
+        <action
+            android:id="@+id/action_cartFragment_to_myAccountFragment"
+            app:destination="@id/myAccountFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/checkoutFragment"
+        android:name="com.example.fashionapp.uix.CheckoutFragment"
+        android:label="Checkout"
+        tools:layout="@layout/activity_checkout">
+
+        <action
+            android:id="@+id/action_checkoutFragment_to_confirmFragment"
+            app:destination="@id/confirmFragment" />
+
+        <action
+            android:id="@+id/action_checkoutFragment_to_deliveryFragment"
+            app:destination="@id/deliveryFragment" />
+
+        <action
+            android:id="@+id/action_checkoutFragment_to_paymentFragment"
+            app:destination="@id/paymentFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/confirmFragment"
+        android:name="com.example.fashionapp.uix.ConfirmFragment"
+        android:label="Confirm"
+        tools:layout="@layout/activity_confirm">
+
+        <action
+            android:id="@+id/action_confirmFragment_to_paymentSuccessFragment"
+            app:destination="@id/paymentSuccessFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/deliveryFragment"
+        android:name="com.example.fashionapp.uix.DeliveryFragment"
+        android:label="Delivery"
+        tools:layout="@layout/activity_delivery_method">
+
+        <action
+            android:id="@+id/action_deliveryFragment_to_confirmFragment"
+            app:destination="@id/confirmFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/paymentFragment"
+        android:name="com.example.fashionapp.uix.PaymentMethodFragment"
+        android:label="Payment"
+        tools:layout="@layout/activity_payment_method">
+
+        <action
+            android:id="@+id/action_paymentFragment_to_confirmFragment"
+            app:destination="@id/confirmFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/paymentSuccessFragment"
+        android:name="com.example.fashionapp.uix.PaymentSuccessFragment"
+        android:label="Payment Success"
+        tools:layout="@layout/activity_payment_success">
+
+        <action
+            android:id="@+id/action_paymentSuccessFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
     </fragment>
 
     <fragment

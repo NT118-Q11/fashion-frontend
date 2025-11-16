@@ -1,39 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:id="@+id/overall_rating"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:orientation="vertical"
         android:gravity="center"
-        app:layout_constraintTop_toTopOf="parent"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/tenorsans"
             android:text="Overall Rating"
             android:textColor="@color/black"
             android:textSize="23sp"
-            android:textStyle="bold"
-            android:fontFamily="@font/tenorsans"/>
+            android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:gravity="center_horizontal"
+            android:gravity="center"
             android:orientation="horizontal">
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:layout_marginEnd="15dp"
                 android:src="@drawable/yellow_star"
                 android:background="?android:attr/selectableItemBackgroundBorderless"
@@ -41,8 +42,8 @@
                 />
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:layout_marginEnd="15dp"
                 android:src="@drawable/yellow_star"
                 android:background="?android:attr/selectableItemBackgroundBorderless"
@@ -50,8 +51,8 @@
                 />
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:layout_marginEnd="15dp"
                 android:src="@drawable/yellow_star"
                 android:background="?android:attr/selectableItemBackgroundBorderless"
@@ -59,8 +60,8 @@
                 />
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:layout_marginEnd="15dp"
                 android:src="@drawable/yellow_star"
                 android:background="?android:attr/selectableItemBackgroundBorderless"
@@ -68,8 +69,8 @@
                 />
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:src="@drawable/uncolor_star"
                 android:background="?android:attr/selectableItemBackgroundBorderless"
                 android:scaleType="fitCenter"
@@ -77,16 +78,16 @@
 
         </LinearLayout>
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:layout_marginTop="20dp"
+        <TextView
+            android:id="@+id/tv_review_count"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Base on 1024 review"
-            android:textColor="@color/black"
-            android:gravity="center"
+            android:layout_marginTop="20dp"
             android:fontFamily="@font/tenorsans"
+            android:gravity="center"
+            android:textColor="@color/black"
             android:textSize="16dp"
-            />
+            tools:text="Base on 1024 review" />
 
         <ImageView
             android:id="@+id/line1"
@@ -94,20 +95,20 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:adjustViewBounds="true"
-            android:src="@drawable/straight_line"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+            android:src="@drawable/straight_line" />
 
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
+        android:id="@+id/rv_ratings"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:paddingBottom="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/overall_rating">
-
-    </androidx.recyclerview.widget.RecyclerView>
-
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/overall_rating"
+        tools:listitem="@layout/item_for_overall_rating" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

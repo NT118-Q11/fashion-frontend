@@ -4,9 +4,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F4f1ec">
+    android:background="#F4f1ec"
+    android:fitsSystemWindows="true">
 
-    <!-- Back button -->
     <ImageView
         android:id="@+id/pm_btnBack"
         android:layout_width="24dp"
@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>
 
-    <!-- Title -->
+
     <TextView
         android:id="@+id/pm_tvTitle"
         android:layout_width="wrap_content"
@@ -34,7 +34,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
-    <!-- CREDIT / DEBIT CARD -->
+
     <ImageView
         android:id="@+id/pm_btnPlus"
         android:layout_width="24dp"

@@ -16,6 +16,7 @@
         app:layout_constraintEnd_toEndOf="parent">
 
 
+
         <TextView
             android:id="@+id/composition"
             android:layout_width="match_parent"
@@ -24,7 +25,22 @@
             android:layout_marginEnd="20dp"
             android:layout_marginTop="40dp"
             android:layout_marginBottom="40dp"
+            android:textAlignment="textStart"
             android:lineSpacingExtra="10dp"
+            android:text="Composition \n \n
+• Upper: 100% polyester \n
+• Insole: 85% polyester, 15% polyurethane \n \n
+Specific care instructions \n
+LEATHER: Clean with a clean, dry cloth. You can rub colourless or colour-matched waxes into the leather in a circular motion.\n \n
+SUEDE/NUBUCK/SPLIT SUEDE: Gently clean with a clean, dry cloth. You can also use a soft brush. Do not apply cream. Treat with special sprays.\n
+PATENT FINISH/SYNTHETIC FABRIC: Clean with a damp cloth.\n \n
+
+Care\n
+• Do not wash \n
+• Do not bleach \n
+• Do not iron \n
+• Do not dry clean \n
+• Do not tumble dry"
             android:textColor="@color/black" />
 
     </ScrollView>

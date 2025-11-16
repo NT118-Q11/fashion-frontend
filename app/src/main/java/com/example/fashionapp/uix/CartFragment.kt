@@ -80,6 +80,10 @@ class CartFragment : Fragment() {
         binding.navProfile.setOnClickListener {
             findNavController().navigate(R.id.action_cartFragment_to_myAccountFragment)
         }
+
+        binding.navNotifications.setOnClickListener {
+            findNavController().navigate(R.id.action_cartFragment_to_notificationFragment)
+        }
     }
 
     override fun onDestroyView() {

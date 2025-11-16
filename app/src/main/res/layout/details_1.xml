@@ -7,6 +7,22 @@
     android:fitsSystemWindows="true"
     android:background="#F4F1EC">
 
+    <ImageButton
+        android:id="@+id/btnBack"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="30dp"
+        android:background="?android:attr/selectableItemBackgroundBorderless"
+        android:backgroundTint="@color/white"
+        android:clickable="true"
+        android:contentDescription="@string/details_back_desc"
+        android:scaleType="fitCenter"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/arrow_left"
+        tools:ignore="TouchTargetSizeCheck" />
+
 
     <LinearLayout
         android:id="@+id/clothes_information"
@@ -15,7 +31,7 @@
         android:orientation="vertical"
         android:background="#F4F1EC"
         android:layout_marginTop="40dp"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnBack"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 

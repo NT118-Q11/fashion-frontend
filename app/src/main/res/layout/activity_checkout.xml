@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F4F1EC">
+    android:background="#F4F1EC"
+    android:fitsSystemWindows="true">
 
     <!-- Nút Back -->
     <ImageView
@@ -41,6 +42,7 @@
         android:paddingHorizontal="20dp"
         android:paddingTop="100dp"
         android:paddingBottom="10dp"
+        android:clickable="true"
         app:layout_constraintTop_toBottomOf="@id/tvCheckoutTitle"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
@@ -95,6 +97,7 @@
         android:paddingHorizontal="20dp"
         android:paddingTop="15dp"
         android:paddingBottom="10dp"
+        android:clickable="true"
         app:layout_constraintTop_toBottomOf="@id/btnDelivery"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">

@@ -16,7 +16,7 @@
         android:background="?android:attr/selectableItemBackgroundBorderless"
         android:backgroundTint="@color/white"
         android:clickable="true"
-        android:contentDescription="Arrow left"
+        android:contentDescription="@string/details_back_desc"
         android:scaleType="fitCenter"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -29,7 +29,7 @@
         android:layout_height="wrap_content"
         android:backgroundTint="@null"
         android:background="@drawable/button_state_selector"
-        android:text="ADD TO CART"
+        android:text="@string/add_to_cart_upper"
         android:textStyle="bold"
         android:textColor="@color/white"
         android:fontFamily="@font/tenorsans"
@@ -43,25 +43,27 @@
         app:layout_constraintBottom_toTopOf="@id/add_to_cart_button">
         
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_info"
             style="?attr/materialIconButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textAllCaps="false"
             android:backgroundTint="@color/yellow_white"
-            android:text="Information"
+            android:text="@string/tab_information"
             android:textColor="@color/for_small_text"
             android:textSize="15sp"
             app:cornerRadius="0dp"
             app:strokeWidth="0dp"/>
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_description"
             style="?attr/materialIconButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:backgroundTint="@color/yellow_white"
-            android:text="Description"
+            android:text="@string/tab_description"
             android:textColor="@color/for_small_text"
             android:textAllCaps="false"
             android:textSize="15sp"
@@ -69,12 +71,13 @@
             app:strokeWidth="0dp"/>
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_rating"
             style="?attr/materialIconButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:backgroundTint="@color/yellow_white"
-            android:text="Rating"
+            android:text="@string/tab_rating"
             android:textAllCaps="false"
             android:textColor="@color/for_small_text"
             android:textSize="15sp"

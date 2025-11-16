@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F4f1ec">
+    android:background="#F4f1ec"
+    android:fitsSystemWindows="true">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardSuccess"
@@ -138,6 +139,7 @@
             android:layout_height="48dp"
             android:layout_weight="1"
             android:text="SUBMIT"
+            android:textStyle="bold"
             android:textAllCaps="false"
             android:textColor="#FFFFFF"
             android:background="@color/black"
@@ -149,6 +151,7 @@
             android:layout_height="48dp"
             android:layout_weight="1"
             android:text="BACK TO HOME"
+            android:textStyle="bold"
             android:textAllCaps="false"
             android:textColor="#2D2D2D"
             android:background="@color/white"

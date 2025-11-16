@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.fashionapp.databinding.SettingsBinding
 
 class SettingFragment : Fragment() {
@@ -19,6 +20,16 @@ class SettingFragment : Fragment() {
         _binding = SettingsBinding.inflate(inflater, container, false)
         // Trả về view gốc của layout
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.backButton.setOnClickListener {
+            // Lệnh này sẽ quay lại màn hình trước đó trong Back Stack (tức là MyAccountFragment)
+            findNavController().popBackStack()
+        }
+
     }
 
     override fun onDestroyView() {

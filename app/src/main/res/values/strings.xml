@@ -19,4 +19,34 @@
     <string name="desc_back">Back</string>
     <string name="desc_selected">Selected</string>
     <string name="desc_not_selected">Not selected</string>
+    <string name="details_back_desc">Back</string>
+    <string name="add_to_cart_upper">ADD TO CART</string>
+    <string name="tab_information">Information</string>
+    <string name="tab_description">Description</string>
+    <string name="tab_rating">Rating</string>
+    <string name="sample_product_name">reversible angora cardigan</string>
+    <string name="price_format">$%1$d</string>
+    <string name="clothes_type_dress">Dress</string>
+    <string name="details_info_bullets">• Product code 4393336 \n• Shoulder bag in black color, short strips, a corset-style neckline and straps on the back.</string>
+    <string name="label_size_selection">Size selection</string>
+    <string name="label_color_selection">Color selection</string>
+    <string name="size_s">S</string>
+    <string name="size_m">M</string>
+    <string name="size_l">L</string>
+    <string name="size_xl">XL</string>
+    <string name="details2_section_composition_title">Composition</string>
+    <string name="details2_composition_upper">• Upper: 100% polyester</string>
+    <string name="details2_composition_insole">• Insole: 85% polyester, 15% polyurethane</string>
+
+    <string name="details2_section_care_instructions_title">Specific care instructions</string>
+    <string name="details2_care_instructions_leather">LEATHER: Clean with a clean, dry cloth. You can rub colourless or colour-matched waxes into the leather in a circular motion.</string>
+    <string name="details2_care_instructions_suede">SUEDE/NUBUCK/SPLIT SUEDE: Gently clean with a clean, dry cloth. You can also use a soft brush. Do not apply cream. Treat with special sprays.</string>
+    <string name="details2_care_instructions_patent">PATENT FINISH/SYNTHETIC FABRIC: Clean with a damp cloth.</string>
+
+    <string name="details2_section_care_title">Care</string>
+    <string name="details2_care_do_not_wash">• Do not wash</string>
+    <string name="details2_care_do_not_bleach">• Do not bleach</string>
+    <string name="details2_care_do_not_iron">• Do not iron</string>
+    <string name="details2_care_do_not_dry_clean">• Do not dry clean</string>
+    <string name="details2_care_do_not_tumble_dry">• Do not tumble dry</string>
 </resources>

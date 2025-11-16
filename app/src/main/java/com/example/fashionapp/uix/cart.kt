@@ -38,7 +38,7 @@ class Cart : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.cart)
+        setContentView(R.layout.cart_nothing)
 
         initViews()
         setupRecyclerView()

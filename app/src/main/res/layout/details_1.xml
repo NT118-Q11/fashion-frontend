@@ -37,10 +37,10 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
-            android:layout_marginEnd="20dp"
             android:fontFamily="@font/tenorsans"
             android:lineSpacingExtra="10dp"
             android:textColor="@color/black"
+            android:layout_marginEnd="20dp"
             android:text="• Product code 4393336 \n• Shoulder bag in black coor, short strips, a corset-style neckline and straps on the back."/>
 
     </LinearLayout>

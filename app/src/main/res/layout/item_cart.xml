@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="150dp"
+    android:padding="12dp">
+
+    <!-- Ảnh sản phẩm -->
+    <ImageView
+        android:id="@+id/img_product"
+        android:layout_width="100dp"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/sample_woman" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:paddingStart="12dp"
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="LAMEREI"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="#000"
+            android:fontFamily="@font/tenorsans" />
+
+        <TextView
+            android:id="@+id/tv_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Recycle Boucle Knit Cardigan Pink"
+            android:fontFamily="@font/tenorsans"
+            android:textSize="14sp"
+            android:textColor="#666" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:paddingTop="8dp">
+
+            <ImageView
+                android:id="@+id/btn_minus"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:src="@drawable/ic_minus"
+                app:tint="#000" />
+
+            <TextView
+                android:id="@+id/tv_quantity"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:text="1"
+                android:fontFamily="@font/tenorsans"
+                android:gravity="center"
+                android:textSize="14sp"/>
+
+            <ImageView
+                android:id="@+id/btn_plus"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:src="@drawable/ic_plus"
+                app:tint="#000" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="$120"
+            android:textSize="16dp"
+            android:layout_marginTop="40dp"
+            android:fontFamily="@font/tenorsans"
+            android:textColor="#C67A5C"
+            android:textStyle="bold"
+            android:paddingTop="4dp"/>
+    </LinearLayout>
+
+    <!-- Remove button -->
+    <ImageView
+        android:id="@+id/btn_remove"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/ic_close"
+        android:layout_gravity="top"
+        app:tint="#000" />
+</LinearLayout>

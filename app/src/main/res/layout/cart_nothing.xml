@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F4F1EC"
+    tools:context=".uix.Cart">
+
+    <!-- Main Content Container -->
+    <LinearLayout
+        android:id="@+id/mainContentLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/white"
+        android:layout_above="@+id/black_nav_bar">
+
+        <!-- Header -->
+        <RelativeLayout
+            android:id="@+id/headerLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="24dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/tenorsans"
+                    android:layout_marginTop="20dp"
+                    android:text="CART"
+                    android:textSize="18sp"
+                    android:letterSpacing="0.3"
+                    android:textColor="@color/black" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <!-- Empty Cart State -->
+        <LinearLayout
+            android:id="@+id/emptyCartLayout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="32dp"
+            android:visibility="visible">
+
+            <FrameLayout
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_gravity="center">
+
+                <ImageView
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_gravity="center"
+                    android:backgroundTint="@color/white"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/glass" />
+
+            </FrameLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/tenorsans"
+                android:text="YOU HAVE NOTHING IN CART!"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:letterSpacing="0.05"
+                android:layout_marginTop="32dp"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:fontFamily="@font/tenorsans"
+                android:gravity="center"
+                android:text="Please continue shopping to see your\nproducts here!"
+                android:textColor="@color/gray"
+                android:textSize="13sp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnShoppingNow"
+                android:layout_width="220dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="48dp"
+                android:fontFamily="@font/tenorsans"
+                android:text="SHOPPING NOW"
+                android:textSize="14sp"
+                android:letterSpacing="0.05"
+                android:textColor="@color/white"
+                app:backgroundTint="@color/black"
+                app:cornerRadius="0dp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- 🔻 Black Navigation Bar at Bottom -->
+    <LinearLayout
+        android:id="@+id/black_nav_bar"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:orientation="horizontal"
+        android:background="#000000"
+        android:gravity="center"
+        android:padding="8dp"
+        android:layout_alignParentBottom="true">
+
+        <!-- Home -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+            <ImageView
+                android:id="@+id/nav_home"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                app:srcCompat="@drawable/ic_home"
+                app:tint="#FFFFFF"/>
+        </LinearLayout>
+
+        <!-- Notification -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+            <ImageView
+                android:id="@+id/nav_notification"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                app:srcCompat="@drawable/ic_notifications"
+                app:tint="#FFFFFF"/>
+        </LinearLayout>
+
+        <!-- Cart -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+            <ImageView
+                android:id="@+id/nav_cart"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                app:srcCompat="@drawable/ic_shopping_bag"
+                app:tint="#FFFFFF"/>
+        </LinearLayout>
+
+        <!-- Account -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+            <ImageView
+                android:id="@+id/nav_account"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                app:srcCompat="@drawable/ic_person"
+                app:tint="#FFFFFF"/>
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

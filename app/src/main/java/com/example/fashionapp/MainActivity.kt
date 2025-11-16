@@ -2,20 +2,20 @@ package com.example.fashionapp
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.example.fashionapp.adapter.ImageSliderAdapter
 import com.example.fashionapp.databinding.ActivityMainBinding
-import com.example.fashionapp.databinding.DetailsBinding
-import com.google.android.material.tabs.TabLayoutMediator
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityMainBinding // THAY ĐỔI
-
+    private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // Inflate layout của Activity và thiết lập content view
-        binding = ActivityMainBinding.inflate(layoutInflater) // THAY ĐỔI
-        setContentView(binding.root)
 
+        // Dòng này sẽ "thổi phồng" layout activity_main.xml
+        binding = ActivityMainBinding.inflate(layoutInflater)
+
+        // Dòng này thiết lập view cho Activity.
+        // Sau bước này, FragmentContainerView sẽ được tạo ra và
+        // tự động hiển thị Fragment khởi đầu (start destination) từ nav_graph.
+        setContentView(binding.root)
     }
 }

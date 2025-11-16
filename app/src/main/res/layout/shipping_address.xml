@@ -147,7 +147,7 @@
             android:layout_weight="1"
             android:backgroundTint="@color/black"
             android:contentDescription="Home"
-            app:icon="@drawable/home_normal"
+            app:icon="@drawable/ic_home"
             app:iconGravity="textStart"
             app:iconSize="28dp"
             app:tint="@color/white" />
@@ -159,7 +159,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            app:icon="@drawable/notification_normal"
+            app:icon="@drawable/ic_notifications"
             app:iconSize="28dp"
             app:tint="@color/white"
             app:iconGravity="textStart"
@@ -174,7 +174,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             app:iconTint="@color/white"
-            app:icon="@drawable/cart_normal"
+            app:icon="@drawable/ic_shopping_bag"
             app:iconSize="28dp"
             app:iconGravity="textStart"
             android:contentDescription="Cart" />
@@ -188,7 +188,7 @@
             android:layout_weight="1"
             android:backgroundTint="@color/black"
             android:contentDescription="Profile"
-            app:icon="@drawable/account_click"
+            app:icon="@drawable/ic_person"
             app:iconGravity="textStart"
             app:iconSize="30dp"
             app:tint="@color/white" />

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph.xml"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/myAccountFragment">
+
+    <fragment
+        android:id="@+id/myAccountFragment"
+        android:name="com.example.fashionapp.uix.MyAccountFragment"
+        android:label="My Account"
+        tools:layout="@layout/my_account">
+
+        <action
+            android:id="@+id/action_myAccountFragment_to_settingFragment"
+            app:destination="@id/settingFragment" />
+        <action
+            android:id="@+id/action_myAccountFragment_to_changePasswordFragment"
+            app:destination="@id/changePasswordFragment" />
+        <action
+            android:id="@+id/action_myAccountFragment_to_shippingAddressFragment"
+            app:destination="@id/shippingAddressFragment" />
+        <action
+            android:id="@+id/action_myAccountFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/settingFragment"
+        android:name="com.example.fashionapp.uix.SettingFragment"
+        android:label="Setting"
+        tools:layout="@layout/settings">
+    </fragment>
+
+    <fragment
+        android:id="@+id/changePasswordFragment"
+        android:name="com.example.fashionapp.uix.ChangePasswordFragment"
+        android:label="Change Password"
+        tools:layout="@layout/change_password" />
+    <fragment
+        android:id="@+id/shippingAddressFragment"
+        android:name="com.example.fashionapp.uix.ShippingAddressFragment"
+        android:label="Shipping Address"
+        tools:layout="@layout/shipping_address" />
+
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.fashionapp.uix.ProfileFragment"
+        android:label="Profile"
+        tools:layout="@layout/profile" />
+
+</navigation>

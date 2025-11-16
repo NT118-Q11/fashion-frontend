@@ -12,11 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FashionApp">
         <activity
-<<<<<<< HEAD
-            android:name=".uix.WelcomeActivity"
-=======
             android:name=".MainActivity"
->>>>>>> main
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.FashionApp">
@@ -26,20 +22,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-<<<<<<< HEAD
-
-        <!-- Các Activity khác -->
-        <activity android:name=".uix.SignInActivity" />
-        <activity android:name=".uix.RegisterActivity" />
-        <activity android:name=".uix.HomeActivity"/>
-        <activity android:name=".uix.NotificationActivity"/>
-        <activity android:name=".uix.MyFavoritesActivity" />
-
-
-
-
-=======
->>>>>>> main
     </application>
 
 </manifest>

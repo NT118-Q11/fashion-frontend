@@ -40,7 +40,9 @@ class DetailsFragment: Fragment() {
         }.attach()
 
         // Back arrow
-        binding.imageButton1.setOnClickListener { findNavController().navigateUp() }
+        binding.imageButton1.setOnClickListener {
+            findNavController().popBackStack()
+        }
 
         // Bottom buttons -> navigate to details_1 / details_2 / details_3
         binding.root.findViewById<View>(R.id.btn_info)?.setOnClickListener {

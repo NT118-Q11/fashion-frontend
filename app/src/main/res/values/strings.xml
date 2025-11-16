@@ -19,4 +19,19 @@
     <string name="desc_back">Back</string>
     <string name="desc_selected">Selected</string>
     <string name="desc_not_selected">Not selected</string>
+    <string name="details_back_desc">Back</string>
+    <string name="add_to_cart_upper">ADD TO CART</string>
+    <string name="tab_information">Information</string>
+    <string name="tab_description">Description</string>
+    <string name="tab_rating">Rating</string>
+    <string name="sample_product_name">reversible angora cardigan</string>
+    <string name="price_format">$%1$d</string>
+    <string name="clothes_type_dress">Dress</string>
+    <string name="details_info_bullets">• Product code 4393336 \n• Shoulder bag in black color, short strips, a corset-style neckline and straps on the back.</string>
+    <string name="label_size_selection">Size selection</string>
+    <string name="label_color_selection">Color selection</string>
+    <string name="size_s">S</string>
+    <string name="size_m">M</string>
+    <string name="size_l">L</string>
+    <string name="size_xl">XL</string>
 </resources>

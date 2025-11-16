@@ -9,6 +9,7 @@ import com.example.fashionapp.R
 import com.example.fashionapp.adapter.ImageSliderAdapter
 import com.example.fashionapp.databinding.DetailsBinding
 import com.google.android.material.tabs.TabLayoutMediator
+import androidx.navigation.fragment.findNavController
 
 class DetailsFragment: Fragment() {
     private var _binding: DetailsBinding? = null
@@ -35,11 +36,22 @@ class DetailsFragment: Fragment() {
         binding.viewPagerMain.adapter = adapter
 
         TabLayoutMediator(binding.tabLayoutMain, binding.viewPagerMain) { tab, position ->
-            // tùy chỉnh tab nếu cần
+            // No-op
         }.attach()
 
-        // Lắng nghe dữ liệu từ ViewModel nếu cần:
-        // viewModel.someLiveData.observe(viewLifecycleOwner) { ... }
+        // Back arrow
+        binding.imageButton1.setOnClickListener { findNavController().navigateUp() }
+
+        // Bottom buttons -> navigate to details_1 / details_2 / details_3
+        binding.root.findViewById<View>(R.id.btn_info)?.setOnClickListener {
+            findNavController().navigate(R.id.action_detailsFragment_to_details1Fragment)
+        }
+        binding.root.findViewById<View>(R.id.btn_description)?.setOnClickListener {
+            findNavController().navigate(R.id.action_detailsFragment_to_details2Fragment)
+        }
+        binding.root.findViewById<View>(R.id.btn_rating)?.setOnClickListener {
+            findNavController().navigate(R.id.action_detailsFragment_to_details3Fragment)
+        }
     }
 
     override fun onDestroyView() {

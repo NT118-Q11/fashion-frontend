@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:background="#F4f1ec">
 
+
     <!-- Title -->
     <TextView
         android:id="@+id/tvNotificationTitle"

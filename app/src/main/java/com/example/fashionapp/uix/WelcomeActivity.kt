@@ -1,11 +1,29 @@
-package com.example.fashionapp
+package com.example.fashionapp.uix
 
 import android.content.Intent
-import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import android.widget.Button
+import android.os.Bundle
+import com.example.fashionapp.R
+import com.google.android.material.button.MaterialButton
 
 class WelcomeActivity : AppCompatActivity() {
+<<<<<<< HEAD
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_welcome)
+
+        val btnSignIn = findViewById<MaterialButton>(R.id.button_sign_in)
+        val btnRegister = findViewById<MaterialButton>(R.id.button_sign_up)
+
+        btnSignIn.setOnClickListener {
+            startActivity(Intent(this, SignInActivity::class.java))
+        }
+
+        btnRegister.setOnClickListener {
+            startActivity(Intent(this, RegisterActivity::class.java))
+        }
+    }
+=======
 //    override fun onCreate(savedInstanceState: Bundle?) {
 //        super.onCreate(savedInstanceState)
 //        setContentView(R.layout.activity_welcome)
@@ -21,4 +39,5 @@ class WelcomeActivity : AppCompatActivity() {
 //            startActivity(Intent(this, RegisterActivity::class.java))
 //        }
 //    }
+>>>>>>> main
 }

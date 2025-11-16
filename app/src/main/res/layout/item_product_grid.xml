@@ -7,4 +7,68 @@
     android:layout_margin="6dp"
     app:cardCornerRadius="8dp"
     app:cardElevation="2dp">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        android:padding="8dp">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="#F7F4F1">
+
+            <ImageView
+                android:id="@+id/img_product"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/sample_woman" />
+
+            <ImageView
+                android:id="@+id/iv_like"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_margin="1dp"
+                android:padding="3dp"
+                android:layout_gravity="top|end"
+                app:srcCompat="@drawable/ic_favorite_filled"
+                app:tint="#E07A5F" />
+
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/tv_product_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="LAMEREI"
+            android:fontFamily="@font/tenorsans"
+            android:textStyle="bold"
+            android:textColor="#000"
+            android:textSize="14sp"
+            android:layout_marginTop="6dp" />
+
+        <TextView
+            android:id="@+id/tv_product_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="reversible angora cardigan"
+            android:fontFamily="@font/tenorsans"
+            android:textSize="15sp"
+            android:textColor="#666" />
+
+        <TextView
+            android:id="@+id/tv_product_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="$120"
+            android:fontFamily="@font/tenorsans"
+            android:textColor="#D47A52"
+            android:textSize="15sp"
+            android:layout_marginTop="4dp" />
+
+    </LinearLayout>
+
 </androidx.cardview.widget.CardView>

@@ -1,9 +1,9 @@
-package com.example.fashionapp
+package com.example.fashionapp.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.fashionapp.databinding.ItemImageSliderBinding // Import lớp binding được tạo tự động
+import com.example.fashionapp.databinding.ItemImageSliderBinding
 
 class ImageSliderAdapter(private val images: List<Int>) :
     RecyclerView.Adapter<ImageSliderAdapter.ViewHolder>() {

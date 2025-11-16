@@ -55,6 +55,7 @@
             android:orientation="vertical"
             android:gravity="center"
             android:clickable="true"
+            android:id="@+id/setting_button"
             android:layout_marginTop="30dp">
 
             <androidx.appcompat.widget.AppCompatImageView
@@ -85,6 +86,7 @@
             android:orientation="vertical"
             android:gravity="center"
             android:clickable="true"
+            android:id="@+id/profile_button"
             android:layout_marginTop="30dp">
 
             <androidx.appcompat.widget.AppCompatImageView
@@ -115,6 +117,7 @@
             android:orientation="vertical"
             android:gravity="center"
             android:clickable="true"
+            android:id="@+id/password_button"
             android:layout_marginTop="10dp">
 
             <androidx.appcompat.widget.AppCompatImageView
@@ -145,6 +148,7 @@
             android:orientation="vertical"
             android:gravity="center"
             android:clickable="true"
+            android:id="@+id/address_button"
             android:layout_marginTop="10dp">
 
             <androidx.appcompat.widget.AppCompatImageView

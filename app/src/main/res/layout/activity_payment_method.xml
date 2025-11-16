@@ -1,88 +1,292 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="#F4f1ec">
+
+    <!-- Back button -->
+    <ImageView
+        android:id="@+id/pm_btnBack"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="18dp"
+        app:srcCompat="@drawable/ic_arrow_back"
+        app:tint="#000"
+        android:contentDescription="@string/desc_back"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <!-- Title -->
+    <TextView
+        android:id="@+id/pm_tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="PAYMENT METHOD"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:fontFamily="@font/tenorsans"
+        android:layout_marginTop="50dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <!-- CREDIT / DEBIT CARD -->
+    <ImageView
+        android:id="@+id/pm_btnPlus"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_plus"
+        app:tint="#000" />
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/btnDonePayment"
-        android:orientation="vertical">
+        android:id="@+id/btnCard"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/box_border"
+        android:gravity="center_vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/pm_tvTitle">
 
-        <!-- Header -->
-        <RelativeLayout
-            android:layout_width="match_parent"
+        <ImageView
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:src="@drawable/ic_card"
+            app:tint="#000" />
+
+        <LinearLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:padding="16dp"
-            android:background="@color/white">
-
-            <ImageView
-                android:id="@+id/btnBackPayment"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_alignParentStart="true"
-                android:layout_centerVertical="true"
-                android:src="@android:drawable/ic_menu_revert"
-                android:tint="@color/black"
-                android:padding="8dp"
-                android:clickable="true"
-                android:focusable="true"
-                android:importantForAccessibility="no" />
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginStart="12dp">
 
             <TextView
+                android:id="@+id/tv_card_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:text="PAYMENT METHOD"
-                android:textSize="16sp"
-                android:letterSpacing="0.1"
-                android:textColor="@color/black" />
+                android:text="Credit / Debit Card"
+                android:textSize="20sp"
+                android:fontFamily="@font/tenorsans"
+                android:textColor="#000"/>
 
-            <ImageView
-                android:id="@+id/btnAddPayment"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:src="@android:drawable/ic_input_add"
-                android:tint="@color/black"
-                android:padding="8dp"
-                android:clickable="true"
-                android:focusable="true"
-                android:importantForAccessibility="no" />
+            <TextView
+                android:id="@+id/tv_card_sub"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="**** **** **** 2187"
+                android:textSize="13sp"
+                android:textColor="#777"
+                android:layout_marginTop="6dp"/>
+        </LinearLayout>
 
-        </RelativeLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/gray"
-            android:alpha="0.2" />
-
-        <!-- Payment Methods List -->
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerPaymentMethods"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="16dp" />
-
+        <ImageView
+            android:id="@+id/iconCheckCard"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:src="@drawable/ic_check"
+            app:tint="#000" />
     </LinearLayout>
 
-    <!-- Done Button -->
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnDonePayment"
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:layout_alignParentBottom="true"
-        android:text="DONE"
-        android:textSize="14sp"
-        android:letterSpacing="0.1"
-        android:textColor="@color/white"
-        app:backgroundTint="@color/black"
-        app:cornerRadius="0dp" />
+    <!-- CASH ON DELIVERY -->
+    <LinearLayout
+        android:id="@+id/btnCOD"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/box_border"
+        android:gravity="center_vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnCard">
 
-</RelativeLayout>
+        <ImageView
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:src="@drawable/ic_cod"
+            app:tint="#000" />
 
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginStart="12dp">
 
+            <TextView
+                android:id="@+id/tv_cod_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cash on Delivery"
+                android:textSize="20sp"
+                android:fontFamily="@font/tenorsans"
+                android:textColor="#000"/>
+
+            <TextView
+                android:id="@+id/tv_cod_sub"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pay when product arrives"
+                android:textSize="13sp"
+                android:textColor="#777"
+                android:layout_marginTop="6dp"/>
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/iconCheckCOD"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:src="@drawable/ic_check"
+            app:tint="@android:color/transparent" />
+    </LinearLayout>
+
+    <!-- PAYPAL -->
+    <LinearLayout
+        android:id="@+id/btnPaypal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/box_border"
+        android:gravity="center_vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnCOD">
+
+        <ImageView
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:src="@drawable/ic_paypal"
+            app:tint="#000" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginStart="12dp">
+
+            <TextView
+                android:id="@+id/tv_paypal_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="PayPal"
+                android:textSize="20sp"
+                android:fontFamily="@font/tenorsans"
+                android:textColor="#000"/>
+
+            <TextView
+                android:id="@+id/tv_paypal_sub"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="example@email.com"
+                android:textSize="13sp"
+                android:textColor="#777"
+                android:layout_marginTop="6dp"/>
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/iconCheckPaypal"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:src="@drawable/ic_check"
+            app:tint="@android:color/transparent" />
+    </LinearLayout>
+
+    <!-- MOMO -->
+    <LinearLayout
+        android:id="@+id/btnMomo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/box_border"
+        android:gravity="center_vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnPaypal">
+
+        <ImageView
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:src="@drawable/ic_momo"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginStart="12dp">
+
+            <TextView
+                android:id="@+id/tv_momo_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="MoMo Wallet"
+                android:textSize="20sp"
+                android:fontFamily="@font/tenorsans"
+                android:textColor="#000"/>
+
+            <TextView
+                android:id="@+id/tv_momo_sub"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="momo_username"
+                android:textSize="13sp"
+                android:textColor="#777"
+                android:layout_marginTop="6dp"/>
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/iconCheckMomo"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:src="@drawable/ic_check"
+            app:tint="@android:color/transparent" />
+    </LinearLayout>
+
+    <!-- DONE -->
+    <LinearLayout
+        android:id="@+id/btnDone"
+        android:layout_width="0dp"
+        android:layout_height="64dp"
+        android:background="#000000"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="DONE"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:fontFamily="@font/tenorsans"/>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

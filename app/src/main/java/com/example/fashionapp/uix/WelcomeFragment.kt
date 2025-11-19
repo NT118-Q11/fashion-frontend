@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.fashionapp.R
 import androidx.navigation.fragment.findNavController
-import com.example.fashionapp.databinding.ActivityDeliveryMethodBinding
 import com.example.fashionapp.databinding.ActivityWelcomeBinding
 
 class WelcomeFragment : Fragment() {

@@ -10,8 +10,11 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import android.widget.TextView
+import com.example.fashionapp.databinding.ActivitySearchViewBinding
 
 class ActivitySearchViewFragment : Fragment() {
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
@@ -22,6 +25,22 @@ class ActivitySearchViewFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         view.findViewById<View>(R.id.btn_back)?.setOnClickListener { findNavController().navigateUp() }
         view.findViewById<View>(R.id.btn_close)?.setOnClickListener { /* no-op */ }
+        view.findViewById<View>(R.id.navHome)?.setOnClickListener {
+            findNavController().navigate(R.id.action_activitySearchViewFragment_to_homeFragment)
+        }
+
+        view.findViewById<View>(R.id.navProfile)?.setOnClickListener {
+            findNavController().navigate(R.id.action_activitySearchViewFragment_to_myAccountFragment)
+        }
+
+        view.findViewById<View>(R.id.navCart)?.setOnClickListener {
+            findNavController().navigate(R.id.action_activitySearchViewFragment_to_cartFragment)
+        }
+
+        view.findViewById<View>(R.id.navNotifications)?.setOnClickListener {
+            findNavController().navigate(R.id.action_activitySearchViewFragment_to_notificationFragment)
+        }
+
 
         val recycler = view.findViewById<RecyclerView>(R.id.rcv_search_results)
         recycler.layoutManager = GridLayoutManager(requireContext(), 2)
@@ -62,5 +81,8 @@ class ActivitySearchViewFragment : Fragment() {
         }
 
         override fun getItemCount(): Int = items.size
+
+
     }
+
 }

@@ -3,7 +3,127 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph"
     xmlns:tools="http://schemas.android.com/tools"
-    app:startDestination="@id/myAccountFragment">
+    app:startDestination="@id/welcomeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.fashionapp.uix.HomeFragment"
+        android:label="Home"
+        tools:layout="@layout/activity_home">
+
+        <action
+            android:id="@+id/action_homeFragment_to_myAccountFragment"
+            app:destination="@id/myAccountFragment" />
+
+        <action
+            android:id="@+id/action_homeFragment_to_cartFragment"
+            app:destination="@id/cartFragment"/>
+
+        <action
+            android:id="@+id/NotificationFragment"
+            app:destination="@id/NotificationFragment" />
+
+        <action
+            android:id="@+id/action_homeFragment_to_MyFavoritesFragment"
+            app:destination="@id/MyFavoritesFragment" />
+
+        <action
+            android:id="@+id/action_homeFragment_to_activitySearchFragment"
+            app:destination="@id/activitySearchFragment" />
+
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/MyFavoritesFragment"
+        android:name="com.example.fashionapp.uix.MyFavoritesFragment"
+        android:label="Favorites"
+        tools:layout="@layout/activity_my_favorites">
+
+        <action
+            android:id="@+id/action_MyFavoritesFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+
+        <action
+            android:id="@+id/action_MyFavoritesFragment_to_myAccountFragment"
+            app:destination="@id/myAccountFragment" />
+
+        <action
+            android:id="@+id/action_MyFavoritesFragment_to_cartFragment"
+            app:destination="@id/cartFragment" />
+
+        <action
+            android:id="@+id/action_MyFavoritesFragment_to_notificationFragment"
+            app:destination="@id/NotificationFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/NotificationFragment"
+        android:name="com.example.fashionapp.uix.NotificationsFragment"
+        android:label="Notifications"
+        tools:layout="@layout/activity_notification">
+
+        <action
+            android:id="@+id/action_NotificationFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+
+        <action
+            android:id="@+id/action_NotificationFragment_to_myAccountFragment"
+            app:destination="@id/myAccountFragment" />
+
+        <action
+            android:id="@+id/action_NotificationFragment_to_cartFragment"
+            app:destination="@id/cartFragment" />
+
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/welcomeFragment"
+        android:name="com.example.fashionapp.uix.WelcomeFragment"
+        android:label="Welcome"
+        tools:layout="@layout/activity_welcome">
+        <action
+            android:id="@+id/action_welcomeFragment_to_signInFragment"
+            app:destination="@id/signInFragment" />
+
+        <action
+            android:id="@+id/action_welcomeFragment_to_registerFragment"
+            app:destination="@id/registerFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/signInFragment"
+        android:name="com.example.fashionapp.uix.SignInFragment"
+        android:label="Sign In"
+        tools:layout="@layout/activity_sign_in">
+
+        <action
+            android:id="@+id/action_signInFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+
+        <action
+            android:id="@+id/action_signInFragment_to_registerFragment"
+            app:destination="@id/registerFragment" />
+
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="com.example.fashionapp.uix.RegisterFragment"
+        android:label="Register"
+        tools:layout="@layout/activity_register">
+
+        <action
+            android:id="@+id/action_registerFragment_to_signInFragment"
+            app:destination="@id/signInFragment" />
+
+    </fragment>
+
+
 
     <fragment
         android:id="@+id/myAccountFragment"
@@ -24,6 +144,103 @@
             android:id="@+id/action_myAccountFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
 
+        <action
+            android:id="@+id/action_myAccountFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+
+        <action
+            android:id="@+id/action_myAccountFragment_to_cartFragment"
+            app:destination="@id/cartFragment"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/cartFragment"
+        android:name="com.example.fashionapp.uix.CartFragment"
+        android:label="Cart"
+        tools:layout="@layout/activity_cart">
+
+        <action
+            android:id="@+id/action_cartFragment_to_checkoutFragment"
+            app:destination="@id/checkoutFragment" />
+
+        <action
+            android:id="@+id/action_cartFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+
+        <action
+            android:id="@+id/action_cartFragment_to_myAccountFragment"
+            app:destination="@id/myAccountFragment" />
+
+        <action
+            android:id="@+id/action_cartFragment_to_notificationFragment"
+            app:destination="@id/NotificationFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/checkoutFragment"
+        android:name="com.example.fashionapp.uix.CheckoutFragment"
+        android:label="Checkout"
+        tools:layout="@layout/activity_checkout">
+
+        <action
+            android:id="@+id/action_checkoutFragment_to_confirmFragment"
+            app:destination="@id/confirmFragment" />
+
+        <action
+            android:id="@+id/action_checkoutFragment_to_deliveryFragment"
+            app:destination="@id/deliveryFragment" />
+
+        <action
+            android:id="@+id/action_checkoutFragment_to_paymentFragment"
+            app:destination="@id/paymentFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/confirmFragment"
+        android:name="com.example.fashionapp.uix.ConfirmFragment"
+        android:label="Confirm"
+        tools:layout="@layout/activity_confirm">
+
+        <action
+            android:id="@+id/action_confirmFragment_to_paymentSuccessFragment"
+            app:destination="@id/paymentSuccessFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/deliveryFragment"
+        android:name="com.example.fashionapp.uix.DeliveryFragment"
+        android:label="Delivery"
+        tools:layout="@layout/activity_delivery_method">
+
+        <action
+            android:id="@+id/action_deliveryFragment_to_confirmFragment"
+            app:destination="@id/confirmFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/paymentFragment"
+        android:name="com.example.fashionapp.uix.PaymentMethodFragment"
+        android:label="Payment"
+        tools:layout="@layout/activity_payment_method">
+
+        <action
+            android:id="@+id/action_paymentFragment_to_confirmFragment"
+            app:destination="@id/confirmFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/paymentSuccessFragment"
+        android:name="com.example.fashionapp.uix.PaymentSuccessFragment"
+        android:label="Payment Success"
+        tools:layout="@layout/activity_payment_success">
+
+        <action
+            android:id="@+id/action_paymentSuccessFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
     </fragment>
 
     <fragment
@@ -49,5 +266,84 @@
         android:name="com.example.fashionapp.uix.ProfileFragment"
         android:label="Profile"
         tools:layout="@layout/profile" />
+
+    <!-- Added: Search -> Search View -> Details -> Details 1 -> Details 2 -> Details 3 flow -->
+    <fragment
+        android:id="@+id/activitySearchFragment"
+        android:name="com.example.fashionapp.uix.ActivitySearchFragment"
+        android:label="Search"
+        tools:layout="@layout/activity_search">
+        <action
+            android:id="@+id/action_activitySearchFragment_to_activitySearchViewFragment"
+            app:destination="@id/activitySearchViewFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/activitySearchViewFragment"
+        android:name="com.example.fashionapp.uix.ActivitySearchViewFragment"
+        android:label="Search View"
+        tools:layout="@layout/activity_search_view">
+        <action
+            android:id="@+id/action_activitySearchViewFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
+
+        <action
+            android:id="@+id/action_activitySearchViewFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+
+        <action
+            android:id="@+id/action_activitySearchViewFragment_to_myAccountFragment"
+            app:destination="@id/myAccountFragment" />
+
+        <action
+            android:id="@+id/action_activitySearchViewFragment_to_cartFragment"
+            app:destination="@id/cartFragment" />
+
+        <action
+            android:id="@+id/action_activitySearchViewFragment_to_notificationFragment"
+            app:destination="@id/NotificationFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/detailsFragment"
+        android:name="com.example.fashionapp.uix.DetailsFragment"
+        android:label="Details"
+        tools:layout="@layout/details">
+        <action
+            android:id="@+id/action_detailsFragment_to_details2Fragment"
+            app:destination="@id/details2Fragment" />
+        <action
+            android:id="@+id/action_detailsFragment_to_details3Fragment"
+            app:destination="@id/details3Fragment" />
+        <action
+            android:id="@+id/action_detailsFragment_to_details1Fragment"
+            app:destination="@id/details1Fragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/details1Fragment"
+        android:name="com.example.fashionapp.uix.Details1Fragment"
+        android:label="Details 1"
+        tools:layout="@layout/details_1">
+        <action
+            android:id="@+id/action_details1Fragment_to_details2Fragment"
+            app:destination="@id/details2Fragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/details2Fragment"
+        android:name="com.example.fashionapp.uix.Details2Fragment"
+        android:label="Details 2"
+        tools:layout="@layout/details_2">
+        <action
+            android:id="@+id/action_details2Fragment_to_details3Fragment"
+            app:destination="@id/details3Fragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/details3Fragment"
+        android:name="com.example.fashionapp.uix.Details3Fragment"
+        android:label="Details 3"
+        tools:layout="@layout/details_3" />
 
 </navigation>

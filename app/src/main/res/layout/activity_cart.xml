@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="#F4F1EC">
+    android:background="#F4F1EC"
+    android:fitsSystemWindows="true">
 
     <!-- CART TITLE -->
     <TextView
@@ -94,7 +95,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="*shipping charges, taxes and discount codes are                                 calculated at the time of accounting."
+            android:text="*shipping charges, taxes and discount codes are calculated at the time of accounting."
             android:textColor="#7B7A77"
             android:textSize="14sp"
             android:fontFamily="@font/tenorsans"

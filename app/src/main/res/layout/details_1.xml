@@ -7,6 +7,22 @@
     android:fitsSystemWindows="true"
     android:background="#F4F1EC">
 
+    <ImageButton
+        android:id="@+id/btnBack"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="30dp"
+        android:background="?android:attr/selectableItemBackgroundBorderless"
+        android:backgroundTint="@color/white"
+        android:clickable="true"
+        android:contentDescription="@string/details_back_desc"
+        android:scaleType="fitCenter"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/arrow_left"
+        tools:ignore="TouchTargetSizeCheck" />
+
 
     <LinearLayout
         android:id="@+id/clothes_information"
@@ -15,17 +31,15 @@
         android:orientation="vertical"
         android:background="#F4F1EC"
         android:layout_marginTop="40dp"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnBack"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="1dp">
-        
+        app:layout_constraintEnd_toEndOf="parent">
+
         <TextView
             android:id="@+id/clothes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Dress"
+            android:text="@string/clothes_type_dress"
             android:fontFamily="@font/tenorsans"
             android:textSize="30sp"
             android:textColor="@color/black"
@@ -41,7 +55,7 @@
             android:lineSpacingExtra="10dp"
             android:textColor="@color/black"
             android:layout_marginEnd="20dp"
-            android:text="• Product code 4393336 \n• Shoulder bag in black coor, short strips, a corset-style neckline and straps on the back."/>
+            android:text="@string/details_info_bullets"/>
 
     </LinearLayout>
 
@@ -60,71 +74,82 @@
             android:layout_height="wrap_content"
             android:layout_gravity="start"
             android:textColor="@color/black"
-            android:text="Size selection"
+            android:text="@string/label_size_selection"
             android:fontFamily="@font/tenorsans"
             android:textSize="18sp"
             android:layout_marginStart="20dp"
             />
 
-        <LinearLayout
+        <com.google.android.material.button.MaterialButtonToggleGroup
+            android:id="@+id/group_sizes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
-            android:layout_marginStart="20dp">
+            android:layout_marginEnd="20dp"
+            app:singleSelection="true">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/button_s"
+                android:layout_width="0dp"
                 android:layout_height="56dp"
-                android:layout_width="56dp"
-                android:backgroundTint="@color/white"
-                android:text="S"
-                android:textColor="@color/black"
+                android:layout_weight="1"
+                android:text="@string/size_s"
                 android:fontFamily="@font/tenorsans"
                 android:textSize="18sp"
+                android:textColor="@color/black"
+                android:backgroundTint="@color/white"
+                android:singleLine="true"
+                android:gravity="center"
                 app:strokeColor="@color/black"
                 app:strokeWidth="1dp"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/button_m"
+                android:layout_width="0dp"
                 android:layout_height="56dp"
-                android:layout_width="56dp"
-                android:layout_marginStart="16dp"
-                android:backgroundTint="@color/white"
-                android:text="M"
-                android:textColor="@color/black"
+                android:layout_weight="1"
+                android:text="@string/size_m"
                 android:fontFamily="@font/tenorsans"
                 android:textSize="18sp"
+                android:textColor="@color/black"
+                android:backgroundTint="@color/white"
+                android:singleLine="true"
+                android:gravity="center"
                 app:strokeColor="@color/black"
                 app:strokeWidth="1dp"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/button_l"
+                android:layout_width="0dp"
                 android:layout_height="56dp"
-                android:layout_width="56dp"
-                android:layout_marginStart="16dp"
-                android:backgroundTint="@color/white"
-                android:text="L"
-                android:textColor="@color/black"
+                android:layout_weight="1"
+                android:text="@string/size_l"
                 android:fontFamily="@font/tenorsans"
                 android:textSize="18sp"
+                android:textColor="@color/black"
+                android:backgroundTint="@color/white"
+                android:singleLine="true"
+                android:gravity="center"
                 app:strokeColor="@color/black"
                 app:strokeWidth="1dp"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/button_xl"
+                android:layout_width="0dp"
                 android:layout_height="56dp"
-                android:layout_width="58dp"
-                android:layout_marginStart="16dp"
-                android:backgroundTint="@color/white"
-                android:text="XL"
-                android:textColor="@color/black"
+                android:layout_weight="1"
+                android:text="@string/size_xl"
                 android:fontFamily="@font/tenorsans"
                 android:textSize="18sp"
+                android:textColor="@color/black"
+                android:backgroundTint="@color/white"
+                android:singleLine="true"
+                android:gravity="center"
                 app:strokeColor="@color/black"
                 app:strokeWidth="1dp"/>
 
-        </LinearLayout>
+        </com.google.android.material.button.MaterialButtonToggleGroup>
 
     </LinearLayout>
 
@@ -139,7 +164,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Color selection"
+            android:text="@string/label_color_selection"
             android:textSize="18sp"
             android:textColor="@color/black"
             android:fontFamily="@font/tenorsans"

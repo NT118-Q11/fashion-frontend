@@ -43,6 +43,16 @@ class MyAccountFragment: Fragment() {
         binding.profileButton.setOnClickListener {
             findNavController().navigate(R.id.action_myAccountFragment_to_profileFragment)
         }
+
+        binding.navCart.setOnClickListener {
+            findNavController().navigate(R.id.action_myAccountFragment_to_cartFragment)
+        }
+
+        binding.navHome.setOnClickListener {
+            findNavController().navigate(R.id.action_myAccountFragment_to_homeFragment)
+        }
+
+
     }
 
     override fun onDestroyView() {

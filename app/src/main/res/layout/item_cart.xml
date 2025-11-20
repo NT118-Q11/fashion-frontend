@@ -3,8 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="150dp"
-    android:padding="12dp">
+    android:layout_height="wrap_content"
+    android:padding="12dp"
+    android:minHeight="150dp">
 
     <!-- Ảnh sản phẩm -->
     <ImageView
@@ -77,7 +78,7 @@
             android:layout_height="wrap_content"
             android:text="$120"
             android:textSize="16dp"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="15dp"
             android:fontFamily="@font/tenorsans"
             android:textColor="#C67A5C"
             android:textStyle="bold"

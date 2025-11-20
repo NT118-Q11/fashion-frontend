@@ -3,39 +3,35 @@ package com.example.fashionapp.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.fashionapp.uix.ConfirmFragment
-import com.example.fashionapp.databinding.ItemCartBinding
+import com.example.fashionapp.data.CartItem
+import com.example.fashionapp.databinding.ItemConfirmProductBinding
 
+class ConfirmAdapter(private val items: List<CartItem>) :
+    RecyclerView.Adapter<ConfirmAdapter.ConfirmViewHolder>() {
 
-class ConfirmAdapter(private val items: List<ConfirmFragment.CartItem>) :
-    RecyclerView.Adapter<ConfirmAdapter.CartViewHolder>() {
+    inner class ConfirmViewHolder(val binding: ItemConfirmProductBinding) :
+        RecyclerView.ViewHolder(binding.root)
 
-
-    inner class CartViewHolder(val binding: ItemCartBinding) : RecyclerView.ViewHolder(binding.root)
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CartViewHolder {
-        // Sử dụng LayoutInflater.from(parent.context) là cách thực hành tốt
-        val binding = ItemCartBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return CartViewHolder(binding)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ConfirmViewHolder {
+        val binding = ItemConfirmProductBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+            false
+        )
+        return ConfirmViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: CartViewHolder, position: Int) {
-        val currentItem = items[position]
+    override fun onBindViewHolder(holder: ConfirmViewHolder, position: Int) {
+        val item = items[position]
+
         holder.binding.apply {
-            // TODO: Cập nhật tên các view cho phù hợp với file item_cart.xml của bạn
-
-
-            tvTitle.text = currentItem.title
-            tvDesc.text = currentItem.description // Giả sử CartItem có thuộc tính description
-            tvQuantity.text = currentItem.quantity.toString()
-            tvPrice.text = "$${currentItem.price}"
-
-
+            tvProductName.text = item.title
+            tvProductDesc.text = item.description
+            tvQuantity.text = item.quantity.toString()
+            tvPrice.text = "$${String.format("%.2f", item.price)}"
+            imgProduct.setImageResource(item.imageRes)
         }
     }
 
-    override fun getItemCount(): Int {
-
-        return items.size
-    }
+    override fun getItemCount(): Int = items.size
 }

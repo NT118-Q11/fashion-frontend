@@ -1,5 +1,4 @@
 package com.example.fashionapp.adapter
-
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -25,11 +24,11 @@ class FavoritesAdapter(
     override fun onBindViewHolder(holder: FavViewHolder, position: Int) {
         val item = list[position]
 
-        holder.binding.imgProduct.setImageResource(item.imageRes)
-        holder.binding.tvProductName.text = item.title
-        holder.binding.tvProductDesc.text = item.description
-        holder.binding.tvProductPrice.text = "$${item.price}"
+        holder.binding.imgProduct.setImageResource(item.image)
+        holder.binding.tvProductName.text = item.name
+        holder.binding.tvProductDesc.text = item.desc
+        holder.binding.tvProductPrice.text = item.price
     }
 
-    override fun getItemCount() = list.size
+    override fun getItemCount(): Int = list.size
 }

@@ -1,62 +1,76 @@
 package com.example.fashionapp.adapter
 
+import android.graphics.BitmapFactory
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.fashionapp.R
 import com.example.fashionapp.data.FavoritesManager
 import com.example.fashionapp.data.Product
-import com.example.fashionapp.databinding.ItemSearchBinding
+import java.io.IOException
 
 class SearchAdapter(
-    private var products: List<Product>,
-    private val onFavoritesChanged: () -> Unit
-) : RecyclerView.Adapter<SearchAdapter.ViewHolder>() {
+    private var items: List<Product>
+) : RecyclerView.Adapter<SearchAdapter.SearchViewHolder>() {
 
-    inner class ViewHolder(val binding: ItemSearchBinding) : RecyclerView.ViewHolder(binding.root)
+    inner class SearchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val imgProduct: ImageView = itemView.findViewById(com.example.fashionapp.R.id.imgProduct)
+        val txtTitle: TextView = itemView.findViewById(com.example.fashionapp.R.id.txtTitle)
+        val txtName: TextView = itemView.findViewById(com.example.fashionapp.R.id.txtName)
+        val txtPrice: TextView = itemView.findViewById(com.example.fashionapp.R.id.txtPrice)
+        val btnFavorite: ImageButton = itemView.findViewById(com.example.fashionapp.R.id.btnFavorite)
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchViewHolder {
+        val view = LayoutInflater.from(parent.context)
+            .inflate(com.example.fashionapp.R.layout.item_search_result, parent, false)
+        return SearchViewHolder(view)
+    }
+
+    override fun onBindViewHolder(holder: SearchViewHolder, position: Int) {
+        val product = items[position]
+
+        try {
+            val am = holder.itemView.context.assets
+            am.open(product.assetImage).use { input: java.io.InputStream ->
+                val bmp = BitmapFactory.decodeStream(input)
+                holder.imgProduct.setImageBitmap(bmp)
+            }
+        } catch (e: IOException) {
+            holder.imgProduct.setImageResource(com.example.fashionapp.R.drawable.sample_woman)
+        }
+
+        holder.txtTitle.text = product.title
+        holder.txtName.text = product.description
+        holder.txtPrice.text = "$${product.price}"
+
+        updateFavoriteIcon(holder, product)
+
+        holder.btnFavorite.setOnClickListener {
+            if (FavoritesManager.isFavorite(product)) {
+                FavoritesManager.removeFromFavorites(product)
+            } else {
+                FavoritesManager.addToFavorites(product)
+            }
+            updateFavoriteIcon(holder, product)
+        }
+    }
+
+    private fun updateFavoriteIcon(holder: SearchViewHolder, product: Product) {
+        if (FavoritesManager.isFavorite(product)) {
+            holder.btnFavorite.setImageResource(com.example.fashionapp.R.drawable.ic_favorite_filled)
+        } else {
+            holder.btnFavorite.setImageResource(com.example.fashionapp.R.drawable.ic_favorite_border)
+        }
+    }
+
+    override fun getItemCount(): Int = items.size
 
     fun updateList(newList: List<Product>) {
-        products = newList
+        items = newList
         notifyDataSetChanged()
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = ItemSearchBinding.inflate(
-            LayoutInflater.from(parent.context),
-            parent,
-            false
-        )
-        return ViewHolder(binding)
-    }
-
-    override fun getItemCount() = products.size
-
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = products[position]
-
-        holder.binding.apply {
-            imgProduct.setImageResource(item.imageRes)
-            txtTitle.text = item.title
-            txtName.text = item.description
-            txtPrice.text = "$${item.price}"
-
-            val isFavorite = FavoritesManager.getFavorites().any { it.id == item.id }
-
-            btnFavorite.setImageResource(
-                if (isFavorite) R.drawable.ic_favorite_filled
-                else R.drawable.ic_favorite_border
-            )
-
-            btnFavorite.setOnClickListener {
-                if (FavoritesManager.getFavorites().any { it.id == item.id }) {
-                    FavoritesManager.removeFromFavorites(item.id)
-                    btnFavorite.setImageResource(R.drawable.ic_favorite_border)
-                } else {
-                    FavoritesManager.addToFavorites(item)
-                    btnFavorite.setImageResource(R.drawable.ic_favorite_filled)
-                }
-                onFavoritesChanged()
-            }
-        }
     }
 }

@@ -66,7 +66,7 @@ class Details3Fragment : Fragment() { // Class bắt đầu ở đây
 
     private fun getSampleRatings(): List<Rating> {
         return listOf(
-
+            // SỬA LỖI: Sử dụng lớp `Rating` bạn đã định nghĩa, không phải từ thư viện media3
             Rating("Emelia Sans", 4, "Worth the money. Highly recommend. 10/10 for comfort and looks"),
             Rating("Jane Doe", 5, "Amazing product! I love it so much."),
             Rating("John Smith", 3, "It's okay, but I expected more for the price."),

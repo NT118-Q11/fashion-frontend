@@ -1,6 +1,8 @@
 package com.example.fashionapp.uix
 
+import android.content.Intent
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.example.fashionapp.databinding.ActivityMyFavoritesBinding
 import com.example.fashionapp.model.FavoriteItem
 import com.example.fashionapp.adapter.FavoritesAdapter

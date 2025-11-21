@@ -5,8 +5,7 @@
     android:id="@+id/favorites_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F4F1EC"
-    android:fitsSystemWindows="true">
+    android:background="#F4F1EC">
 
     <!-- Back button -->
     <ImageView

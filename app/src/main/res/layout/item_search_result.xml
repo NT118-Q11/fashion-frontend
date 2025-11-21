@@ -15,6 +15,7 @@
         android:padding="10dp"
         card_view:tint="#E66A2C">
 
+        <!-- ẢNH + ICON TRÁI TIM  -->
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="200dp"

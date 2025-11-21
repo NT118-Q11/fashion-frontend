@@ -9,7 +9,8 @@ import com.example.fashionapp.R
 import androidx.navigation.fragment.findNavController
 import com.example.fashionapp.databinding.ActivitySearchBinding
 
-class ActivitySearchFragment : Fragment() {
+class SearchFragment : Fragment() {
+
     private var _binding: ActivitySearchBinding? = null
     private val binding get() = _binding!!
 
@@ -36,20 +37,8 @@ class ActivitySearchFragment : Fragment() {
             findNavController().navigate(R.id.action_activitySearchFragment_to_cartFragment)
         }
 
-        binding.navNotifications.setOnClickListener {
-            findNavController().navigate(R.id.action_activitySearchFragment_to_notificationFragment)
-        }
-
         binding.btnBack.setOnClickListener {
             findNavController().popBackStack()
-        }
-
-        binding.btnFilter.setOnClickListener {
-            findNavController().navigate(R.id.action_activitySearchFragment_to_activitySearchViewFragment)
-        }
-
-        binding.centerSearchIcon.setOnClickListener {
-            findNavController().navigate(R.id.action_activitySearchFragment_to_activitySearchViewFragment)
         }
 
     }
@@ -58,4 +47,5 @@ class ActivitySearchFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
 }

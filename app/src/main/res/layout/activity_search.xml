@@ -97,4 +97,74 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
+    <LinearLayout
+        android:id="@+id/bottomNavBar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:background="@color/black"
+        android:gravity="center"
+        android:paddingHorizontal="0dp"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <!-- Home Icon -->
+
+        <!-- Notifications Icon -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/navHome"
+            style="?attr/materialIconButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="@color/black"
+            android:contentDescription="Home"
+            app:icon="@drawable/ic_home"
+            app:iconGravity="textStart"
+            app:iconSize="28dp"
+            app:tint="@color/white" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/navNotifications"
+            android:backgroundTint="@color/black"
+            style="?attr/materialIconButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:icon="@drawable/ic_notifications"
+            app:iconSize="28dp"
+            app:tint="@color/white"
+            app:iconGravity="textStart"
+            android:contentDescription="Notifications" />
+
+        <!-- Cart Icon -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/navCart"
+            android:backgroundTint="@color/black"
+            style="?attr/materialIconButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:iconTint="@color/white"
+            app:icon="@drawable/ic_shopping_bag"
+            app:iconSize="28dp"
+            app:iconGravity="textStart"
+            android:contentDescription="Cart" />
+
+        <!-- Profile Icon -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/navProfile"
+            style="?attr/materialIconButtonStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="@color/black"
+            android:contentDescription="Profile"
+            app:icon="@drawable/ic_person"
+            app:iconGravity="textStart"
+            app:iconSize="30dp"
+            app:tint="@color/white" />
+
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

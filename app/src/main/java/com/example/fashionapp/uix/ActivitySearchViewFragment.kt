@@ -33,19 +33,28 @@ class ActivitySearchViewFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        view.findViewById<View>(R.id.btn_back)?.setOnClickListener {
-            findNavController().navigateUp()
+        // Setup navigation listeners
+        view.findViewById<View>(R.id.btn_back)?.setOnClickListener { findNavController().navigateUp() }
+        view.findViewById<View>(R.id.btn_close)?.setOnClickListener { /* no-op */ }
+        view.findViewById<View>(R.id.navHome)?.setOnClickListener {
+            findNavController().navigate(R.id.action_activitySearchViewFragment_to_homeFragment)
         }
-        view.findViewById<View>(R.id.btn_close)?.setOnClickListener {
-            // no-op
+        view.findViewById<View>(R.id.navProfile)?.setOnClickListener {
+            findNavController().navigate(R.id.action_activitySearchViewFragment_to_myAccountFragment)
+        }
+        view.findViewById<View>(R.id.navCart)?.setOnClickListener {
+            findNavController().navigate(R.id.action_activitySearchViewFragment_to_cartFragment)
+        }
+        view.findViewById<View>(R.id.navNotifications)?.setOnClickListener {
+            findNavController().navigate(R.id.action_activitySearchViewFragment_to_notificationFragment)
         }
 
+        // Initialize RecyclerView and data
         recycler = view.findViewById(R.id.rcv_search_results)
         recycler.layoutManager = GridLayoutManager(requireContext(), 2)
-
         items = List(20) { index -> getString(R.string.sample_product_name) + " #${index + 1}" }
 
-        // Khởi tạo các nút phân trang
+        // Initialize pagination controls
         pageButtons = listOf(
             view.findViewById(R.id.page_1),
             view.findViewById(R.id.page_2),
@@ -56,6 +65,7 @@ class ActivitySearchViewFragment : Fragment() {
         pagePrev = view.findViewById(R.id.page_prev)
         pageNext = view.findViewById(R.id.page_next)
 
+        // Setup pagination listeners
         pagePrev.setOnClickListener {
             if (currentPage > 1) {
                 currentPage--
@@ -64,7 +74,8 @@ class ActivitySearchViewFragment : Fragment() {
         }
 
         pageNext.setOnClickListener {
-            if (currentPage < pageButtons.size) {
+            val totalPages = (items.size + itemsPerPage - 1) / itemsPerPage
+            if (currentPage < totalPages) {
                 currentPage++
                 updatePageUI()
             }
@@ -77,10 +88,12 @@ class ActivitySearchViewFragment : Fragment() {
             }
         }
 
+        // Initial UI update for pagination and RecyclerView
         updatePageUI()
     }
 
     private fun updatePageUI() {
+        // Update pagination button styles
         pageButtons.forEachIndexed { index, button ->
             val isSelected = (index + 1) == currentPage
             button.setBackgroundResource(
@@ -91,9 +104,10 @@ class ActivitySearchViewFragment : Fragment() {
             )
         }
 
+        // Update RecyclerView with items for the current page
         val startIndex = (currentPage - 1) * itemsPerPage
         val endIndex = minOf(startIndex + itemsPerPage, items.size)
-        val pageItems = items.subList(startIndex, endIndex)
+        val pageItems = if (startIndex < items.size) items.subList(startIndex, endIndex) else emptyList()
 
         recycler.adapter = SearchResultAdapter(pageItems) {
             findNavController().navigate(R.id.action_activitySearchViewFragment_to_detailsFragment)
@@ -106,18 +120,19 @@ class ActivitySearchViewFragment : Fragment() {
     ) : RecyclerView.Adapter<SearchResultAdapter.VH>() {
 
         inner class VH(itemView: View, onClick: () -> Unit) : RecyclerView.ViewHolder(itemView) {
-            private val title: TextView? = itemView.findViewById(R.id.txtTitle)
-            private val name: TextView? = itemView.findViewById(R.id.txtName)
-            private val price: TextView? = itemView.findViewById(R.id.txtPrice)
+            // Use non-nullable views for robustness
+            private val title: TextView = itemView.findViewById(R.id.txtTitle)
+            private val name: TextView = itemView.findViewById(R.id.txtName)
+            private val price: TextView = itemView.findViewById(R.id.txtPrice)
 
             init {
                 itemView.setOnClickListener { onClick() }
             }
 
             fun bind(text: String) {
-                title?.text = text
-                name?.text = getString(R.string.sample_product_name)
-                price?.text = getString(R.string.price_format, 120)
+                title.text = text
+                name.text = getString(R.string.sample_product_name)
+                price.text = getString(R.string.price_format, 120)
             }
         }
 

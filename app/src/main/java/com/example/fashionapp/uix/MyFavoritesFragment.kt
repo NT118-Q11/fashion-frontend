@@ -1,21 +1,31 @@
 package com.example.fashionapp.uix
 
-import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import com.example.fashionapp.databinding.ActivityMyFavoritesBinding
-import com.example.fashionapp.model.FavoriteItem
-import com.example.fashionapp.adapter.FavoritesAdapter
-import com.example.fashionapp.R
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
+import com.example.fashionapp.R
+import com.example.fashionapp.adapter.FavoritesAdapter
+import com.example.fashionapp.databinding.ActivityMyFavoritesBinding
+import com.example.fashionapp.model.FavoriteItem
 
 class MyFavoritesFragment : Fragment() {
     private var _binding: ActivityMyFavoritesBinding? = null
     private val binding get() = _binding!!
+
+    private lateinit var pageButtons: List<TextView>
+    private lateinit var pagePrev: ImageView
+    private lateinit var pageNext: ImageView
+
+    private var currentPage = 1
+    private val itemsPerPage = 4
+    private lateinit var allItems: List<FavoriteItem>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,15 +38,64 @@ class MyFavoritesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val items = listOf(
+        allItems = listOf(
+            FavoriteItem("LAMEREI", "reversible angora cardigan", "$120", R.drawable.sample_woman),
+            FavoriteItem("FENDI", "cotton jacket", "$210", R.drawable.sample_woman),
+            FavoriteItem("CHANEL", "classic coat", "$350", R.drawable.sample_woman),
+            FavoriteItem("GUCCI", "wool blazer", "$280", R.drawable.sample_woman),
+            FavoriteItem("PRADA", "silk blouse", "$190", R.drawable.sample_woman),
+            FavoriteItem("DIOR", "leather boots", "$320", R.drawable.sample_woman),
+            FavoriteItem("MIU MIU", "pleated skirt", "$150", R.drawable.sample_woman),
+            FavoriteItem("BURBERRY", "trench coat", "$400", R.drawable.sample_woman) ,
+            FavoriteItem("LAMEREI", "reversible angora cardigan", "$120", R.drawable.sample_woman),
+        FavoriteItem("FENDI", "cotton jacket", "$210", R.drawable.sample_woman),
+        FavoriteItem("CHANEL", "classic coat", "$350", R.drawable.sample_woman),
+        FavoriteItem("GUCCI", "wool blazer", "$280", R.drawable.sample_woman),
+        FavoriteItem("PRADA", "silk blouse", "$190", R.drawable.sample_woman),
+        FavoriteItem("DIOR", "leather boots", "$320", R.drawable.sample_woman),
+        FavoriteItem("MIU MIU", "pleated skirt", "$150", R.drawable.sample_woman),
+        FavoriteItem("BURBERRY", "trench coat", "$400", R.drawable.sample_woman),
+            FavoriteItem("BURBERRY", "trench coat", "$400", R.drawable.sample_woman) ,
             FavoriteItem("LAMEREI", "reversible angora cardigan", "$120", R.drawable.sample_woman),
             FavoriteItem("FENDI", "cotton jacket", "$210", R.drawable.sample_woman),
             FavoriteItem("CHANEL", "classic coat", "$350", R.drawable.sample_woman),
         )
 
-        binding.rvFavorites.adapter = FavoritesAdapter(items)
+        binding.rvFavorites.layoutManager = GridLayoutManager(requireContext(), 2)
 
-        // Quay lại
+        pageButtons = listOf(
+            binding.page1,
+            binding.page2,
+            binding.page3,
+            binding.page4,
+            binding.page5
+        )
+        pagePrev = binding.pagePrev
+        pageNext = binding.pageNext
+
+        pagePrev.setOnClickListener {
+            if (currentPage > 1) {
+                currentPage--
+                updatePageUI()
+            }
+        }
+
+        pageNext.setOnClickListener {
+            if (currentPage < pageButtons.size) {
+                currentPage++
+                updatePageUI()
+            }
+        }
+
+        pageButtons.forEachIndexed { index, button ->
+            button.setOnClickListener {
+                currentPage = index + 1
+                updatePageUI()
+            }
+        }
+
+        updatePageUI()
+
         binding.ivBack.setOnClickListener {
             findNavController().popBackStack()
         }
@@ -56,13 +115,28 @@ class MyFavoritesFragment : Fragment() {
         binding.navHome.setOnClickListener {
             findNavController().navigate(R.id.action_MyFavoritesFragment_to_homeFragment)
         }
+    }
 
+    private fun updatePageUI() {
+        pageButtons.forEachIndexed { index, button ->
+            val isSelected = (index + 1) == currentPage
+            button.setBackgroundResource(
+                if (isSelected) R.drawable.page_selected_bg else R.drawable.page_unselected_bg
+            )
+            button.setTextColor(
+                if (isSelected) Color.WHITE else Color.BLACK
+            )
+        }
+
+        val startIndex = (currentPage - 1) * itemsPerPage
+        val endIndex = minOf(startIndex + itemsPerPage, allItems.size)
+        val pageItems = allItems.subList(startIndex, endIndex)
+
+        binding.rvFavorites.adapter = FavoritesAdapter(pageItems)
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        // Dọn dẹp binding để tránh rò rỉ bộ nhớ
         _binding = null
     }
-
 }

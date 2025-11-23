@@ -4,27 +4,137 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/noive_background">
+    android:clipChildren="false"
+    android:clipToPadding="false">
 
-
-    <TextView
-        android:id="@+id/welcome_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="100dp"
-        android:fontFamily="@font/tenorsans"
-        android:text="WELCOME"
-        android:textAlignment="center"
-        android:textColor="@color/black"
-        android:textSize="34sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/button_sign_in"
+    <VideoView
+        android:id="@+id/backgroundVideo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:keepScreenOn="true"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.0" />
 
+    <LinearLayout
+        android:id="@+id/logo_noive"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="104dp"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.033"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:paddingStart="24dp">
+
+            <!-- Lớp stroke đen -->
+            <TextView
+                android:id="@+id/tvNStroke"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/greatvibes"
+                android:includeFontPadding="false"
+                android:shadowColor="#80000000"
+                android:shadowDx="3"
+                android:shadowDy="4"
+                android:shadowRadius="8"
+                android:text="N"
+                android:textColor="#000000"
+                android:textSize="64sp" />
+
+            <!-- Lớp chữ trắng -->
+            <TextView
+                android:id="@+id/tvN"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/greatvibes"
+                android:includeFontPadding="false"
+                android:text="N "
+                android:textColor="#FFFFFF"
+                android:textSize="64sp"
+                android:translationX="-1dp"
+                android:translationY="-1dp"
+                android:shadowColor="#FFEB3B"
+                android:shadowDx="0"
+                android:shadowDy="0"
+                android:shadowRadius="6"/>
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:clipChildren="false"
+            android:clipToPadding="false">
+
+            <!-- Lớp stroke -->
+            <TextView
+                android:id="@+id/tvOiveStroke"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/quicksand"
+                android:includeFontPadding="false"
+                android:shadowColor="#80000000"
+                android:shadowDx="3"
+                android:shadowDy="4"
+                android:shadowRadius="8"
+                android:text="oivé"
+                android:textColor="#000000"
+                android:textSize="48sp"
+                android:translationX="-12dp"
+                />
+
+            <!-- Lớp chữ trắng -->
+            <TextView
+                android:id="@+id/tvOive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/quicksand"
+                android:includeFontPadding="false"
+                android:shadowColor="#000000"
+                android:shadowDx="0"
+                android:shadowDy="0"
+                android:shadowRadius="6"
+                android:text="oivé"
+                android:textColor="#FFFFFF"
+                android:textSize="48sp"
+                android:translationX="-12dp"
+                android:translationY="-1dp" />
+
+        </FrameLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvTagline"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="35dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="40dp"
+        android:fontFamily="@font/tenorsans"
+        android:lineSpacingExtra="6dp"
+        android:text="Defining luxury\nthrough the grace,\ndepth, and soul of\nclassic fashion"
+        android:textColor="#FFFFFF"
+        android:textSize="25sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/logo_noive" />
+
+    <!-- Nút SIGN IN -->
     <Button
         android:id="@+id/button_sign_in"
         android:layout_width="0dp"
@@ -34,43 +144,42 @@
         android:backgroundTint="@color/gray"
         android:fontFamily="@font/tenorsans"
         android:text="SIGN IN"
-        android:textSize="18sp"
         android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.5" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.57" />
 
+    <!-- OR -->
     <TextView
         android:id="@+id/text_or"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:fontFamily="@font/tenorsans"
         android:text="OR"
-        android:textColor="#999999"
         android:textSize="13sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/button_sign_in"
+        android:fontFamily="@font/tenorsans"
+        android:textColor="#FFFFFF"
         app:layout_constraintStart_toStartOf="@+id/button_sign_in"
+        app:layout_constraintEnd_toEndOf="@+id/button_sign_in"
         app:layout_constraintTop_toBottomOf="@+id/button_sign_in" />
 
+    <!-- Nút SIGN UP -->
     <Button
         android:id="@+id/button_sign_up"
-        style="?attr/materialButtonOutlinedStyle"
         android:layout_width="0dp"
         android:layout_height="60dp"
         android:layout_marginTop="16dp"
+        android:text="SIGN UP"
+        android:textColor="@color/white"
+        android:textSize="18sp"
         android:backgroundTint="@color/gray"
         android:fontFamily="@font/tenorsans"
-        android:text="SIGN UP"
-        android:textSize="18sp"
-
-        android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="@+id/button_sign_in"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/button_sign_in"
+        app:layout_constraintEnd_toEndOf="@+id/button_sign_in"
         app:layout_constraintTop_toBottomOf="@+id/text_or" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

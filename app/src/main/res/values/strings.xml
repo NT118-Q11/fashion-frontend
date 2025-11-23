@@ -56,5 +56,15 @@
     <string name="details2_care_do_not_iron">• Do not iron</string>
     <string name="details2_care_do_not_dry_clean">• Do not dry clean</string>
     <string name="details2_care_do_not_tumble_dry">• Do not tumble dry</string>
-
+    <string name="app_brand">4500 APPAREL</string>
+    <string name="cd_search">Search</string>
+    <string name="cd_favorites">Favorites</string>
+    <string name="cd_home">Home</string>
+    <string name="cd_notifications">Notifications</string>
+    <string name="cd_cart">Cart</string>
+    <string name="cd_profile">Profile</string>
+    <string name="cd_reel_image">Reel image</string>
+    <string name="cat_women">WOMEN</string>
+    <string name="cat_man">MAN</string>
+    <string name="cat_kids">KIDS</string>
 </resources>

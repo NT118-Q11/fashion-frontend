@@ -5,9 +5,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.net.Uri
 import com.example.fashionapp.R
 import androidx.navigation.fragment.findNavController
-import com.example.fashionapp.databinding.ActivityDeliveryMethodBinding
 import com.example.fashionapp.databinding.ActivityWelcomeBinding
 
 class WelcomeFragment : Fragment() {
@@ -25,6 +25,17 @@ class WelcomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // --- Video background ---
+        val videoUri = Uri.parse("android.resource://${requireContext().packageName}/${R.raw.welcome_bg}")
+        binding.backgroundVideo.setVideoURI(videoUri)
+
+        binding.backgroundVideo.setOnPreparedListener { mp ->
+            mp.isLooping = true
+            mp.setVolume(0f, 0f) // tắt tiếng
+            binding.backgroundVideo.start()
+        }
+
+        // Điều hướng
         binding.buttonSignIn.setOnClickListener {
             findNavController().navigate(R.id.action_welcomeFragment_to_signInFragment)
         }
@@ -32,7 +43,16 @@ class WelcomeFragment : Fragment() {
         binding.buttonSignUp.setOnClickListener {
             findNavController().navigate(R.id.action_welcomeFragment_to_registerFragment)
         }
+    }
 
+    override fun onPause() {
+        super.onPause()
+        binding.backgroundVideo.pause()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        binding.backgroundVideo.start()
     }
 
     override fun onDestroyView() {

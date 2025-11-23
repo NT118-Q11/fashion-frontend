@@ -4,14 +4,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.fashionapp.R
 import com.example.fashionapp.adapter.ImageSliderAdapter
+import com.example.fashionapp.data.CartItem
+import com.example.fashionapp.data.CartManager
 import com.example.fashionapp.databinding.DetailsBinding
 import com.google.android.material.tabs.TabLayoutMediator
-import androidx.navigation.fragment.findNavController
 
-class DetailsFragment: Fragment() {
+class DetailsFragment : Fragment() {
+
     private var _binding: DetailsBinding? = null
     private val binding get() = _binding!!
 
@@ -32,27 +36,40 @@ class DetailsFragment: Fragment() {
             R.drawable.model_image_3
         )
 
-        val adapter = ImageSliderAdapter(imageList)
-        binding.viewPagerMain.adapter = adapter
+        binding.viewPagerMain.adapter = ImageSliderAdapter(imageList)
 
-        TabLayoutMediator(binding.tabLayoutMain, binding.viewPagerMain) { tab, position ->
-            // No-op
-        }.attach()
+        TabLayoutMediator(binding.tabLayoutMain, binding.viewPagerMain) { _, _ -> }.attach()
 
-        // Back arrow
         binding.imageButton1.setOnClickListener {
             findNavController().popBackStack()
         }
 
-        // Bottom buttons -> navigate to details_1 / details_2 / details_3
-        binding.root.findViewById<View>(R.id.btn_info)?.setOnClickListener {
+        // 3 nút chuyển fragment
+        binding.btnInfo.setOnClickListener {
             findNavController().navigate(R.id.action_detailsFragment_to_details1Fragment)
         }
-        binding.root.findViewById<View>(R.id.btn_description)?.setOnClickListener {
+        binding.btnDescription.setOnClickListener {
             findNavController().navigate(R.id.action_detailsFragment_to_details2Fragment)
         }
-        binding.root.findViewById<View>(R.id.btn_rating)?.setOnClickListener {
+        binding.btnRating.setOnClickListener {
             findNavController().navigate(R.id.action_detailsFragment_to_details3Fragment)
+        }
+
+        // NÚT ADD TO CART
+        binding.addToCartButton.setOnClickListener {
+
+            val item = CartItem(
+                id = 1,
+                title = "LAMEREI",
+                description = "Recycle Boucle Knit Cardigan Pink",
+                price = 120.0,
+                imageRes = R.drawable.model_image_1,
+                quantity = 1
+            )
+
+            CartManager.addItem(item)
+
+            Toast.makeText(requireContext(), "Added to cart!", Toast.LENGTH_SHORT).show()
         }
     }
 

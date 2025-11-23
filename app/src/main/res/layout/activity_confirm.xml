@@ -198,15 +198,15 @@
     <!-- Confirm -->
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/ConfirmButton"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="70dp"
         android:background="#000"
+        android:fontFamily="@font/tenorsans"
         android:gravity="center"
         android:text="CONFIRM"
         android:textAlignment="center"
         android:textColor="#FFF"
         android:textSize="16sp"
-        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

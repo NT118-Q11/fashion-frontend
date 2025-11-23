@@ -5,26 +5,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.fashionapp.R
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.fashionapp.adapter.CartAdapter
+import com.example.fashionapp.R
 import com.example.fashionapp.adapter.ConfirmAdapter
+import com.example.fashionapp.data.CartManager
 import com.example.fashionapp.databinding.ActivityConfirmBinding
 
 class ConfirmFragment : Fragment() {
 
     private var _binding: ActivityConfirmBinding? = null
     private val binding get() = _binding!!
-
-    data class CartItem(
-        val id: Int,
-        val title: String,
-        val description: String,
-        val price: Double,
-        val quantity: Int,
-        val imageUrl: String
-    )
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,42 +28,28 @@ class ConfirmFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val demoItems = listOf(
-            CartItem(
-                id = 1,
-                title = "LAMEREI",
-                description = "Recycle Boucle Knit Cardigan Pink",
-                price = 120.0,
-                quantity = 1,
-                imageUrl = "R.drawable.sample_woman"
-            ),
-            CartItem(
-                id = 2,
-                title = "21WN",
-                description = "Reversible Angora Cardigan",
-                price = 99.0,
-                quantity = 2,
-                imageUrl = "R.drawable.another_sample"
-            )
-        )
+        // Lấy danh sách giỏ hàng thật
+        val items = CartManager.getItems()
 
-        val cartAdapter = ConfirmAdapter(demoItems)
+        // Setup RecyclerView
+        val adapter = ConfirmAdapter(items)
+        binding.rcvOrder.layoutManager = LinearLayoutManager(context)
+        binding.rcvOrder.adapter = adapter
 
-        // Thiết lập RecyclerView
-        binding.rcvOrder.apply {
+        // Tính tổng
+        val total = items.sumOf { it.price * it.quantity }
+        binding.tvTotalAmount.text = "$${String.format("%.2f", total)}"
 
-            layoutManager = LinearLayoutManager(context)
-            adapter = cartAdapter
-        }
-
+        // Back
         binding.btnBack.setOnClickListener {
             findNavController().popBackStack()
         }
 
+        // Confirm
         binding.ConfirmButton.setOnClickListener {
-            findNavController().navigate(R.id.action_confirmFragment_to_paymentSuccessFragment)
+            findNavController()
+                .navigate(R.id.action_confirmFragment_to_paymentSuccessFragment)
         }
-
     }
 
     override fun onDestroyView() {

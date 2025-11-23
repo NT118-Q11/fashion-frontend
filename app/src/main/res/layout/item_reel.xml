@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -7,36 +8,46 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        android:src="@drawable/sample_woman" />
+        android:contentDescription="@string/cd_reel_image" />
 
+    <!-- Bottom overlay text -->
     <LinearLayout
-        android:layout_width="match_parent"
+        android:id="@+id/reel_info"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:background="@android:color/transparent"
+        android:layout_gravity="bottom|start"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="56dp">
 
         <TextView
+            android:id="@+id/reel_brand"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:alpha="0.95"
             android:fontFamily="@font/tenorsans"
-            android:text="MOHAN"
             android:textColor="#FFFFFF"
-            android:textSize="20sp" />
+            android:textSize="22sp"
+            android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/reel_name"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="Recycle Boucle Knit Cardigan Pink"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:fontFamily="@font/tenorsans"
             android:textColor="#FFFFFF"
-            android:textSize="17sp" />
+            android:textSize="18sp" />
 
         <TextView
+            android:id="@+id/reel_price"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="$120"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:fontFamily="@font/tenorsans"
             android:textColor="#FFFFFF"
-            android:textSize="17sp" />
+            android:textSize="18sp"
+            android:textStyle="bold" />
     </LinearLayout>
 </FrameLayout>

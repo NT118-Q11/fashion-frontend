@@ -1,6 +1,10 @@
 # Compiled class file
 *.class
 
+.env
+
+app/src/main/res/raw/env
+
 .gradle/
 
 .idea/

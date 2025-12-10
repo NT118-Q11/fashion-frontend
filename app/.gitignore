@@ -1,5 +1,6 @@
 /build
 
+/raw
 # Compiled class file
 *.class
 

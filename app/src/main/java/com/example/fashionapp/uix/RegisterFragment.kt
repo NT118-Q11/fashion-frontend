@@ -2,6 +2,7 @@ package com.example.fashionapp.uix
 
 import androidx.fragment.app.Fragment
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -36,6 +37,7 @@ class RegisterFragment : Fragment() {
                     registerWithGoogle(signInResult)
                 }
                 is GoogleSignInManager.GoogleSignInResult.Error -> {
+                    Log.e("RegisterFragment", "Google Sign-In failed: ${signInResult.message}", signInResult.exception)
                     Toast.makeText(
                         requireContext(),
                         "Google Sign-In failed: ${signInResult.message}",
@@ -115,14 +117,23 @@ class RegisterFragment : Fragment() {
      */
     private fun registerWithEmail(firstName: String, lastName: String, email: String, password: String) {
         lifecycleScope.launch {
+            val username = "$firstName $lastName"
+
             try {
-                val username = "$firstName $lastName"
                 val request = com.example.fashionapp.UserRegistrationRequest(
                     username = username,
                     email = email,
                     password = password
                 )
+
+                Log.d("RegisterFragment", "Making registration request to backend...")
+                Log.d("RegisterFragment", "Request data - Username: $username, Email: $email")
+
                 val response = AppRoute.auth.register(request)
+
+                Log.d("RegisterFragment", "Backend response received")
+                Log.d("RegisterFragment", "Response message: ${response.message}")
+                Log.d("RegisterFragment", "Response user: ${response.user}")
 
                 if (response.user != null) {
                     Toast.makeText(
@@ -141,6 +152,15 @@ class RegisterFragment : Fragment() {
                     ).show()
                 }
             } catch (e: Exception) {
+                Log.e("RegisterFragment", "Email registration failed", e)
+                Log.e("RegisterFragment", "Exception type: ${e.javaClass.simpleName}")
+                Log.e("RegisterFragment", "Exception message: ${e.message}")
+                Log.e("RegisterFragment", "Exception cause: ${e.cause}")
+                e.printStackTrace()
+
+                // Additional logging for request details
+                Log.d("RegisterFragment", "Registration request - Username: $username, Email: $email")
+
                 Toast.makeText(
                     requireContext(),
                     "Registration failed: ${e.message}",
@@ -164,15 +184,28 @@ class RegisterFragment : Fragment() {
     private fun registerWithGoogle(result: GoogleSignInManager.GoogleSignInResult.Success) {
         lifecycleScope.launch {
             try {
+                Log.d("RegisterFragment", "Creating GoogleOAuth2UserInfo with token length: ${result.idToken.length}")
+
                 val googleUserInfo = GoogleOAuth2UserInfo(
-                    idToken = result.idToken,
+                    accessToken = result.idToken, // Backend expects "accessToken" field name
                     email = result.email,
                     name = result.name,
-                    picture = result.photoUrl
+                    picture = result.photoUrl,
+                    id = result.email // Use email as ID instead of parsing token
                 )
+
+                Log.d("RegisterFragment", "GoogleOAuth2UserInfo created successfully")
+                Log.d("RegisterFragment", "Sending Google OAuth2 request to backend...")
+                Log.d("RegisterFragment", "Request accessToken length: ${googleUserInfo.accessToken.length}")
+                Log.d("RegisterFragment", "Request email: ${googleUserInfo.email}")
+                Log.d("RegisterFragment", "Request name: ${googleUserInfo.name}")
 
                 // Call backend register-gmail endpoint
                 val response = AppRoute.auth.registerWithGoogle(googleUserInfo)
+
+                Log.d("RegisterFragment", "Google registration response received")
+                Log.d("RegisterFragment", "Response message: ${response.message}")
+                Log.d("RegisterFragment", "Response user: ${response.user}")
 
                 if (response.user != null) {
                     Toast.makeText(
@@ -191,6 +224,16 @@ class RegisterFragment : Fragment() {
                     ).show()
                 }
             } catch (e: Exception) {
+                Log.e("RegisterFragment", "Google registration failed", e)
+                Log.e("RegisterFragment", "Exception type: ${e.javaClass.simpleName}")
+                Log.e("RegisterFragment", "Exception message: ${e.message}")
+                Log.e("RegisterFragment", "Exception cause: ${e.cause}")
+                e.printStackTrace()
+
+                // Additional logging for specific user info
+                Log.d("RegisterFragment", "Google user info - Email: ${result.email}, Name: ${result.name}")
+                Log.d("RegisterFragment", "ID Token length: ${result.idToken.length}")
+
                 Toast.makeText(
                     requireContext(),
                     "Google registration failed: ${e.message}",

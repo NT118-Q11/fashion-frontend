@@ -2,6 +2,7 @@ package com.example.fashionapp
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -33,6 +34,24 @@ class GoogleSignInManager(private val context: Context) {
         // Get Google Client ID from environment variables with retry
         var clientId = EnvironmentConfig.getGoogleClientId()
         println("GoogleSignInManager: Retrieved clientId = '$clientId'")
+
+        // Log application id and build type to help diagnose mismatch issues (status code 10)
+        try {
+            Log.i("GoogleSignInManager", "=== GOOGLE SIGN-IN CONFIGURATION ===")
+            Log.i("GoogleSignInManager", "ApplicationId=${com.example.fashionapp.BuildConfig.APPLICATION_ID}, BuildType=${com.example.fashionapp.BuildConfig.BUILD_TYPE}")
+            Log.i("GoogleSignInManager", "Web ClientId for requestIdToken='$clientId'")
+            Log.i("GoogleSignInManager", "Package name: ${context.packageName}")
+            Log.i("GoogleSignInManager", "=== REQUIRED IN GOOGLE CLOUD CONSOLE ===")
+            Log.i("GoogleSignInManager", "1. Web OAuth client with this Client ID")
+            Log.i("GoogleSignInManager", "2. Android OAuth client with package: ${context.packageName}")
+            Log.i("GoogleSignInManager", "3. Android client must have SHA-1: 81:30:0C:1B:2A:95:84:68:AE:4F:1D:C0:EB:21:E3:69:51:AD:63:68 (debug)")
+            Log.i("GoogleSignInManager", "====================================")
+            println("GoogleSignInManager: Web ClientId = '$clientId'")
+            println("GoogleSignInManager: Package = '${context.packageName}'")
+        } catch (ignored: Exception) {
+            // BuildConfig may not be accessible in some contexts — fallback to println
+            println("GoogleSignInManager: BuildConfig not available for logging: ${ignored.message}")
+        }
 
         // If empty, try reinitializing once more
         if (clientId.isEmpty()) {
@@ -82,6 +101,13 @@ class GoogleSignInManager(private val context: Context) {
                 val account = task.getResult(ApiException::class.java)
 
                 if (account != null) {
+                    Log.d("GoogleSignInManager", "Sign-in successful for ${account.email}")
+                    Log.d("GoogleSignInManager", "ID Token present: ${account.idToken != null}")
+                    Log.d("GoogleSignInManager", "Account details - Name: ${account.displayName}, Photo: ${account.photoUrl}")
+                    if (account.idToken != null) {
+                        Log.d("GoogleSignInManager", "ID Token length: ${account.idToken!!.length}")
+                    }
+
                     GoogleSignInResult.Success(
                         idToken = account.idToken ?: "",
                         email = account.email ?: "",
@@ -89,12 +115,27 @@ class GoogleSignInManager(private val context: Context) {
                         photoUrl = account.photoUrl?.toString()
                     )
                 } else {
+                    Log.e("GoogleSignInManager", "Account is null after sign-in")
                     GoogleSignInResult.Error("Account is null")
                 }
             } catch (e: ApiException) {
-                GoogleSignInResult.Error("Sign in failed: ${e.message}")
+                val errorCode = e.statusCode
+                val errorMessage = when (errorCode) {
+                    12500 -> "Sign-in failed: Developer error (error code 12500). Check SHA-1 certificate fingerprint in Google Cloud Console matches your debug/release keystore."
+                    12501 -> "Sign-in canceled by user (error code 12501)"
+                    10 -> "Sign-in failed: Developer error (error code 10). Verify OAuth 2.0 Client ID is correctly configured and requestIdToken() is using the correct Web Client ID."
+                    7 -> "Network error (error code 7). Check your internet connection."
+                    else -> "Sign-in failed with error code $errorCode: ${e.message}"
+                }
+                Log.e("GoogleSignInManager", "ApiException - $errorMessage", e)
+                Log.e("GoogleSignInManager", "Error code: $errorCode")
+                e.printStackTrace()
+                GoogleSignInResult.Error(errorMessage, e)
             } catch (e: Exception) {
-                GoogleSignInResult.Error("Unexpected error: ${e.message}")
+                Log.e("GoogleSignInManager", "Unexpected exception - ${e.message}", e)
+                Log.e("GoogleSignInManager", "Exception type: ${e.javaClass.simpleName}")
+                e.printStackTrace()
+                GoogleSignInResult.Error("Unexpected error: ${e.message}", e)
             }
         }
     }
@@ -132,7 +173,6 @@ class GoogleSignInManager(private val context: Context) {
             val photoUrl: String?
         ) : GoogleSignInResult()
 
-        data class Error(val message: String) : GoogleSignInResult()
+        data class Error(val message: String, val exception: Exception? = null) : GoogleSignInResult()
     }
 }
-

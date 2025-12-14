@@ -2,6 +2,7 @@ package com.example.fashionapp.uix
 
 import androidx.fragment.app.Fragment
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,6 +36,7 @@ class SignInFragment : Fragment() {
                     loginWithGoogle(signInResult)
                 }
                 is GoogleSignInManager.GoogleSignInResult.Error -> {
+                    Log.e("SignInFragment", "Google Sign-In failed: ${signInResult.message}", signInResult.exception)
                     Toast.makeText(
                         requireContext(),
                         "Google Sign-In failed: ${signInResult.message}",
@@ -118,6 +120,10 @@ class SignInFragment : Fragment() {
                     ).show()
                 }
             } catch (e: Exception) {
+                Log.e("SignInFragment", "Email/password login failed", e)
+                Log.e("SignInFragment", "Exception type: ${e.javaClass.simpleName}")
+                Log.e("SignInFragment", "Exception message: ${e.message}")
+                e.printStackTrace()
                 Toast.makeText(
                     requireContext(),
                     "Login failed: ${e.message}",
@@ -141,12 +147,17 @@ class SignInFragment : Fragment() {
     private fun loginWithGoogle(result: GoogleSignInManager.GoogleSignInResult.Success) {
         lifecycleScope.launch {
             try {
+                Log.d("SignInFragment", "Creating GoogleOAuth2UserInfo with token length: ${result.idToken.length}")
+
                 val googleUserInfo = GoogleOAuth2UserInfo(
-                    idToken = result.idToken,
+                    accessToken = result.idToken, // Backend expects "accessToken" field name
                     email = result.email,
                     name = result.name,
-                    picture = result.photoUrl
+                    picture = result.photoUrl,
+                    id = result.email // Use email as ID instead of parsing token
                 )
+
+                Log.d("SignInFragment", "GoogleOAuth2UserInfo created successfully")
 
                 // Call backend login-gmail endpoint
                 val response = AppRoute.auth.loginWithGoogle(googleUserInfo)
@@ -168,6 +179,16 @@ class SignInFragment : Fragment() {
                     ).show()
                 }
             } catch (e: Exception) {
+                Log.e("SignInFragment", "Google login failed", e)
+                Log.e("SignInFragment", "Exception type: ${e.javaClass.simpleName}")
+                Log.e("SignInFragment", "Exception message: ${e.message}")
+                Log.e("SignInFragment", "Exception cause: ${e.cause}")
+                e.printStackTrace()
+
+                // Additional logging for specific user info
+                Log.d("SignInFragment", "Google user info - Email: ${result.email}, Name: ${result.name}")
+                Log.d("SignInFragment", "ID Token length: ${result.idToken.length}")
+
                 Toast.makeText(
                     requireContext(),
                     "Google login failed: ${e.message}",

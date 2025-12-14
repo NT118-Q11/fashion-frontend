@@ -77,6 +77,7 @@ class SignInFragment : Fragment() {
         binding.forgetPassword.setOnClickListener {
             findNavController().navigate(R.id.action_signInFragment_to_forgotPasswordFragment)
         }
+
         // Google Sign-In button
         binding.buttonSignInGoogle.setOnClickListener {
             signInWithGoogle()

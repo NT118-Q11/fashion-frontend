@@ -52,6 +52,10 @@ class MyAccountFragment: Fragment() {
             findNavController().navigate(R.id.action_myAccountFragment_to_homeFragment)
         }
 
+        binding.navNotifications.setOnClickListener {
+            findNavController().navigate(R.id.action_myAccountFragment_to_notificationFragment)
+        }
+
 
     }
 

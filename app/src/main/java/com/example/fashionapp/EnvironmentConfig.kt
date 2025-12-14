@@ -1,6 +1,7 @@
 package com.example.fashionapp
 
 import android.content.Context
+import android.util.Log
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.util.Properties
@@ -235,12 +236,12 @@ object EnvironmentConfig {
     fun getGoogleClientId(): String {
         val envClientId = properties?.getProperty("GOOGLE_CLIENT_ID")
         if (!envClientId.isNullOrEmpty()) {
-            println("EnvironmentConfig: getGoogleClientId() from .env = '$envClientId'")
-            return envClientId
+        Log.d("EnvironmentConfig", "getGoogleClientId() from .env = '$envClientId'")
+        return envClientId
         }
 
         // No hardcoded fallback for security - throw meaningful error
-        println("EnvironmentConfig: GOOGLE_CLIENT_ID not found in any .env source!")
+        Log.e("EnvironmentConfig", "GOOGLE_CLIENT_ID not found in any .env source!")
         throw IllegalStateException(
             "GOOGLE_CLIENT_ID not found. Please ensure .env file exists with GOOGLE_CLIENT_ID value in:\n" +
             "- Project root: .env\n" +
@@ -255,14 +256,34 @@ object EnvironmentConfig {
     fun getGoogleClientSecret(): String {
         val envClientSecret = properties?.getProperty("GOOGLE_CLIENT_SECRET")
         if (!envClientSecret.isNullOrEmpty()) {
-            println("EnvironmentConfig: getGoogleClientSecret() from .env = '$envClientSecret'")
+            Log.d("EnvironmentConfig", "getGoogleClientSecret() from .env = '$envClientSecret'")
             return envClientSecret
         }
 
         // No hardcoded fallback for security - throw meaningful error
-        println("EnvironmentConfig: GOOGLE_CLIENT_SECRET not found in any .env source!")
+        Log.e("EnvironmentConfig", "GOOGLE_CLIENT_SECRET not found in any .env source!")
         throw IllegalStateException(
             "GOOGLE_CLIENT_SECRET not found. Please ensure .env file exists with GOOGLE_CLIENT_SECRET value in:\n" +
+            "- Project root: .env\n" +
+            "- Raw resources: app/src/main/res/raw/env\n" +
+            "- Assets folder: app/src/main/assets/.env"
+        )
+    }
+
+    /**
+     * Get Google Android Client ID from environment
+     */
+    fun getGoogleAndroidClientId(): String {
+        val envAndroidClientId = properties?.getProperty("GOOGLE_ANDROID_CLIENT_ID")
+        if (!envAndroidClientId.isNullOrEmpty()) {
+            Log.d("EnvironmentConfig", "getGoogleAndroidClientId() from .env = '$envAndroidClientId'")
+            return envAndroidClientId
+        }
+
+        // No hardcoded fallback for security - throw meaningful error
+        Log.e("EnvironmentConfig", "GOOGLE_ANDROID_CLIENT_ID not found in any .env source!")
+        throw IllegalStateException(
+            "GOOGLE_ANDROID_CLIENT_ID not found. Please ensure .env file exists with GOOGLE_ANDROID_CLIENT_ID value in:\n" +
             "- Project root: .env\n" +
             "- Raw resources: app/src/main/res/raw/env\n" +
             "- Assets folder: app/src/main/assets/.env"

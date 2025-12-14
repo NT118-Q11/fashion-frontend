@@ -1,13 +1,27 @@
 # Compiled class file
 *.class
 
+# Environment and security files - NEVER COMMIT THESE!
 .env
-
+.env.*
+!.env.template
 app/src/main/res/raw/env
+app/src/main/assets/.env
+local.properties
 
+# API Keys and secrets
+**/google-services.json
+**/GoogleService-Info.plist
+**/*-key.json
+**/*secret*
+**/*credential*
+
+# Build and IDE files
 .gradle/
-
 .idea/
+build/
+*.iml
+.DS_Store
 
 # Log file
 *.log

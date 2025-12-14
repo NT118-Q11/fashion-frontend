@@ -16,7 +16,7 @@
         android:clipToPadding="false"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.431"
+        app:layout_constraintHorizontal_bias="0.461"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -40,7 +40,7 @@
                 android:shadowRadius="8"
                 android:text="N"
                 android:textColor="#000000"
-                android:textSize="60sp" />
+                android:textSize="40sp" />
 
             <!-- Lớp chữ trắng -->
             <TextView
@@ -55,7 +55,7 @@
                 android:shadowRadius="6"
                 android:text="N "
                 android:textColor="#FFFFFF"
-                android:textSize="60sp"
+                android:textSize="40sp"
                 android:translationX="-1dp"
                 android:translationY="-1dp" />
 
@@ -81,7 +81,7 @@
                 android:shadowRadius="8"
                 android:text="oivé"
                 android:textColor="#000000"
-                android:textSize="44sp"
+                android:textSize="30sp"
                 android:translationX="-15dp" />
 
             <!-- Lớp chữ trắng -->
@@ -97,7 +97,7 @@
                 android:shadowRadius="6"
                 android:text="oivé"
                 android:textColor="#FFFFFF"
-                android:textSize="44sp"
+                android:textSize="30sp"
                 android:translationX="-15dp"
                 android:translationY="-1dp" />
 

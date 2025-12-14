@@ -108,6 +108,10 @@
             android:id="@+id/action_signInFragment_to_registerFragment"
             app:destination="@id/registerFragment" />
 
+        <action
+            android:id="@+id/action_signInFragment_to_forgotPasswordFragment"
+            app:destination="@id/forgotPasswordFragment" />
+
 
     </fragment>
 
@@ -345,5 +349,15 @@
         android:name="com.example.fashionapp.uix.Details3Fragment"
         android:label="Details 3"
         tools:layout="@layout/details_3" />
+    <fragment
+        android:id="@+id/forgotPasswordFragment"
+        android:name="com.example.fashionapp.uix.ForgotPasswordFragment"
+        android:label="Forgot Password"
+        tools:layout="@layout/fragment_forgot_password">
+
+        <action
+            android:id="@+id/action_forgotPasswordFragment_to_signInFragment"
+            app:destination="@id/signInFragment" />
+    </fragment>
 
 </navigation>

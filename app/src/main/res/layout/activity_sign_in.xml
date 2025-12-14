@@ -16,7 +16,7 @@
         android:clipToPadding="false"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.454"
+        app:layout_constraintHorizontal_bias="0.465"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -40,7 +40,7 @@
                 android:shadowRadius="8"
                 android:text="N"
                 android:textColor="#000000"
-                android:textSize="60sp" />
+                android:textSize="40sp" />
 
             <!-- Lớp chữ trắng -->
             <TextView
@@ -55,7 +55,7 @@
                 android:shadowRadius="6"
                 android:text="N "
                 android:textColor="#FFFFFF"
-                android:textSize="60sp"
+                android:textSize="40sp"
                 android:translationX="-1dp"
                 android:translationY="-1dp" />
 
@@ -81,7 +81,7 @@
                 android:shadowRadius="8"
                 android:text="oivé"
                 android:textColor="#000000"
-                android:textSize="44sp"
+                android:textSize="30sp"
                 android:translationX="-15dp" />
 
             <!-- Lớp chữ trắng -->
@@ -97,7 +97,7 @@
                 android:shadowRadius="6"
                 android:text="oivé"
                 android:textColor="#FFFFFF"
-                android:textSize="44sp"
+                android:textSize="30sp"
                 android:translationX="-15dp"
                 android:translationY="-1dp" />
 
@@ -105,12 +105,11 @@
 
     </LinearLayout>
 
-
     <LinearLayout
         android:id="@+id/tab_layout"
         android:layout_width="0dp"
         android:layout_height="86dp"
-        android:layout_marginTop="104dp"
+        android:layout_marginTop="96dp"
         android:orientation="horizontal"
         android:paddingTop="32dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -130,7 +129,6 @@
             android:textSize="20sp"
             android:textStyle="bold" />
 
-
         <TextView
             android:id="@+id/tv_register"
             android:layout_width="0dp"
@@ -142,6 +140,7 @@
             android:textColor="#999999"
             android:textSize="20sp"
             android:textStyle="bold" />
+
 
     </LinearLayout>
 

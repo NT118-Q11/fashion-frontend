@@ -5,13 +5,45 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.lifecycle.lifecycleScope
 import com.example.fashionapp.R
 import androidx.navigation.fragment.findNavController
+import com.example.fashionapp.AppRoute
+import com.example.fashionapp.GoogleOAuth2UserInfo
+import com.example.fashionapp.GoogleSignInManager
 import com.example.fashionapp.databinding.ActivitySignInBinding
+import kotlinx.coroutines.launch
 
 class SignInFragment : Fragment() {
     private var _binding: ActivitySignInBinding? = null
     private val binding get() = _binding!!
+
+    private lateinit var googleSignInManager: GoogleSignInManager
+
+    // Activity result launcher for Google Sign-In
+    private val googleSignInLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        lifecycleScope.launch {
+            val signInResult = googleSignInManager.handleSignInResult(result.data)
+
+            when (signInResult) {
+                is GoogleSignInManager.GoogleSignInResult.Success -> {
+                    // Call backend API with Google credentials
+                    loginWithGoogle(signInResult)
+                }
+                is GoogleSignInManager.GoogleSignInResult.Error -> {
+                    Toast.makeText(
+                        requireContext(),
+                        "Google Sign-In failed: ${signInResult.message}",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+            }
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -24,10 +56,20 @@ class SignInFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Initialize Google Sign-In Manager
+        googleSignInManager = GoogleSignInManager(requireContext())
+
+        // Regular email/password sign in
         binding.buttonSignIn.setOnClickListener {
-            findNavController().navigate(R.id.action_signInFragment_to_homeFragment)
+            val email = binding.etEmail.text.toString().trim()
+            val password = binding.etPassword.text.toString().trim()
+
+            if (validateInput(email, password)) {
+                loginWithEmail(email, password)
+            }
         }
 
+        // Navigate to register
         binding.tvRegister.setOnClickListener {
             findNavController().navigate(R.id.action_signInFragment_to_registerFragment)
         }
@@ -35,7 +77,107 @@ class SignInFragment : Fragment() {
         binding.forgetPassword.setOnClickListener {
             findNavController().navigate(R.id.action_signInFragment_to_forgotPasswordFragment)
         }
+        // Google Sign-In button
+        binding.buttonSignInGoogle.setOnClickListener {
+            signInWithGoogle()
+        }
+    }
 
+    private fun validateInput(email: String, password: String): Boolean {
+        if (email.isEmpty()) {
+            Toast.makeText(requireContext(), "Please enter email", Toast.LENGTH_SHORT).show()
+            return false
+        }
+        if (password.isEmpty()) {
+            Toast.makeText(requireContext(), "Please enter password", Toast.LENGTH_SHORT).show()
+            return false
+        }
+        return true
+    }
+
+    /**
+     * Sign in with email/password using backend API
+     */
+    private fun loginWithEmail(email: String, password: String) {
+        lifecycleScope.launch {
+            try {
+                val request = com.example.fashionapp.UserLoginRequest(email, password)
+                val response = AppRoute.auth.login(request)
+
+                if (response.user != null) {
+                    Toast.makeText(
+                        requireContext(),
+                        "Welcome ${response.user.username ?: response.user.email}!",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                    // Navigate to home
+                    findNavController().navigate(R.id.action_signInFragment_to_homeFragment)
+                } else {
+                    Toast.makeText(
+                        requireContext(),
+                        response.message,
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+            } catch (e: Exception) {
+                Toast.makeText(
+                    requireContext(),
+                    "Login failed: ${e.message}",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+        }
+    }
+
+    /**
+     * Launch Google Sign-In flow
+     */
+    private fun signInWithGoogle() {
+        val signInIntent = googleSignInManager.getSignInIntent()
+        googleSignInLauncher.launch(signInIntent)
+    }
+
+    /**
+     * Login with Google using backend API
+     */
+    private fun loginWithGoogle(result: GoogleSignInManager.GoogleSignInResult.Success) {
+        lifecycleScope.launch {
+            try {
+                val googleUserInfo = GoogleOAuth2UserInfo(
+                    idToken = result.idToken,
+                    email = result.email,
+                    name = result.name,
+                    picture = result.photoUrl
+                )
+
+                // Call backend login-gmail endpoint
+                val response = AppRoute.auth.loginWithGoogle(googleUserInfo)
+
+                if (response.user != null) {
+                    Toast.makeText(
+                        requireContext(),
+                        "Welcome ${response.user.username ?: response.user.email}!",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                    // Navigate to home
+                    findNavController().navigate(R.id.action_signInFragment_to_homeFragment)
+                } else {
+                    Toast.makeText(
+                        requireContext(),
+                        response.message,
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+            } catch (e: Exception) {
+                Toast.makeText(
+                    requireContext(),
+                    "Google login failed: ${e.message}",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+        }
     }
 
     override fun onDestroyView() {

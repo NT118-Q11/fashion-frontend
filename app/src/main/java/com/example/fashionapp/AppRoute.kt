@@ -15,7 +15,13 @@ data class UserRegistrationRequest(
     val username: String,
     val email: String,
     val password: String,
+    @SerializedName("firstName")
+    val first_name: String? = null,
+    @SerializedName("lastName")
+    val last_name: String? = null,
+    @SerializedName("phoneNumber")
     val phone_number: String? = null,
+    @SerializedName("userAddress")
     val user_address: String? = null
 )
 

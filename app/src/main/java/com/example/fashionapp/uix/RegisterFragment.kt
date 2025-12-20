@@ -74,9 +74,10 @@ class RegisterFragment : Fragment() {
             val email = binding.etEmail.text.toString().trim()
             val password = binding.etPassword.text.toString().trim()
             val confirmPassword = binding.etConfirmPassword.text.toString().trim()
+            val phoneNumber = binding.phoneNumber.text.toString().trim()
 
-            if (validateInput(firstName, lastName, email, password, confirmPassword)) {
-                registerWithEmail(firstName, lastName, email, password)
+            if (validateInput(firstName, lastName, email, password, phoneNumber, confirmPassword)) {
+                registerWithEmail(firstName, lastName, email, password, phoneNumber)
             }
         }
 
@@ -91,6 +92,7 @@ class RegisterFragment : Fragment() {
         lastName: String,
         email: String,
         password: String,
+        phoneNumber: String,
         confirmPassword: String
     ): Boolean {
         if (firstName.isEmpty() || lastName.isEmpty()) {
@@ -109,25 +111,40 @@ class RegisterFragment : Fragment() {
             Toast.makeText(requireContext(), "Passwords do not match", Toast.LENGTH_SHORT).show()
             return false
         }
+        if (phoneNumber.isEmpty()) {
+            Toast.makeText(requireContext(), "Please enter phone number", Toast.LENGTH_SHORT).show()
+            return false
+        }
+        // Validate phone number has only digits and is 10-11 digits long
+        val phoneDigits = phoneNumber.filter { it.isDigit() }
+        if (phoneDigits.length !in 10..11) {
+            Toast.makeText(requireContext(), "Phone number must be 10-11 digits", Toast.LENGTH_SHORT).show()
+            return false
+        }
+
         return true
     }
 
     /**
      * Register with email/password using backend API
      */
-    private fun registerWithEmail(firstName: String, lastName: String, email: String, password: String) {
+    private fun registerWithEmail(firstName: String, lastName: String, email: String, password: String, phoneNumber: String) {
         lifecycleScope.launch {
-            val username = "$firstName $lastName"
+            // Username priority: email > phoneNumber
+            val username = email.ifEmpty { phoneNumber }
 
             try {
                 val request = com.example.fashionapp.UserRegistrationRequest(
                     username = username,
                     email = email,
-                    password = password
+                    password = password,
+                    first_name = firstName,
+                    last_name = lastName,
+                    phone_number = phoneNumber
                 )
 
                 Log.d("RegisterFragment", "Making registration request to backend...")
-                Log.d("RegisterFragment", "Request data - Username: $username, Email: $email")
+                Log.d("RegisterFragment", "Request data - Username: $username, Email: $email, Phone: $phoneNumber, Name: $firstName $lastName")
 
                 val response = AppRoute.auth.register(request)
 

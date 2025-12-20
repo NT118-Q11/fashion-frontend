@@ -1,5 +1,6 @@
 package com.example.fashionapp
 
+import com.example.fashionapp.data.ProductApi
 import com.google.gson.annotations.SerializedName
 import okhttp3.OkHttpClient
 import okhttp3.ResponseBody
@@ -26,7 +27,7 @@ data class UserRegistrationRequest(
 )
 
 data class UserLoginRequest(
-    val email: String,
+    val username: String,  // Can be email or phone number
     val password: String
 )
 
@@ -122,6 +123,7 @@ object AppRoute {
     }
 
     val auth: AuthApi by lazy { retrofit.create(AuthApi::class.java) }
+    val product: ProductApi by lazy { retrofit.create(ProductApi::class.java) }
 
     // Allow overriding the base URL (call before accessing `auth` to take effect)
     fun init(newBaseUrl: String) {

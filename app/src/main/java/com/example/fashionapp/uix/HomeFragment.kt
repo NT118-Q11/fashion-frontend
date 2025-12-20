@@ -78,15 +78,27 @@ class HomeFragment : Fragment() {
         )
         for (spec in specs) {
             val (brand, folder, prefix) = spec
-            for (n in 1..3) {
-                val filePath = "$folder/${prefix}${n}.jpg"
-                Log.d("HomeFragment", "Adding reel asset: $filePath")
-                val name = when (brand) {
-                    "WOMEN" -> "Cardigan Pink $n"
-                    "MAN" -> "Denim Jacket $n"
-                    else -> "Kids Outfit $n"
+            try {
+                val files = requireContext().assets.list(folder) ?: emptyArray()
+                for (fileName in files) {
+                    if (!fileName.endsWith(".jpg") && !fileName.endsWith(".png") && !fileName.endsWith(".jpeg")) continue
+
+                    val filePath = "$folder/$fileName"
+                    Log.d("HomeFragment", "Adding reel asset: $filePath")
+
+                    // Try to extract a number for the name, or just use a counter/hash
+                    val numberStr = fileName.filter { it.isDigit() }
+                    val n = if (numberStr.isNotEmpty()) numberStr.toInt() else (1..100).random()
+
+                    val name = when (brand) {
+                        "WOMEN" -> "Fashion Item $n"
+                        "MAN" -> "Men Style $n"
+                        else -> "Kids Wear $n"
+                    }
+                    allItems.add(ReelItem(filePath, brand, name, "$${(80..140).random()}"))
                 }
-                allItems.add(ReelItem(filePath, brand, name, "$${(80..140).random()}"))
+            } catch (e: Exception) {
+                Log.e("HomeFragment", "Error listing assets for $folder", e)
             }
         }
 

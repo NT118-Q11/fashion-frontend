@@ -223,27 +223,27 @@
         app:layout_constraintEnd_toEndOf="@id/et_email"
         app:layout_constraintStart_toStartOf="@id/et_email"
         app:layout_constraintTop_toBottomOf="@id/et_password" />
-    <!-- Terms -->
-    <TextView
-        android:id="@+id/tvTerms"
+
+    <EditText
+        android:id="@+id/phone_number"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_marginTop="10dp"
-        android:layout_marginStart="29dp"
-        android:text="By clicking Register Now, you agree to our                             Terms &amp; Conditions and Privacy Policy."
-        android:textColor="#000000"
-        android:textSize="14sp"
+        android:hint="Enter your phone number"
         android:fontFamily="@font/tenorsans"
+        android:textColor="#979797"
+        android:textSize="18sp"
+        android:padding="10dp"
         app:layout_constraintTop_toBottomOf="@id/et_confirm_password"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintStart_toStartOf="@id/et_email"
+        app:layout_constraintEnd_toEndOf="@id/et_email"/>
 
     <Button
         android:id="@+id/button_sign_in"
         android:layout_width="0dp"
         android:layout_height="60dp"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="30dp"
         android:backgroundTint="@color/vintage_gray"
         android:fontFamily="@font/tenorsans"
@@ -252,7 +252,7 @@
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_confirm_password" />
+        app:layout_constraintTop_toBottomOf="@+id/phone_number" />
 
     <TextView
         android:id="@+id/text_or"
@@ -269,46 +269,25 @@
         app:layout_constraintTop_toBottomOf="@+id/button_sign_in" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/button_sign_in_facebook"
-        android:layout_width="0dp"
-        android:layout_height="60dp"
-        android:text="SIGN IN WITH FACEBOOK"
-        android:textColor="#333333"
-        android:backgroundTint="#ffffff"
-        android:layout_marginTop="10dp"
-        android:fontFamily="@font/tenorsans"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        app:strokeColor="#cccccc"
-        app:strokeWidth="1dp"
-        app:icon="@drawable/ic_facebook"
-        app:iconTint="@null"
-        app:iconGravity="start"
-        app:layout_constraintTop_toBottomOf="@id/text_or"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:iconSize="24dp"/>
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/button_sign_in_google"
-        android:layout_width="0dp"
-        android:layout_height="60dp"
-        android:text="SIGN IN WITH GOOGLE"
-        android:textColor="#333333"
-        android:backgroundTint="#ffffff"
-        android:layout_marginTop="10dp"
-        android:fontFamily="@font/tenorsans"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        app:strokeColor="#cccccc"
-        app:strokeWidth="1dp"
-        app:icon="@drawable/ic_google"
-        app:iconTint="@null"
-        app:iconGravity="start"
-        app:layout_constraintTop_toBottomOf="@id/button_sign_in_facebook"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:iconSize="24dp"/>
+            android:id="@+id/button_sign_in_google"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:text="SIGN IN WITH GOOGLE"
+            android:textColor="#333333"
+            android:backgroundTint="#ffffff"
+            android:fontFamily="@font/tenorsans"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toBottomOf="@id/text_or"
+            app:strokeColor="#cccccc"
+            app:strokeWidth="1dp"
+            app:icon="@drawable/ic_google"
+            app:iconTint="@null"
+            app:iconGravity="start"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:iconSize="24dp"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

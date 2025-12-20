@@ -84,7 +84,7 @@ class SignInFragment : Fragment() {
 
     private fun validateInput(email: String, password: String): Boolean {
         if (email.isEmpty()) {
-            Toast.makeText(requireContext(), "Please enter email", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Please enter email or phone number", Toast.LENGTH_SHORT).show()
             return false
         }
         if (password.isEmpty()) {
@@ -100,7 +100,11 @@ class SignInFragment : Fragment() {
     private fun loginWithEmail(email: String, password: String) {
         lifecycleScope.launch {
             try {
-                val request = com.example.fashionapp.UserLoginRequest(email, password)
+                // Backend expects 'username' field which can be email or phone number
+                val request = com.example.fashionapp.UserLoginRequest(
+                    username = email,  // Use email as username
+                    password = password
+                )
                 val response = AppRoute.auth.login(request)
 
                 if (response.user != null) {

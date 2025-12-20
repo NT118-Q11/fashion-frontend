@@ -44,6 +44,13 @@ class HomeFragment : Fragment() {
 
         // Setup vertical ViewPager2 to behave like a reel
         reelAdapter = ReelPagerAdapter(requireContext())
+        reelAdapter?.onItemClick = { item ->
+            try {
+                findNavController().navigate(R.id.detailsFragment)
+            } catch (e: Exception) {
+                Log.e("HomeFragment", "Navigation failed", e)
+            }
+        }
         binding.reelPager.apply {
             orientation = ViewPager2.ORIENTATION_VERTICAL
             adapter = reelAdapter

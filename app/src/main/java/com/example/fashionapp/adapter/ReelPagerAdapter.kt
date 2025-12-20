@@ -1,7 +1,9 @@
 package com.example.fashionapp.adapter
 
 import android.content.Context
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -10,9 +12,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.fashionapp.R
 import com.example.fashionapp.databinding.ItemReelBinding
 import com.example.fashionapp.model.ReelItem
-import android.graphics.Bitmap
-import android.graphics.Color
 import java.util.concurrent.ConcurrentHashMap
+import kotlin.math.pow
 
 class ReelPagerAdapter(
     private val context: Context,
@@ -21,6 +22,9 @@ class ReelPagerAdapter(
 
     // Listener for top area text color suggestions (left, center, right)
     var onTopTextColorsSuggested: ((Int, Int, Int) -> Unit)? = null
+
+    // Listener for item clicks
+    var onItemClick: ((ReelItem) -> Unit)? = null
 
     private val topColorCache: MutableMap<Int, Triple<Int, Int, Int>> = ConcurrentHashMap()
 
@@ -118,6 +122,11 @@ class ReelPagerAdapter(
                 // Bottom text color & shadows
                 val bottomLum = sampleBottomLuminance(bmp)
                 val isBright = bottomLum > 150
+
+                holder.binding.reelImage.setOnClickListener {
+                    onItemClick?.invoke(item)
+                }
+
                 val chosenTextColor = if (isBright) Color.BLACK else Color.WHITE
                 holder.binding.reelBrand.setTextColor(chosenTextColor)
                 holder.binding.reelName.setTextColor(chosenTextColor)
@@ -150,16 +159,18 @@ class ReelPagerAdapter(
     }
 
     private fun calculateContrast(fg: Int, bg: Int): Double {
+        fun channel(v: Int): Double {
+            val d = v / 255.0
+            return if (d <= 0.03928) d / 12.92 else ((d + 0.055) / 1.055).pow(2.4)
+        }
+
         fun relLum(c: Int): Double {
-            fun channel(v: Int): Double {
-                val d = v / 255.0
-                return if (d <= 0.03928) d / 12.92 else Math.pow((d + 0.055) / 1.055, 2.4)
-            }
-            val r = channel((c shr 16) and 0xFF)
-            val g = channel((c shr 8) and 0xFF)
+            val r = channel((c shr 16 and 0xFF))
+            val g = channel((c shr 8 and 0xFF))
             val b = channel(c and 0xFF)
             return 0.2126 * r + 0.7152 * g + 0.0722 * b
         }
+
         val l1 = relLum(fg) + 0.05
         val l2 = relLum(bg) + 0.05
         return if (l1 > l2) l1 / l2 else l2 / l1
@@ -174,3 +185,4 @@ class ReelPagerAdapter(
         notifyDataSetChanged()
     }
 }
+

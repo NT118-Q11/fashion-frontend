@@ -31,6 +31,10 @@
             android:id="@+id/action_homeFragment_to_activitySearchFragment"
             app:destination="@id/activitySearchFragment" />
 
+        <action
+            android:id="@+id/action_homeFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
+
 
     </fragment>
 

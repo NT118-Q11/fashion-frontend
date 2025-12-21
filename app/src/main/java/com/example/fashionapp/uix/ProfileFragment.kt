@@ -5,13 +5,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.example.fashionapp.databinding.ProfileBinding
+import com.example.fashionapp.data.UserManager
 
 class ProfileFragment : Fragment() {
 
     private var _binding: ProfileBinding? = null
     private val binding get() = _binding!!
+    private lateinit var userManager: UserManager
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -26,11 +29,72 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Initialize UserManager
+        userManager = UserManager.getInstance(requireContext())
+
+        // Load and display user information
+        loadUserProfile()
+
         binding.backButton.setOnClickListener {
             // Lệnh này sẽ quay lại màn hình trước đó trong Back Stack (tức là MyAccountFragment)
             findNavController().popBackStack()
         }
 
+        // Save button to update profile
+        binding.confirmButton.setOnClickListener {
+            saveUserProfile()
+        }
+    }
+
+    /**
+     * Load user profile information and populate the fields
+     */
+    private fun loadUserProfile() {
+        val user = userManager.getUser()
+        val firstName = userManager.getFirstName()
+        val lastName = userManager.getLastName()
+
+        // Set the values to the input fields
+        binding.currentName.setText(firstName ?: "")
+        binding.lastName2.setText(lastName ?: "")
+        binding.emailAddress.setText(user?.email ?: "")
+        binding.phoneNumber.setText(user?.phoneNumber ?: "")
+    }
+
+    /**
+     * Save updated user profile information
+     */
+    private fun saveUserProfile() {
+        val firstName = binding.currentName.text.toString().trim()
+        val lastName = binding.lastName2.text.toString().trim()
+        val email = binding.emailAddress.text.toString().trim()
+        val phoneNumber = binding.phoneNumber.text.toString().trim()
+
+        // Validate inputs
+        if (firstName.isEmpty() || lastName.isEmpty()) {
+            Toast.makeText(requireContext(), "Please enter your full name", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        if (email.isEmpty()) {
+            Toast.makeText(requireContext(), "Please enter email", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        if (phoneNumber.isEmpty()) {
+            Toast.makeText(requireContext(), "Please enter phone number", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        // Update profile information
+        userManager.updateProfile(
+            firstName = firstName,
+            lastName = lastName,
+            email = email,
+            phoneNumber = phoneNumber
+        )
+
+        Toast.makeText(requireContext(), "Profile updated successfully!", Toast.LENGTH_SHORT).show()
     }
 
     override fun onDestroyView() {

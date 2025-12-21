@@ -35,11 +35,21 @@
                     android:fontFamily="@font/tenorsans"
                     android:layout_marginTop="20dp"
                     android:text="CART"
+                    android:textStyle="bold"
                     android:textSize="18sp"
                     android:letterSpacing="0.3"
                     android:textColor="@color/black" />
+                <ImageView
+                    android:id="@+id/title_underline"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/underline"
+                    app:layout_constraintTop_toBottomOf="@id/change_password"
+                    app:layout_constraintStart_toStartOf="@id/change_password"
+                    app:layout_constraintEnd_toEndOf="@id/change_password" />
 
             </LinearLayout>
+
 
         </RelativeLayout>
 
@@ -88,7 +98,7 @@
                 android:gravity="center"
                 android:text="Please continue shopping to see your\nproducts here!"
                 android:textColor="@color/gray"
-                android:textSize="13sp" />
+                android:textSize="14sp" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnShoppingNow"

@@ -112,6 +112,10 @@
             android:id="@+id/action_signInFragment_to_registerFragment"
             app:destination="@id/registerFragment" />
 
+        <action
+            android:id="@+id/action_signInFragment_to_forgotPasswordFragment"
+            app:destination="@id/forgotPasswordFragment" />
+
 
     </fragment>
 
@@ -200,13 +204,6 @@
             android:id="@+id/action_checkoutFragment_to_confirmFragment"
             app:destination="@id/confirmFragment" />
 
-        <action
-            android:id="@+id/action_checkoutFragment_to_deliveryFragment"
-            app:destination="@id/deliveryFragment" />
-
-        <action
-            android:id="@+id/action_checkoutFragment_to_paymentFragment"
-            app:destination="@id/paymentFragment" />
     </fragment>
 
     <fragment
@@ -221,28 +218,6 @@
 
     </fragment>
 
-    <fragment
-        android:id="@+id/deliveryFragment"
-        android:name="com.example.fashionapp.uix.DeliveryFragment"
-        android:label="Delivery"
-        tools:layout="@layout/activity_delivery_method">
-
-        <action
-            android:id="@+id/action_deliveryFragment_to_confirmFragment"
-            app:destination="@id/confirmFragment" />
-
-    </fragment>
-
-    <fragment
-        android:id="@+id/paymentFragment"
-        android:name="com.example.fashionapp.uix.PaymentMethodFragment"
-        android:label="Payment"
-        tools:layout="@layout/activity_payment_method">
-
-        <action
-            android:id="@+id/action_paymentFragment_to_confirmFragment"
-            app:destination="@id/confirmFragment" />
-    </fragment>
 
     <fragment
         android:id="@+id/paymentSuccessFragment"
@@ -336,15 +311,12 @@
         android:id="@+id/detailsFragment"
         android:name="com.example.fashionapp.uix.DetailsFragment"
         android:label="Details"
-        tools:layout="@layout/details">
+        tools:layout="@layout/product_detail">
         <argument
             android:name="productId"
             app:argType="string"
             app:nullable="true"
             android:defaultValue="@null" />
-        <action
-            android:id="@+id/action_detailsFragment_to_details2Fragment"
-            app:destination="@id/details2Fragment" />
         <action
             android:id="@+id/action_detailsFragment_to_details3Fragment"
             app:destination="@id/details3Fragment" />
@@ -359,17 +331,7 @@
         android:label="Details 1"
         tools:layout="@layout/details_1">
         <action
-            android:id="@+id/action_details1Fragment_to_details2Fragment"
-            app:destination="@id/details2Fragment" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/details2Fragment"
-        android:name="com.example.fashionapp.uix.Details2Fragment"
-        android:label="Details 2"
-        tools:layout="@layout/details_2">
-        <action
-            android:id="@+id/action_details2Fragment_to_details3Fragment"
+            android:id="@+id/action_details1Fragment_to_details3Fragment"
             app:destination="@id/details3Fragment" />
     </fragment>
 
@@ -378,5 +340,15 @@
         android:name="com.example.fashionapp.uix.Details3Fragment"
         android:label="Details 3"
         tools:layout="@layout/details_3" />
+    <fragment
+        android:id="@+id/forgotPasswordFragment"
+        android:name="com.example.fashionapp.uix.ForgotPasswordFragment"
+        android:label="Forgot Password"
+        tools:layout="@layout/activity_forgot_password">
+
+        <action
+            android:id="@+id/action_forgotPasswordFragment_to_signInFragment"
+            app:destination="@id/signInFragment" />
+    </fragment>
 
 </navigation>

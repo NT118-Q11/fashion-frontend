@@ -15,6 +15,7 @@ import com.example.fashionapp.AppRoute
 import com.example.fashionapp.GoogleOAuth2UserInfo
 import com.example.fashionapp.GoogleSignInManager
 import com.example.fashionapp.databinding.ActivitySignInBinding
+import com.example.fashionapp.data.UserManager
 import kotlinx.coroutines.launch
 
 class SignInFragment : Fragment() {
@@ -22,6 +23,7 @@ class SignInFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var googleSignInManager: GoogleSignInManager
+    private lateinit var userManager: UserManager
 
     // Activity result launcher for Google Sign-In
     private val googleSignInLauncher = registerForActivityResult(
@@ -61,6 +63,9 @@ class SignInFragment : Fragment() {
         // Initialize Google Sign-In Manager
         googleSignInManager = GoogleSignInManager(requireContext())
 
+        // Initialize UserManager
+        userManager = UserManager.getInstance(requireContext())
+
         // Regular email/password sign in
         binding.buttonSignIn.setOnClickListener {
             val email = binding.etEmail.text.toString().trim()
@@ -74,6 +79,10 @@ class SignInFragment : Fragment() {
         // Navigate to register
         binding.tvRegister.setOnClickListener {
             findNavController().navigate(R.id.action_signInFragment_to_registerFragment)
+        }
+
+        binding.forgetPassword.setOnClickListener {
+            findNavController().navigate(R.id.action_signInFragment_to_forgotPasswordFragment)
         }
 
         // Google Sign-In button
@@ -108,6 +117,9 @@ class SignInFragment : Fragment() {
                 val response = AppRoute.auth.login(request)
 
                 if (response.user != null) {
+                    // Save user data to SharedPreferences
+                    userManager.saveUser(response.user)
+
                     Toast.makeText(
                         requireContext(),
                         "Welcome ${response.user.username ?: response.user.email}!",
@@ -167,6 +179,10 @@ class SignInFragment : Fragment() {
                 val response = AppRoute.auth.loginWithGoogle(googleUserInfo)
 
                 if (response.user != null) {
+                    // Save user data to SharedPreferences
+                    // Backend now returns firstName and lastName in UserDto
+                    userManager.saveUser(response.user)
+
                     Toast.makeText(
                         requireContext(),
                         "Welcome ${response.user.username ?: response.user.email}!",

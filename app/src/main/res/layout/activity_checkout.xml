@@ -1,166 +1,282 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F4F1EC"
-    android:fitsSystemWindows="true">
+    android:background="#F4F1EC">
 
-    <!-- Nút Back -->
     <ImageView
         android:id="@+id/btnBack"
         android:layout_width="24dp"
         android:layout_height="24dp"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
-        app:srcCompat="@drawable/ic_arrow_back"
-        app:tint="#000000"
+        android:src="@drawable/ic_arrow_back"
+        app:tint="#000"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>
 
     <!-- Title -->
+
     <TextView
-        android:id="@+id/tvCheckoutTitle"
+        android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="CHECKOUT"
+        android:layout_marginTop="32dp"
         android:fontFamily="@font/tenorsans"
+        android:text="CHECKOUT"
+        android:textColor="#000"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/btnBack" />
+
+    <ImageView
+        android:id="@+id/title_underline"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/underline"
+        android:layout_marginTop="4dp"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+
+    <!-- SHIPPING ADDRESS -->
+    <TextView
+        android:id="@+id/tvAddressLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SHIPPING ADDRESS"
+        android:textColor="#888"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:fontFamily="@font/tenorsans"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="50dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@id/tvTitle"
+        app:layout_constraintStart_toStartOf="parent"/>
 
-    <!-- Delivery Method -->
-    <LinearLayout
-        android:id="@+id/btnDelivery"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardAddress"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingHorizontal="20dp"
-        android:paddingTop="100dp"
-        android:paddingBottom="10dp"
-        android:clickable="true"
-        app:layout_constraintTop_toBottomOf="@id/tvCheckoutTitle"
+        android:layout_margin="20dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="0dp"
+        app:layout_constraintTop_toBottomOf="@id/tvAddressLabel"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <TextView
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Delivery method"
-            android:gravity="center"
-            android:textSize="20sp"
-            android:textColor="#000000"
-            android:fontFamily="@font/tenorsans"/>
+            android:padding="16dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:text="Iris Watson"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:textColor="#000"
+                    android:fontFamily="@font/tenorsans"/>
+
+                <TextView
+                    android:text="606-3727 Ullamcorper Street"
+                    android:textSize="14sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#555"/>
+
+                <TextView
+                    android:text="Roseville NH 11523"
+                    android:textSize="14sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#555"/>
+
+                <TextView
+                    android:text="(786) 713-8616"
+                    android:textSize="14sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#555"/>
+            </LinearLayout>
+
+            <!-- Arrow -->
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentEnd="true"
+                android:layout_gravity="center"
+                android:layout_marginEnd="13dp"
+                android:src="@drawable/arrow_right"
+                app:tint="#000" />
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+    <!-- SHIPPING METHOD -->
+
+    <TextView
+        android:id="@+id/tvShippingMethodLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/tenorsans"
+        android:text="SHIPPING METHOD"
+        android:textColor="#888"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cardAddress" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardShippingMethod"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="0dp"
+        app:layout_constraintTop_toBottomOf="@id/tvShippingMethodLabel"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="8dp"
+            android:padding="16dp"
             android:gravity="center_vertical">
 
-            <TextView
+            <Spinner
+                android:id="@+id/spinnerShipping"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:fontFamily="@font/tenorsans"
-                android:gravity="center"
-                android:text="    Choose a delivery method"
-                android:textColor="#999999"
-                android:textSize="16sp" />
+                android:background="@null"/>
 
             <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                app:srcCompat="@drawable/ic_right"
-                app:tint="#000000"/>
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="15dp"
-            android:background="#D8D8D8" />
-    </LinearLayout>
-
-    <!-- Payment Method -->
-    <LinearLayout
-        android:id="@+id/btnPayment"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginTop="30dp"
-        android:paddingHorizontal="20dp"
-        android:paddingTop="15dp"
-        android:paddingBottom="10dp"
-        android:clickable="true"
-        app:layout_constraintTop_toBottomOf="@id/btnDelivery"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Payment method"
-            android:gravity="center"
-            android:textSize="20sp"
-            android:textColor="#000"
-            android:fontFamily="@font/tenorsans"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="8dp"
-            android:gravity="center_vertical">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="   Select payment methods"
-                android:gravity="center"
-                android:fontFamily="@font/tenorsans"
-                android:textColor="#999"
-                android:textSize="16sp"/>
-
-            <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                app:srcCompat="@drawable/ic_right"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:src="@drawable/ic_down"
                 app:tint="#000"/>
         </LinearLayout>
+    </androidx.cardview.widget.CardView>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="15dp"
-            android:background="#D8D8D8"/>
-    </LinearLayout>
-
-
-    <!-- Pay Button -->
-    <LinearLayout
-        android:id="@+id/btnPay"
-        android:layout_width="0dp"
-        android:layout_height="70dp"
-        android:gravity="center"
-        android:background="#000000"
+    <!-- PAYMENT METHOD -->
+    <TextView
+        android:id="@+id/tvPaymentLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/tenorsans"
+        android:text="PAYMENT METHOD"
+        android:textColor="#888"
+        android:textSize="16sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cardShippingMethod" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardPayment"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="0dp"
+        app:layout_constraintTop_toBottomOf="@id/tvPaymentLabel"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:padding="16dp">
+
+            <ImageView
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:src="@android:drawable/ic_menu_info_details"
+                app:tint="#000" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cash on Delivery"
+                android:textSize="16sp"
+                android:textColor="#000"
+                android:fontFamily="@font/tenorsans"
+                android:layout_marginStart="12dp" />
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+
+    <!-- PLACE ORDER -->
+    <LinearLayout
+        android:id="@+id/layoutSubtotal"
+        android:layout_width="407dp"
+        android:layout_height="36dp"
+        android:layout_marginBottom="32dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="20dp"
+        android:paddingTop="16dp"
+        app:layout_constraintBottom_toTopOf="@id/btnPlaceOrder"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintStart_toStartOf="parent">
 
         <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/tenorsans"
+            android:text="TOTAL"
+            android:textColor="#000"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/tv_subtotal_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="PAY • $430"
-            android:textColor="#FFFFFF"
-            android:textSize="18sp"
-            android:fontFamily="@font/tenorsans"/>
+            android:fontFamily="@font/tenorsans"
+            android:text="$240"
+            android:textColor="#C67A5C"
+            android:textSize="20sp"
+            android:textStyle="bold" />
     </LinearLayout>
+
+    <Button
+        android:id="@+id/btnPlaceOrder"
+        android:layout_width="0dp"
+        android:layout_height="64dp"
+        android:text="PLACE ORDER"
+        android:textColor="#FFF"
+        android:textSize="16sp"
+        android:fontFamily="@font/tenorsans"
+        android:backgroundTint="#000"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="24dp"
+        android:paddingVertical="14dp"
+        app:icon="@drawable/ic_shopping_bag"
+        app:iconGravity="textStart"
+        app:iconPadding="12dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

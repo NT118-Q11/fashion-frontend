@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.fashionapp.R
 import com.example.fashionapp.adapter.FavoritesAdapter
+import com.example.fashionapp.data.FavoritesManager
 import com.example.fashionapp.databinding.ActivityMyFavoritesBinding
 import com.example.fashionapp.model.FavoriteItem
 
@@ -25,7 +26,7 @@ class MyFavoritesFragment : Fragment() {
 
     private var currentPage = 1
     private val itemsPerPage = 4
-    private lateinit var allItems: List<FavoriteItem>
+    private var allItems: List<FavoriteItem> = emptyList()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,28 +39,7 @@ class MyFavoritesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        allItems = listOf(
-            FavoriteItem("LAMEREI", "reversible angora cardigan", "$120", R.drawable.sample_woman),
-            FavoriteItem("FENDI", "cotton jacket", "$210", R.drawable.sample_woman),
-            FavoriteItem("CHANEL", "classic coat", "$350", R.drawable.sample_woman),
-            FavoriteItem("GUCCI", "wool blazer", "$280", R.drawable.sample_woman),
-            FavoriteItem("PRADA", "silk blouse", "$190", R.drawable.sample_woman),
-            FavoriteItem("DIOR", "leather boots", "$320", R.drawable.sample_woman),
-            FavoriteItem("MIU MIU", "pleated skirt", "$150", R.drawable.sample_woman),
-            FavoriteItem("BURBERRY", "trench coat", "$400", R.drawable.sample_woman) ,
-            FavoriteItem("LAMEREI", "reversible angora cardigan", "$120", R.drawable.sample_woman),
-        FavoriteItem("FENDI", "cotton jacket", "$210", R.drawable.sample_woman),
-        FavoriteItem("CHANEL", "classic coat", "$350", R.drawable.sample_woman),
-        FavoriteItem("GUCCI", "wool blazer", "$280", R.drawable.sample_woman),
-        FavoriteItem("PRADA", "silk blouse", "$190", R.drawable.sample_woman),
-        FavoriteItem("DIOR", "leather boots", "$320", R.drawable.sample_woman),
-        FavoriteItem("MIU MIU", "pleated skirt", "$150", R.drawable.sample_woman),
-        FavoriteItem("BURBERRY", "trench coat", "$400", R.drawable.sample_woman),
-            FavoriteItem("BURBERRY", "trench coat", "$400", R.drawable.sample_woman) ,
-            FavoriteItem("LAMEREI", "reversible angora cardigan", "$120", R.drawable.sample_woman),
-            FavoriteItem("FENDI", "cotton jacket", "$210", R.drawable.sample_woman),
-            FavoriteItem("CHANEL", "classic coat", "$350", R.drawable.sample_woman),
-        )
+        loadFavorites()
 
         binding.rvFavorites.layoutManager = GridLayoutManager(requireContext(), 2)
 
@@ -117,6 +97,18 @@ class MyFavoritesFragment : Fragment() {
         }
     }
 
+    private fun loadFavorites() {
+        allItems = FavoritesManager.getFavorites()
+        // Reset current page if it exceeds total pages after deletion
+        val totalPages = (allItems.size + itemsPerPage - 1) / itemsPerPage
+        if (currentPage > totalPages && currentPage > 1) {
+            currentPage = totalPages
+        }
+        if (allItems.isEmpty()) {
+            currentPage = 1
+        }
+    }
+
     private fun updatePageUI() {
         pageButtons.forEachIndexed { index, button ->
             val isSelected = (index + 1) == currentPage
@@ -130,9 +122,18 @@ class MyFavoritesFragment : Fragment() {
 
         val startIndex = (currentPage - 1) * itemsPerPage
         val endIndex = minOf(startIndex + itemsPerPage, allItems.size)
-        val pageItems = allItems.subList(startIndex, endIndex)
 
-        binding.rvFavorites.adapter = FavoritesAdapter(pageItems)
+        val pageItems = if (startIndex < allItems.size) {
+            allItems.subList(startIndex, endIndex)
+        } else {
+            emptyList()
+        }
+
+        binding.rvFavorites.adapter = FavoritesAdapter(pageItems) { itemToRemove ->
+            FavoritesManager.removeFavorite(itemToRemove)
+            loadFavorites()
+            updatePageUI()
+        }
     }
 
     override fun onDestroyView() {

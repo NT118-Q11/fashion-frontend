@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Page button dimensions -->
+    <dimen name="page_button_size">32dp</dimen>
+    <dimen name="page_button_margin_start">8dp</dimen>
+    <dimen name="page_button_margin_between">6dp</dimen>
+</resources>
+

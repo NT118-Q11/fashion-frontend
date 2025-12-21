@@ -31,6 +31,10 @@
             android:id="@+id/action_homeFragment_to_activitySearchFragment"
             app:destination="@id/activitySearchFragment" />
 
+        <action
+            android:id="@+id/action_homeFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
+
 
     </fragment>
 
@@ -121,6 +125,10 @@
             android:id="@+id/action_registerFragment_to_signInFragment"
             app:destination="@id/signInFragment" />
 
+        <action
+            android:id="@+id/action_registerFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+
     </fragment>
 
 
@@ -151,6 +159,10 @@
         <action
             android:id="@+id/action_myAccountFragment_to_cartFragment"
             app:destination="@id/cartFragment"/>
+
+        <action
+            android:id="@+id/action_myAccountFragment_to_notificationFragment"
+            app:destination="@id/NotificationFragment" />
 
     </fragment>
 
@@ -276,6 +288,22 @@
         <action
             android:id="@+id/action_activitySearchFragment_to_activitySearchViewFragment"
             app:destination="@id/activitySearchViewFragment" />
+
+        <action
+            android:id="@+id/action_activitySearchFragment_to_homeFragment"
+            app:destination="@id/homeFragment"/>
+
+        <action
+            android:id="@+id/action_activitySearchFragment_to_myAccountFragment"
+            app:destination="@id/myAccountFragment" />
+
+        <action
+            android:id="@+id/action_activitySearchFragment_to_cartFragment"
+            app:destination="@id/cartFragment" />
+
+        <action
+            android:id="@+id/action_activitySearchFragment_to_notificationFragment"
+            app:destination="@id/NotificationFragment" />
     </fragment>
 
     <fragment
@@ -309,6 +337,11 @@
         android:name="com.example.fashionapp.uix.DetailsFragment"
         android:label="Details"
         tools:layout="@layout/details">
+        <argument
+            android:name="productId"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null" />
         <action
             android:id="@+id/action_detailsFragment_to_details2Fragment"
             app:destination="@id/details2Fragment" />

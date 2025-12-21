@@ -96,13 +96,23 @@ class HomeFragment : Fragment() {
                     // Try to extract a number for the name, or just use a counter/hash
                     val numberStr = fileName.filter { it.isDigit() }
                     val n = if (numberStr.isNotEmpty()) numberStr.toInt() else (1..100).random()
-
+                    val id = "${brand}_${n}_${fileName.hashCode()}"
                     val name = when (brand) {
                         "WOMEN" -> "Fashion Item $n"
                         "MAN" -> "Men Style $n"
-                        else -> "Kids Wear $n"
+                        "KIDS" -> "Kid Outfit $n"
+                        else -> "Item $n"
                     }
-                    allItems.add(ReelItem(filePath, brand, name, "$${(80..140).random()}"))
+                    val price = "$${(50..300).random()}"
+                    allItems.add(
+                        ReelItem(
+                            id = id,
+                            imageAssetPath = filePath,
+                            brand = brand,
+                            name = name,
+                            priceText = price
+                        )
+                    )
                 }
             } catch (e: Exception) {
                 Log.e("HomeFragment", "Error listing assets for $folder", e)

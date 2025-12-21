@@ -10,7 +10,9 @@ import android.view.ViewGroup
 import androidx.palette.graphics.Palette
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fashionapp.R
+import com.example.fashionapp.data.FavoritesManager
 import com.example.fashionapp.databinding.ItemReelBinding
+import com.example.fashionapp.model.FavoriteItem
 import com.example.fashionapp.model.ReelItem
 import java.util.concurrent.ConcurrentHashMap
 import kotlin.math.pow
@@ -114,6 +116,37 @@ class ReelPagerAdapter(
         holder.binding.reelName.text = item.name
         holder.binding.reelPrice.text = item.priceText
         val path = item.imageAssetPath
+
+        // Check favorite status
+        val favItem = FavoriteItem(
+            id = item.id,
+            name = item.name,
+            desc = item.brand,
+            price = item.priceText,
+            imagePath = item.imageAssetPath
+        )
+
+        fun updateFavoriteIcon() {
+            val isFav = FavoritesManager.isFavorite(favItem)
+            holder.binding.reelFavorite.setImageResource(
+                if (isFav) R.drawable.ic_favorite_filled else R.drawable.ic_favorite_border
+            )
+            holder.binding.reelFavorite.setColorFilter(
+                if (isFav) Color.parseColor("#E07A5F") else Color.WHITE
+            )
+        }
+
+        updateFavoriteIcon()
+
+        holder.binding.reelFavorite.setOnClickListener {
+            if (FavoritesManager.isFavorite(favItem)) {
+                FavoritesManager.removeFavorite(favItem)
+            } else {
+                FavoritesManager.addFavorite(favItem)
+            }
+            updateFavoriteIcon()
+        }
+
         try {
             context.assets.open(path).use { input ->
                 val bmp = BitmapFactory.decodeStream(input)
@@ -185,4 +218,3 @@ class ReelPagerAdapter(
         notifyDataSetChanged()
     }
 }
-

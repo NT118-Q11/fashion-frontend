@@ -1,5 +1,4 @@
 package com.example.fashionapp.uix
-
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -14,14 +13,14 @@ import com.example.fashionapp.R
 import com.example.fashionapp.adapter.ImageSliderAdapter
 import com.example.fashionapp.data.CartItem
 import com.example.fashionapp.data.CartManager
-import com.example.fashionapp.databinding.DetailsBinding
+import com.example.fashionapp.databinding.ProductDetailBinding
 import com.example.fashionapp.model.Product
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.coroutines.launch
 
 class DetailsFragment : Fragment() {
 
-    private var _binding: DetailsBinding? = null
+    private var _binding: ProductDetailBinding? = null
     private val binding get() = _binding!!
     private var currentProduct: Product? = null
 
@@ -29,7 +28,7 @@ class DetailsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = DetailsBinding.inflate(inflater, container, false)
+        _binding = ProductDetailBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -37,15 +36,15 @@ class DetailsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // Setup back button
-        binding.imageButton1.setOnClickListener {
+        binding.btnBack.setOnClickListener {
             findNavController().popBackStack()
         }
 
-        // Setup tab navigation buttons
-        binding.btnInfo.setOnClickListener {
+        // Setup tab navigation buttons (match IDs from product_detail.xml)
+        binding.tabInfo.setOnClickListener {
             findNavController().navigate(R.id.action_detailsFragment_to_details1Fragment)
         }
-        binding.btnRating.setOnClickListener {
+        binding.tabRating.setOnClickListener {
             findNavController().navigate(R.id.action_detailsFragment_to_details3Fragment)
         }
 
@@ -59,7 +58,7 @@ class DetailsFragment : Fragment() {
         }
 
         // Setup add to cart button
-        binding.addToCartButton.setOnClickListener {
+        binding.btnAddToCart.setOnClickListener {
             addToCart()
         }
     }
@@ -73,7 +72,7 @@ class DetailsFragment : Fragment() {
                 Log.d("DetailsFragment", "Loading product details for ID: $productId")
 
                 // Show loading state (optional - you can add a progress bar to layout)
-                binding.addToCartButton.isEnabled = false
+                binding.btnAddToCart.isEnabled = false
 
                 currentProduct = AppRoute.product.getProductById(productId)
 
@@ -82,7 +81,7 @@ class DetailsFragment : Fragment() {
                 // Update UI with product data
                 setupProductUI(currentProduct!!)
 
-                binding.addToCartButton.isEnabled = true
+                binding.btnAddToCart.isEnabled = true
 
             } catch (e: Exception) {
                 Log.e("DetailsFragment", "Error loading product details", e)
@@ -94,7 +93,7 @@ class DetailsFragment : Fragment() {
 
                 // Show default data on error
                 setupDefaultData()
-                binding.addToCartButton.isEnabled = true
+                binding.btnAddToCart.isEnabled = true
             }
         }
     }
@@ -125,8 +124,8 @@ class DetailsFragment : Fragment() {
             ))
         }
 
-        binding.viewPagerMain.adapter = ImageSliderAdapter(imageList, requireContext())
-        TabLayoutMediator(binding.tabLayoutMain, binding.viewPagerMain) { _, _ -> }.attach()
+        binding.viewPagerProduct.adapter = ImageSliderAdapter(imageList, requireContext())
+        TabLayoutMediator(binding.tabLayoutProduct, binding.viewPagerProduct) { _, _ -> }.attach()
 
         // Note: Product name, price, and other details are shown in Details1Fragment (Information tab)
     }
@@ -141,8 +140,8 @@ class DetailsFragment : Fragment() {
             R.drawable.model_image_3
         )
 
-        binding.viewPagerMain.adapter = ImageSliderAdapter(imageList, requireContext())
-        TabLayoutMediator(binding.tabLayoutMain, binding.viewPagerMain) { _, _ -> }.attach()
+        binding.viewPagerProduct.adapter = ImageSliderAdapter(imageList, requireContext())
+        TabLayoutMediator(binding.tabLayoutProduct, binding.viewPagerProduct) { _, _ -> }.attach()
     }
 
     /**

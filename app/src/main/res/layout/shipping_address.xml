@@ -5,13 +5,26 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:fitsSystemWindows="true"
-    android:background="@color/white">
+    android:background="#F4F1EC">
+
+    <ImageView
+        android:id="@+id/logo_noive"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="5dp"
+        android:contentDescription="Logo Noive"
+        android:scaleType="fitCenter"
+        android:src="@drawable/noive_logo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"/>
 
     <LinearLayout
         android:id="@+id/shipping_address"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="90dp"
+        android:layout_marginTop="130dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -23,8 +36,9 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/tenorsans"
             android:text="SHIPPING ADDRESS"
-            android:textColor="@color/black"
             android:textAlignment="center"
+            android:textStyle="bold"
+            android:textColor="@color/black"
             android:textSize="20sp" />
 
         <ImageView
@@ -53,7 +67,7 @@
             android:fontFamily="@font/tenorsans"
             android:text="Name"
             android:textColor="@color/gray"
-            android:textSize="16sp"
+            android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -65,7 +79,7 @@
             android:fontFamily="@font/tenorsans"
             android:text="2365 Green Street, D2, California"
             android:textColor="@color/gray"
-            android:textSize="16sp"
+            android:textSize="18sp"
             app:layout_constraintStart_toStartOf="@id/name"
             app:layout_constraintTop_toBottomOf="@id/name" />
 
@@ -77,7 +91,7 @@
             android:fontFamily="@font/tenorsans"
             android:text="096 0000 000"
             android:textColor="@color/gray"
-            android:textSize="16sp"
+            android:textSize="18sp"
             app:layout_constraintStart_toStartOf="@id/address"
             app:layout_constraintTop_toBottomOf="@id/address" />
 
@@ -85,17 +99,19 @@
             android:id="@+id/imageButton1"
             android:layout_width="30dp"
             android:layout_height="20dp"
-            android:layout_marginEnd="40dp"
             android:layout_marginTop="20dp"
-            android:backgroundTint="@color/white"
-            android:contentDescription="@string/edit_profile"
+            android:layout_marginEnd="24dp"
             android:background="?android:attr/selectableItemBackgroundBorderless"
-            android:scaleType="fitCenter"
+            android:backgroundTint="@color/white"
             android:clickable="true"
+            android:contentDescription="@string/edit_profile"
+            android:scaleType="fitCenter"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.517"
             app:srcCompat="@drawable/edit_pen" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -122,6 +138,43 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>
 
+    <!-- ADD NEW SHIPPING ADDRESS (LEFT - RIGHT) -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/add_new_address"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:minHeight="48dp"
+        android:paddingHorizontal="32dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/line1">
+
+        <TextView
+            android:id="@+id/tvAddAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/tenorsans"
+            android:text="  Add New Shipping Address"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/ivAdd"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_plus"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/black" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     <!-- Bottom Navigation Bar -->
@@ -138,7 +191,6 @@
 
         <!-- Home Icon -->
 
-        <!-- Notifications Icon -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/navHome"
             style="?attr/materialIconButtonStyle"
@@ -152,6 +204,7 @@
             app:iconSize="28dp"
             app:tint="@color/white" />
 
+        <!-- Notifications Icon -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/navNotifications"
             android:backgroundTint="@color/black"

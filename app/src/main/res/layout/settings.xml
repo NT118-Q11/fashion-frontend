@@ -4,13 +4,26 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/white">
+    android:background="#F4F1EC">
+
+    <ImageView
+        android:id="@+id/logo_noive"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="5dp"
+        android:contentDescription="Logo Noive"
+        android:scaleType="fitCenter"
+        android:src="@drawable/noive_logo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"/>
 
     <LinearLayout
         android:id="@+id/setting"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="90dp"
+        android:layout_marginTop="100dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,7 +34,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/tenorsans"
-            android:text="SETTINGS"
+            android:text="SETTING"
             android:textColor="@color/black"
             android:textAlignment="center"
             android:textSize="20sp" />
@@ -95,7 +108,7 @@
         <ImageButton
             android:id="@+id/imageButton1"
             android:layout_width="30dp"
-            android:layout_height="48dp"
+            android:layout_height="30dp"
             android:layout_marginEnd="30dp"
             android:backgroundTint="@color/white"
             android:contentDescription="@string/edit_profile"
@@ -107,7 +120,7 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <!-- FIX: Constrained to the bottom of the correct view -->
+
     <ImageView
         android:id="@+id/line1"
         android:layout_width="360dp"
@@ -118,7 +131,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>
 
-    <!-- FIX: Constrained below line1 to prevent overlap -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/password_constraint"
         android:layout_width="0dp"
@@ -169,7 +181,7 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <!-- FIX: Constrained to the bottom of the correct view -->
+
     <ImageView
         android:id="@+id/line2"
         android:layout_width="360dp"
@@ -180,7 +192,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>
 
-    <!-- FIX: Constrained below line2 and height changed to wrap_content -->
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/logout_constraint"
         android:layout_width="0dp"
@@ -292,13 +304,13 @@
         android:id="@+id/back_button"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="28dp"
         android:background="?android:attr/selectableItemBackgroundBorderless"
-        android:scaleType="fitCenter"
         android:backgroundTint="@color/white"
-        android:contentDescription="Arrow left"
         android:clickable="true"
+        android:contentDescription="Arrow left"
+        android:scaleType="fitCenter"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/arrow_left" />

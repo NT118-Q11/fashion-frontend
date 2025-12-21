@@ -21,6 +21,9 @@
     <color name="yellow_skin">#f5efe5</color>
     <color name="not_really_white">#F9F9F7</color>
     <color name="orange">#F4A460</color>
-    <color name="yellow_white">#F4F1EC</color>
-    <color name="for_small_text">#979797</color>
+    <color name="orange_price">#E26A2C</color>
+    <color name="for_small_text">#777777</color>
+    <color name="yellow_white">#FAF7F2</color>
+
+
 </resources>

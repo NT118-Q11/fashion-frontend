@@ -3,13 +3,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#F4F1EC"
     android:fitsSystemWindows="true">
+
+    <ImageView
+        android:id="@+id/logo_noive"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="5dp"
+        android:contentDescription="Logo Noive"
+        android:scaleType="fitCenter"
+        android:src="@drawable/noive_logo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"/>
 
     <LinearLayout
         android:id="@+id/my_account"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="100dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,8 +38,8 @@
             android:text="MY ACCOUNT"
             android:textAlignment="center"
             android:textColor="@color/black"
-            android:textStyle="bold"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <ImageView
             android:layout_width="150dp"

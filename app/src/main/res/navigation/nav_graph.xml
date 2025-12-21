@@ -343,9 +343,6 @@
             app:nullable="true"
             android:defaultValue="@null" />
         <action
-            android:id="@+id/action_detailsFragment_to_details2Fragment"
-            app:destination="@id/details2Fragment" />
-        <action
             android:id="@+id/action_detailsFragment_to_details3Fragment"
             app:destination="@id/details3Fragment" />
         <action
@@ -359,17 +356,7 @@
         android:label="Details 1"
         tools:layout="@layout/details_1">
         <action
-            android:id="@+id/action_details1Fragment_to_details2Fragment"
-            app:destination="@id/details2Fragment" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/details2Fragment"
-        android:name="com.example.fashionapp.uix.Details2Fragment"
-        android:label="Details 2"
-        tools:layout="@layout/details_2">
-        <action
-            android:id="@+id/action_details2Fragment_to_details3Fragment"
+            android:id="@+id/action_details1Fragment_to_details3Fragment"
             app:destination="@id/details3Fragment" />
     </fragment>
 

@@ -56,19 +56,6 @@
             app:cornerRadius="0dp"
             app:strokeWidth="0dp"/>
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_description"
-            style="?attr/materialIconButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:backgroundTint="@color/yellow_white"
-            android:text="@string/tab_description"
-            android:textColor="@color/for_small_text"
-            android:textAllCaps="false"
-            android:textSize="15sp"
-            app:cornerRadius="0dp"
-            app:strokeWidth="0dp"/>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_rating"

@@ -45,9 +45,6 @@ class DetailsFragment : Fragment() {
         binding.btnInfo.setOnClickListener {
             findNavController().navigate(R.id.action_detailsFragment_to_details1Fragment)
         }
-        binding.btnDescription.setOnClickListener {
-            findNavController().navigate(R.id.action_detailsFragment_to_details2Fragment)
-        }
         binding.btnRating.setOnClickListener {
             findNavController().navigate(R.id.action_detailsFragment_to_details3Fragment)
         }
@@ -131,8 +128,7 @@ class DetailsFragment : Fragment() {
         binding.viewPagerMain.adapter = ImageSliderAdapter(imageList, requireContext())
         TabLayoutMediator(binding.tabLayoutMain, binding.viewPagerMain) { _, _ -> }.attach()
 
-        // Note: Product name, price, and other details can be shown in Details1Fragment, Details2Fragment
-        // You may want to pass the product data to those fragments as well
+        // Note: Product name, price, and other details are shown in Details1Fragment (Information tab)
     }
 
     /**

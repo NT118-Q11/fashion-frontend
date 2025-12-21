@@ -11,53 +11,56 @@ import com.example.fashionapp.R
 import com.example.fashionapp.adapter.ImageSliderAdapter
 import com.example.fashionapp.data.CartItem
 import com.example.fashionapp.data.CartManager
-import com.example.fashionapp.databinding.DetailsBinding
+import com.example.fashionapp.databinding.ProductDetailBinding
 import com.google.android.material.tabs.TabLayoutMediator
 
 class DetailsFragment : Fragment() {
 
-    private var _binding: DetailsBinding? = null
+    private var _binding: ProductDetailBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = DetailsBinding.inflate(inflater, container, false)
+        _binding = ProductDetailBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Danh sách ảnh sản phẩm
         val imageList = listOf(
             R.drawable.model_image_1,
             R.drawable.model_image_2,
             R.drawable.model_image_3
         )
 
-        binding.viewPagerMain.adapter = ImageSliderAdapter(imageList)
+        // Adapter cho ViewPager2
+        binding.viewPagerProduct.adapter = ImageSliderAdapter(imageList)
 
-        TabLayoutMediator(binding.tabLayoutMain, binding.viewPagerMain) { _, _ -> }.attach()
+        // Liên kết TabLayout với ViewPager2
+        TabLayoutMediator(binding.tabLayoutProduct, binding.viewPagerProduct) { _, _ -> }.attach()
 
-        binding.imageButton1.setOnClickListener {
+        // Nút back
+        binding.btnBack.setOnClickListener {
             findNavController().popBackStack()
         }
 
         // 3 nút chuyển fragment
-        binding.btnInfo.setOnClickListener {
+        binding.tabInfo.setOnClickListener {
             findNavController().navigate(R.id.action_detailsFragment_to_details1Fragment)
         }
-        binding.btnDescription.setOnClickListener {
+        binding.tabDescription.setOnClickListener {
             findNavController().navigate(R.id.action_detailsFragment_to_details2Fragment)
         }
-        binding.btnRating.setOnClickListener {
+        binding.tabRating.setOnClickListener {
             findNavController().navigate(R.id.action_detailsFragment_to_details3Fragment)
         }
 
-        // NÚT ADD TO CART
-        binding.addToCartButton.setOnClickListener {
-
+        // Nút ADD TO CART
+        binding.btnAddToCart.setOnClickListener {
             val item = CartItem(
                 id = 1,
                 title = "LAMEREI",
@@ -68,7 +71,6 @@ class DetailsFragment : Fragment() {
             )
 
             CartManager.addItem(item)
-
             Toast.makeText(requireContext(), "Added to cart!", Toast.LENGTH_SHORT).show()
         }
     }

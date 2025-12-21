@@ -7,8 +7,104 @@
     android:layout_height="match_parent"
     android:background="#F5F1E8"
     android:fitsSystemWindows="true">
+    <!-- LOGO NOIVÉ -->
+    <LinearLayout
+        android:id="@+id/logo_noive"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <!-- Top bar -->
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:paddingStart="24dp">
+
+            <!-- Lớp stroke đen -->
+            <TextView
+                android:id="@+id/tvNStroke"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/greatvibes"
+                android:includeFontPadding="false"
+                android:shadowColor="#80000000"
+                android:shadowDx="3"
+                android:shadowDy="4"
+                android:shadowRadius="8"
+                android:text="N"
+                android:textColor="#000000"
+                android:textSize="40sp" />
+
+            <!-- Lớp chữ trắng -->
+            <TextView
+                android:id="@+id/tvN"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/greatvibes"
+                android:includeFontPadding="false"
+                android:shadowColor="#FFEB3B"
+                android:shadowDx="0"
+                android:shadowDy="0"
+                android:shadowRadius="6"
+                android:text="N "
+                android:textColor="#FFFFFF"
+                android:textSize="40sp"
+                android:translationX="-1dp"
+                android:translationY="-1dp" />
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:clipChildren="false"
+            android:clipToPadding="false">
+
+            <!-- Lớp stroke -->
+            <TextView
+                android:id="@+id/tvOiveStroke"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/quicksand"
+                android:includeFontPadding="false"
+                android:shadowColor="#80000000"
+                android:shadowDx="3"
+                android:shadowDy="4"
+                android:shadowRadius="8"
+                android:text="oivé"
+                android:textColor="#000000"
+                android:textSize="30sp"
+                android:translationX="-15dp" />
+
+            <!-- Lớp chữ trắng -->
+            <TextView
+                android:id="@+id/tvOive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/quicksand"
+                android:includeFontPadding="false"
+                android:shadowColor="#000000"
+                android:shadowDx="0"
+                android:shadowDy="0"
+                android:shadowRadius="6"
+                android:text="oivé"
+                android:textColor="#FFFFFF"
+                android:textSize="30sp"
+                android:translationX="-15dp"
+                android:translationY="-1dp" />
+
+        </FrameLayout>
+
+    </LinearLayout>
+
     <LinearLayout
         android:id="@+id/top_bar"
         android:layout_width="0dp"
@@ -23,38 +119,32 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <TextView
-            android:id="@+id/brand"
+        <!-- Search -->
+        <ImageView
+            android:id="@+id/ic_search"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:contentDescription="Search"
+            app:srcCompat="@drawable/ic_search"
+            app:tint="#1E1E1E"
+            android:layout_marginTop="5dp"/>
+
+        <!-- Spacer đẩy icon fav sang phải -->
+        <View
             android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="4500 APPAREL"
-            android:fontFamily="@font/tenorsans"
-            android:textSize="14sp"
-            android:textColor="#1E1E1E" />
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+        <!-- Favorite -->
+        <ImageView
+            android:id="@+id/ic_fav_top"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:contentDescription="Favorites"
+            android:layout_marginTop="5dp"
+            app:srcCompat="@drawable/ic_favorite_border"
+            app:tint="#1E1E1E" />
 
-            <ImageView
-                android:id="@+id/ic_search"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:contentDescription="Search"
-                app:srcCompat="@drawable/ic_search"
-                app:tint="#1E1E1E"
-                android:layout_marginEnd="12dp"/>
-
-            <ImageView
-                android:id="@+id/ic_fav_top"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:contentDescription="Favorites"
-                app:srcCompat="@drawable/ic_favorite_border"
-                app:tint="#1E1E1E"/>
-        </LinearLayout>
     </LinearLayout>
 
     <!-- Reel container between top bar and bottom nav -->
@@ -79,6 +169,7 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_gravity="top"
+            android:layout_marginTop="20dp"
             android:orientation="horizontal">
 
             <TextView
@@ -86,11 +177,14 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:background="#66000000"
+                android:fontFamily="@font/tenorsans"
                 android:gravity="center"
+                android:paddingHorizontal="4dp"
+                android:paddingVertical="6dp"
                 android:text="WOMEN"
-                android:textSize="16sp"
-                android:textColor="#000000"
-                android:fontFamily="@font/tenorsans" />
+                android:textColor="#FFFFFF"
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/cat_man"
@@ -100,7 +194,10 @@
                 android:gravity="center"
                 android:text="MAN"
                 android:textSize="16sp"
-                android:textColor="#000000"
+                android:textColor="#FFFFFF"
+                android:background="#66000000"
+                android:paddingVertical="6dp"
+                android:paddingHorizontal="4dp"
                 android:fontFamily="@font/tenorsans" />
 
             <TextView
@@ -111,8 +208,12 @@
                 android:gravity="center"
                 android:text="KIDS"
                 android:textSize="16sp"
-                android:textColor="#000000"
+                android:textColor="#FFFFFF"
+                android:background="#66000000"
+                android:paddingVertical="6dp"
+                android:paddingHorizontal="4dp"
                 android:fontFamily="@font/tenorsans" />
+
         </LinearLayout>
 
         <!-- Vertical reel indicator container (we add custom view programmatically) -->

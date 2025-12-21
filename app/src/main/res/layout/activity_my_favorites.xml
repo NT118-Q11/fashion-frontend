@@ -16,60 +16,175 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:contentDescription="Back"
-        app:srcCompat="@drawable/ic_arrow_back"
-        app:tint="#000000"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_arrow_back"
+        app:tint="#000000" />
 
-    <!-- RecyclerView -->
+    <!-- LOGO NOIVÉ -->
+    <LinearLayout
+        android:id="@+id/logo_noive"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clipChildren="false"
+            android:clipToPadding="false"
+            android:paddingStart="24dp">
+
+            <!-- Lớp stroke đen -->
+            <TextView
+                android:id="@+id/tvNStroke"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/greatvibes"
+                android:includeFontPadding="false"
+                android:shadowColor="#80000000"
+                android:shadowDx="3"
+                android:shadowDy="4"
+                android:shadowRadius="8"
+                android:text="N"
+                android:textColor="#000000"
+                android:textSize="40sp" />
+
+            <!-- Lớp chữ trắng -->
+            <TextView
+                android:id="@+id/tvN"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/greatvibes"
+                android:includeFontPadding="false"
+                android:shadowColor="#FFEB3B"
+                android:shadowDx="0"
+                android:shadowDy="0"
+                android:shadowRadius="6"
+                android:text="N "
+                android:textColor="#FFFFFF"
+                android:textSize="40sp"
+                android:translationX="-1dp"
+                android:translationY="-1dp" />
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:clipChildren="false"
+            android:clipToPadding="false">
+
+            <!-- Lớp stroke -->
+            <TextView
+                android:id="@+id/tvOiveStroke"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/quicksand"
+                android:includeFontPadding="false"
+                android:shadowColor="#80000000"
+                android:shadowDx="3"
+                android:shadowDy="4"
+                android:shadowRadius="8"
+                android:text="oivé"
+                android:textColor="#000000"
+                android:textSize="30sp"
+                android:translationX="-15dp" />
+
+            <!-- Lớp chữ trắng -->
+            <TextView
+                android:id="@+id/tvOive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/quicksand"
+                android:includeFontPadding="false"
+                android:shadowColor="#000000"
+                android:shadowDx="0"
+                android:shadowDy="0"
+                android:shadowRadius="6"
+                android:text="oivé"
+                android:textColor="#FFFFFF"
+                android:textSize="30sp"
+                android:translationX="-15dp"
+                android:translationY="-1dp" />
+
+        </FrameLayout>
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/btn_search"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:contentDescription="Search"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_search"
+        app:tint="#000000" />
+
     <TextView
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
         android:fontFamily="@font/tenorsans"
         android:letterSpacing="0.1"
         android:text="MY FAVORITES"
         android:textColor="#000000"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@id/iv_back"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.391"
-        app:layout_constraintStart_toEndOf="@id/iv_back"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.695" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/logo_noive" />
+
+    <ImageView
+        android:id="@+id/title_underline"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:backgroundTint="@color/white"
+        android:src="@drawable/underline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_title" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_favorites"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="18dp"
         android:clipToPadding="false"
         android:paddingStart="12dp"
         android:paddingEnd="12dp"
-
+        android:paddingBottom="8dp"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        app:layout_constraintBottom_toTopOf="@id/pagination_container"
-
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/iv_back"
-        app:layout_constraintVertical_bias="0.0"
         app:spanCount="2"
-        tools:listitem="@layout/item_product_grid"
-        />
+        app:layout_constraintTop_toBottomOf="@id/tv_title"
+        app:layout_constraintBottom_toTopOf="@id/pagination_container"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:listitem="@layout/item_product_grid" />
 
+    <!-- Pagination -->
     <LinearLayout
         android:id="@+id/pagination_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"
         android:layout_marginBottom="8dp"
+        android:gravity="center"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@id/bottomNavBar"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
         <ImageView
             android:id="@+id/page_prev"
@@ -82,51 +197,51 @@
             android:id="@+id/page_1"
             android:layout_width="32dp"
             android:layout_height="32dp"
+            android:layout_marginStart="8dp"
+            android:background="@drawable/page_selected_bg"
             android:gravity="center"
             android:text="1"
-            android:textColor="#FFFFFF"
-            android:background="@drawable/page_selected_bg"
-            android:layout_marginStart="8dp"/>
+            android:textColor="#FFFFFF" />
 
         <TextView
             android:id="@+id/page_2"
             android:layout_width="32dp"
             android:layout_height="32dp"
+            android:layout_marginStart="6dp"
+            android:background="@drawable/page_unselected_bg"
             android:gravity="center"
             android:text="2"
-            android:textColor="#000000"
-            android:background="@drawable/page_unselected_bg"
-            android:layout_marginStart="6dp"/>
+            android:textColor="#000000" />
 
         <TextView
             android:id="@+id/page_3"
             android:layout_width="32dp"
             android:layout_height="32dp"
+            android:layout_marginStart="6dp"
+            android:background="@drawable/page_unselected_bg"
             android:gravity="center"
             android:text="3"
-            android:textColor="#000000"
-            android:background="@drawable/page_unselected_bg"
-            android:layout_marginStart="6dp"/>
+            android:textColor="#000000" />
 
         <TextView
             android:id="@+id/page_4"
             android:layout_width="32dp"
             android:layout_height="32dp"
+            android:layout_marginStart="6dp"
+            android:background="@drawable/page_unselected_bg"
             android:gravity="center"
             android:text="4"
-            android:textColor="#000000"
-            android:background="@drawable/page_unselected_bg"
-            android:layout_marginStart="6dp"/>
+            android:textColor="#000000" />
 
         <TextView
             android:id="@+id/page_5"
             android:layout_width="32dp"
             android:layout_height="32dp"
+            android:layout_marginStart="6dp"
+            android:background="@drawable/page_unselected_bg"
             android:gravity="center"
             android:text="5"
-            android:textColor="#000000"
-            android:background="@drawable/page_unselected_bg"
-            android:layout_marginStart="6dp"/>
+            android:textColor="#000000" />
 
         <ImageView
             android:id="@+id/page_next"
@@ -134,23 +249,19 @@
             android:layout_height="24dp"
             android:layout_marginStart="8dp"
             app:srcCompat="@drawable/ic_arrow_right"
-            app:tint="#000000"/>
+            app:tint="#000000" />
     </LinearLayout>
 
+    <!-- Bottom Nav -->
     <LinearLayout
         android:id="@+id/bottomNavBar"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_alignParentBottom="true"
-        android:orientation="horizontal"
         android:background="@color/black"
         android:gravity="center"
-        android:paddingHorizontal="0dp"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent">
 
-        <!-- Home Icon -->
-
-        <!-- Notifications Icon -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/navHome"
             style="?attr/materialIconButtonStyle"
@@ -166,32 +277,30 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/navNotifications"
-            android:backgroundTint="@color/black"
             style="?attr/materialIconButtonStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:backgroundTint="@color/black"
+            android:contentDescription="Notifications"
             app:icon="@drawable/ic_notifications"
-            app:iconSize="28dp"
-            app:tint="@color/white"
             app:iconGravity="textStart"
-            android:contentDescription="Notifications" />
+            app:iconSize="28dp"
+            app:tint="@color/white" />
 
-        <!-- Cart Icon -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/navCart"
-            android:backgroundTint="@color/black"
             style="?attr/materialIconButtonStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            app:iconTint="@color/white"
+            android:backgroundTint="@color/black"
+            android:contentDescription="Cart"
             app:icon="@drawable/ic_shopping_bag"
-            app:iconSize="28dp"
             app:iconGravity="textStart"
-            android:contentDescription="Cart" />
+            app:iconSize="28dp"
+            app:iconTint="@color/white" />
 
-        <!-- Profile Icon -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/navProfile"
             style="?attr/materialIconButtonStyle"

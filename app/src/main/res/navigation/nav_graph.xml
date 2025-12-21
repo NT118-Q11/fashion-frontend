@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph"
     xmlns:tools="http://schemas.android.com/tools"
-    app:startDestination="@id/welcomeFragment">
+    app:startDestination="@id/homeFragment">
 
     <fragment
         android:id="@+id/homeFragment"
@@ -201,10 +201,6 @@
             app:destination="@id/confirmFragment" />
 
         <action
-            android:id="@+id/action_checkoutFragment_to_deliveryFragment"
-            app:destination="@id/deliveryFragment" />
-
-        <action
             android:id="@+id/action_checkoutFragment_to_paymentFragment"
             app:destination="@id/paymentFragment" />
     </fragment>
@@ -221,17 +217,6 @@
 
     </fragment>
 
-    <fragment
-        android:id="@+id/deliveryFragment"
-        android:name="com.example.fashionapp.uix.DeliveryFragment"
-        android:label="Delivery"
-        tools:layout="@layout/activity_delivery_method">
-
-        <action
-            android:id="@+id/action_deliveryFragment_to_confirmFragment"
-            app:destination="@id/confirmFragment" />
-
-    </fragment>
 
     <fragment
         android:id="@+id/paymentFragment"
@@ -336,7 +321,7 @@
         android:id="@+id/detailsFragment"
         android:name="com.example.fashionapp.uix.DetailsFragment"
         android:label="Details"
-        tools:layout="@layout/details">
+        tools:layout="@layout/product_detail">
         <action
             android:id="@+id/action_detailsFragment_to_details2Fragment"
             app:destination="@id/details2Fragment" />
@@ -377,7 +362,7 @@
         android:id="@+id/forgotPasswordFragment"
         android:name="com.example.fashionapp.uix.ForgotPasswordFragment"
         android:label="Forgot Password"
-        tools:layout="@layout/fragment_forgot_password">
+        tools:layout="@layout/activity_forgot_password">
 
         <action
             android:id="@+id/action_forgotPasswordFragment_to_signInFragment"

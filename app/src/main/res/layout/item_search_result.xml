@@ -49,15 +49,6 @@
             android:textColor="#000"
             android:textSize="16sp" />
 
-        <TextView
-            android:id="@+id/txtName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:text="reversible angora cardigan"
-            android:fontFamily="@font/tenorsans"
-            android:textColor="@color/gray"
-            android:textSize="14sp" />
 
         <TextView
             android:id="@+id/txtPrice"

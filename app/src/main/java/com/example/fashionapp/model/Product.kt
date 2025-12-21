@@ -16,12 +16,35 @@ data class Product(
     val sizes: List<String>?,
     val colors: List<String>?,
     val images: List<String>?,
+    val thumbnail: String?,
     val stock: Int?,
     @SerializedName("createdAt")
     val createdAt: String?,
     @SerializedName("updatedAt")
     val updatedAt: String?
-)
+) {
+    /**
+     * Extract asset path from Windows file path
+     * Example: "C:\\Users\\tung\\...\\assets\\woman\\women6.jpg" -> "woman/women6.jpg"
+     */
+    fun getThumbnailAssetPath(): String? {
+        if (thumbnail.isNullOrEmpty()) return null
+
+        // Find the "assets" folder in the path and extract everything after it
+        val assetsIndex = thumbnail.indexOf("assets\\")
+        if (assetsIndex != -1) {
+            // Extract path after "assets\" and convert backslashes to forward slashes
+            return thumbnail.substring(assetsIndex + 7).replace("\\", "/")
+        }
+
+        // If already in correct format (no backslashes), return as is
+        if (!thumbnail.contains("\\")) {
+            return thumbnail
+        }
+
+        return null
+    }
+}
 
 /**
  * Product create request model

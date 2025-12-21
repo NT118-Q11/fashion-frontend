@@ -12,7 +12,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="30dp"
-        android:layout_marginTop="180dp"
+        android:layout_marginTop="100dp"
         android:layout_marginBottom="40dp"
         app:cardElevation="4dp"
         app:cardCornerRadius="12dp"
@@ -24,8 +24,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:gravity="center_horizontal"
+            android:orientation="vertical"
             android:padding="24dp">
 
             <!-- Title -->
@@ -33,12 +33,12 @@
                 android:id="@+id/tvTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:fontFamily="@font/tenorsans"
+                android:letterSpacing="0.12"
                 android:text="PAYMENT SUCCESS"
                 android:textColor="#2D2D2D"
-                android:fontFamily="@font/tenorsans"
-                android:textSize="20sp"
-                android:letterSpacing="0.12"
-                android:layout_marginTop="12dp" />
+                android:textSize="20sp" />
 
             <!-- Check icon -->
             <ImageView
@@ -46,78 +46,75 @@
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 android:layout_marginTop="14dp"
-                android:src="@drawable/ic_success"
-                android:contentDescription="success" />
+                android:contentDescription="success"
+                android:src="@drawable/ic_success" />
 
             <!-- Text -->
             <TextView
                 android:id="@+id/tvSuccessMsg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:fontFamily="@font/tenorsans"
                 android:text="Your payment was success"
                 android:textColor="#3A3A3A"
-                android:fontFamily="@font/tenorsans"
-                android:textSize="17sp"
-                android:layout_marginTop="12dp" />
+                android:textSize="17sp" />
 
             <!-- Payment ID -->
             <TextView
                 android:id="@+id/tvPaymentId"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:fontFamily="@font/tenorsans"
                 android:text="Payment ID   15263541"
                 android:textColor="#6F6F6F"
-                android:fontFamily="@font/tenorsans"
-                android:textSize="14sp"
-                android:layout_marginTop="6dp" />
+                android:textSize="14sp" />
 
             <View
                 android:layout_width="80dp"
                 android:layout_height="1dp"
-                android:background="#D9D4CB"
-                android:layout_marginTop="6dp" />
+                android:layout_marginTop="6dp"
+                android:background="#D9D4CB" />
 
             <!-- Rate your purchase -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/tenorsans"
                 android:text="Rate your purchase"
                 android:textColor="#3A3A3A"
-                android:fontFamily="@font/tenorsans"
-                android:textSize="17sp"
-                android:layout_marginTop="16dp" />
+                android:textSize="17sp" />
 
             <!-- Rating icons -->
-            <LinearLayout
+            <RatingBar
+                android:id="@+id/ratingBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center"
-                android:layout_marginTop="12dp">
+                android:layout_marginTop="12dp"
+                android:numStars="5"
+                android:stepSize="1"
+                android:rating="0"
+                android:progressTint="#FFD700"
+                android:secondaryProgressTint="#FFD700" />
 
-                <ImageView
-                    android:id="@+id/rateBad"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:src="@drawable/ic_rate_bad"
-                    android:contentDescription="bad" />
+            <!-- Comment Input -->
+            <EditText
+                android:id="@+id/etComment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/box_border"
+                android:hint="Write your comment..."
+                android:padding="12dp"
+                android:gravity="top|start"
+                android:minLines="3"
+                android:inputType="textMultiLine|textCapSentences"
+                android:textColor="#3A3A3A"
+                android:fontFamily="@font/tenorsans"
+                android:textSize="14sp" />
 
-                <ImageView
-                    android:id="@+id/rateNormal"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:layout_marginHorizontal="18dp"
-                    android:src="@drawable/ic_rate_normal"
-                    android:contentDescription="normal" />
-
-                <ImageView
-                    android:id="@+id/rateGood"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:src="@drawable/ic_rate_good"
-                    android:contentDescription="good" />
-
-            </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 

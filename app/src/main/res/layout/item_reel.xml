@@ -10,22 +10,37 @@
         android:scaleType="centerCrop"
         android:contentDescription="@string/cd_reel_image" />
 
+    <!-- Top subtle gradient to keep category text readable -->
+    <View
+        android:id="@+id/reel_top_gradient"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/gradient_reel_top" />
+
+    <!-- Bottom gradient scrim to improve description contrast -->
+    <View
+        android:id="@+id/reel_gradient"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/gradient_reel_bottom" />
+
     <!-- Bottom overlay text -->
     <LinearLayout
         android:id="@+id/reel_info"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|start"
+        android:layout_gravity="bottom"
         android:orientation="vertical"
         android:paddingStart="16dp"
         android:paddingEnd="16dp"
-        android:paddingBottom="56dp">
+        android:paddingBottom="56dp"
+        android:paddingTop="24dp">
 
         <TextView
             android:id="@+id/reel_brand"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:alpha="0.95"
+            android:alpha="0.98"
             android:fontFamily="@font/tenorsans"
             android:textColor="#FFFFFF"
             android:textSize="22sp"

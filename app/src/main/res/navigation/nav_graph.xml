@@ -31,6 +31,10 @@
             android:id="@+id/action_homeFragment_to_activitySearchFragment"
             app:destination="@id/activitySearchFragment" />
 
+        <action
+            android:id="@+id/action_homeFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
+
 
     </fragment>
 
@@ -322,6 +326,12 @@
         android:name="com.example.fashionapp.uix.DetailsFragment"
         android:label="Details"
         tools:layout="@layout/product_detail">
+        tools:layout="@layout/details">
+        <argument
+            android:name="productId"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null" />
         <action
             android:id="@+id/action_detailsFragment_to_details2Fragment"
             app:destination="@id/details2Fragment" />

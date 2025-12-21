@@ -2,6 +2,7 @@ package com.example.fashionapp.uix
 
 import androidx.fragment.app.Fragment
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -36,6 +37,7 @@ class RegisterFragment : Fragment() {
                     registerWithGoogle(signInResult)
                 }
                 is GoogleSignInManager.GoogleSignInResult.Error -> {
+                    Log.e("RegisterFragment", "Google Sign-In failed: ${signInResult.message}", signInResult.exception)
                     Toast.makeText(
                         requireContext(),
                         "Google Sign-In failed: ${signInResult.message}",
@@ -72,9 +74,10 @@ class RegisterFragment : Fragment() {
             val email = binding.etEmail.text.toString().trim()
             val password = binding.etPassword.text.toString().trim()
             val confirmPassword = binding.etConfirmPassword.text.toString().trim()
+            val phoneNumber = binding.phoneNumber.text.toString().trim()
 
-            if (validateInput(firstName, lastName, email, password, confirmPassword)) {
-                registerWithEmail(firstName, lastName, email, password)
+            if (validateInput(firstName, lastName, email, password, phoneNumber, confirmPassword)) {
+                registerWithEmail(firstName, lastName, email, password, phoneNumber)
             }
         }
 
@@ -89,6 +92,7 @@ class RegisterFragment : Fragment() {
         lastName: String,
         email: String,
         password: String,
+        phoneNumber: String,
         confirmPassword: String
     ): Boolean {
         if (firstName.isEmpty() || lastName.isEmpty()) {
@@ -107,22 +111,46 @@ class RegisterFragment : Fragment() {
             Toast.makeText(requireContext(), "Passwords do not match", Toast.LENGTH_SHORT).show()
             return false
         }
+        if (phoneNumber.isEmpty()) {
+            Toast.makeText(requireContext(), "Please enter phone number", Toast.LENGTH_SHORT).show()
+            return false
+        }
+        // Validate phone number has only digits and is 10-11 digits long
+        val phoneDigits = phoneNumber.filter { it.isDigit() }
+        if (phoneDigits.length !in 10..11) {
+            Toast.makeText(requireContext(), "Phone number must be 10-11 digits", Toast.LENGTH_SHORT).show()
+            return false
+        }
+
         return true
     }
 
     /**
      * Register with email/password using backend API
      */
-    private fun registerWithEmail(firstName: String, lastName: String, email: String, password: String) {
+    private fun registerWithEmail(firstName: String, lastName: String, email: String, password: String, phoneNumber: String) {
         lifecycleScope.launch {
+            // Username priority: email > phoneNumber
+            val username = email.ifEmpty { phoneNumber }
+
             try {
-                val username = "$firstName $lastName"
                 val request = com.example.fashionapp.UserRegistrationRequest(
                     username = username,
                     email = email,
-                    password = password
+                    password = password,
+                    first_name = firstName,
+                    last_name = lastName,
+                    phone_number = phoneNumber
                 )
+
+                Log.d("RegisterFragment", "Making registration request to backend...")
+                Log.d("RegisterFragment", "Request data - Username: $username, Email: $email, Phone: $phoneNumber, Name: $firstName $lastName")
+
                 val response = AppRoute.auth.register(request)
+
+                Log.d("RegisterFragment", "Backend response received")
+                Log.d("RegisterFragment", "Response message: ${response.message}")
+                Log.d("RegisterFragment", "Response user: ${response.user}")
 
                 if (response.user != null) {
                     Toast.makeText(
@@ -141,6 +169,15 @@ class RegisterFragment : Fragment() {
                     ).show()
                 }
             } catch (e: Exception) {
+                Log.e("RegisterFragment", "Email registration failed", e)
+                Log.e("RegisterFragment", "Exception type: ${e.javaClass.simpleName}")
+                Log.e("RegisterFragment", "Exception message: ${e.message}")
+                Log.e("RegisterFragment", "Exception cause: ${e.cause}")
+                e.printStackTrace()
+
+                // Additional logging for request details
+                Log.d("RegisterFragment", "Registration request - Username: $username, Email: $email")
+
                 Toast.makeText(
                     requireContext(),
                     "Registration failed: ${e.message}",
@@ -164,15 +201,28 @@ class RegisterFragment : Fragment() {
     private fun registerWithGoogle(result: GoogleSignInManager.GoogleSignInResult.Success) {
         lifecycleScope.launch {
             try {
+                Log.d("RegisterFragment", "Creating GoogleOAuth2UserInfo with token length: ${result.idToken.length}")
+
                 val googleUserInfo = GoogleOAuth2UserInfo(
-                    idToken = result.idToken,
+                    accessToken = result.idToken, // Backend expects "accessToken" field name
                     email = result.email,
                     name = result.name,
-                    picture = result.photoUrl
+                    picture = result.photoUrl,
+                    id = result.email // Use email as ID instead of parsing token
                 )
+
+                Log.d("RegisterFragment", "GoogleOAuth2UserInfo created successfully")
+                Log.d("RegisterFragment", "Sending Google OAuth2 request to backend...")
+                Log.d("RegisterFragment", "Request accessToken length: ${googleUserInfo.accessToken.length}")
+                Log.d("RegisterFragment", "Request email: ${googleUserInfo.email}")
+                Log.d("RegisterFragment", "Request name: ${googleUserInfo.name}")
 
                 // Call backend register-gmail endpoint
                 val response = AppRoute.auth.registerWithGoogle(googleUserInfo)
+
+                Log.d("RegisterFragment", "Google registration response received")
+                Log.d("RegisterFragment", "Response message: ${response.message}")
+                Log.d("RegisterFragment", "Response user: ${response.user}")
 
                 if (response.user != null) {
                     Toast.makeText(
@@ -191,6 +241,16 @@ class RegisterFragment : Fragment() {
                     ).show()
                 }
             } catch (e: Exception) {
+                Log.e("RegisterFragment", "Google registration failed", e)
+                Log.e("RegisterFragment", "Exception type: ${e.javaClass.simpleName}")
+                Log.e("RegisterFragment", "Exception message: ${e.message}")
+                Log.e("RegisterFragment", "Exception cause: ${e.cause}")
+                e.printStackTrace()
+
+                // Additional logging for specific user info
+                Log.d("RegisterFragment", "Google user info - Email: ${result.email}, Name: ${result.name}")
+                Log.d("RegisterFragment", "ID Token length: ${result.idToken.length}")
+
                 Toast.makeText(
                     requireContext(),
                     "Google registration failed: ${e.message}",

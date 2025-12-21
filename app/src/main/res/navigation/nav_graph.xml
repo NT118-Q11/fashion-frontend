@@ -204,9 +204,6 @@
             android:id="@+id/action_checkoutFragment_to_confirmFragment"
             app:destination="@id/confirmFragment" />
 
-        <action
-            android:id="@+id/action_checkoutFragment_to_paymentFragment"
-            app:destination="@id/paymentFragment" />
     </fragment>
 
     <fragment
@@ -221,17 +218,6 @@
 
     </fragment>
 
-
-    <fragment
-        android:id="@+id/paymentFragment"
-        android:name="com.example.fashionapp.uix.PaymentMethodFragment"
-        android:label="Payment"
-        tools:layout="@layout/activity_payment_method">
-
-        <action
-            android:id="@+id/action_paymentFragment_to_confirmFragment"
-            app:destination="@id/confirmFragment" />
-    </fragment>
 
     <fragment
         android:id="@+id/paymentSuccessFragment"
@@ -326,7 +312,6 @@
         android:name="com.example.fashionapp.uix.DetailsFragment"
         android:label="Details"
         tools:layout="@layout/product_detail">
-        tools:layout="@layout/details">
         <argument
             android:name="productId"
             app:argType="string"

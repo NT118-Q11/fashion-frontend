@@ -7,103 +7,6 @@
     android:layout_height="match_parent"
     android:background="#F5F1E8"
     android:fitsSystemWindows="true">
-    <!-- LOGO NOIVÉ -->
-    <LinearLayout
-        android:id="@+id/logo_noive"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:clipChildren="false"
-        android:clipToPadding="false"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <FrameLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:clipChildren="false"
-            android:clipToPadding="false"
-            android:paddingStart="24dp">
-
-            <!-- Lớp stroke đen -->
-            <TextView
-                android:id="@+id/tvNStroke"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/greatvibes"
-                android:includeFontPadding="false"
-                android:shadowColor="#80000000"
-                android:shadowDx="3"
-                android:shadowDy="4"
-                android:shadowRadius="8"
-                android:text="N"
-                android:textColor="#000000"
-                android:textSize="40sp" />
-
-            <!-- Lớp chữ trắng -->
-            <TextView
-                android:id="@+id/tvN"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/greatvibes"
-                android:includeFontPadding="false"
-                android:shadowColor="#FFEB3B"
-                android:shadowDx="0"
-                android:shadowDy="0"
-                android:shadowRadius="6"
-                android:text="N "
-                android:textColor="#FFFFFF"
-                android:textSize="40sp"
-                android:translationX="-1dp"
-                android:translationY="-1dp" />
-
-        </FrameLayout>
-
-        <FrameLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:clipChildren="false"
-            android:clipToPadding="false">
-
-            <!-- Lớp stroke -->
-            <TextView
-                android:id="@+id/tvOiveStroke"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/quicksand"
-                android:includeFontPadding="false"
-                android:shadowColor="#80000000"
-                android:shadowDx="3"
-                android:shadowDy="4"
-                android:shadowRadius="8"
-                android:text="oivé"
-                android:textColor="#000000"
-                android:textSize="30sp"
-                android:translationX="-15dp" />
-
-            <!-- Lớp chữ trắng -->
-            <TextView
-                android:id="@+id/tvOive"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/quicksand"
-                android:includeFontPadding="false"
-                android:shadowColor="#000000"
-                android:shadowDx="0"
-                android:shadowDy="0"
-                android:shadowRadius="6"
-                android:text="oivé"
-                android:textColor="#FFFFFF"
-                android:textSize="30sp"
-                android:translationX="-15dp"
-                android:translationY="-1dp" />
-
-        </FrameLayout>
-
-    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/top_bar"
@@ -129,7 +32,6 @@
             app:tint="#1E1E1E"
             android:layout_marginTop="5dp"/>
 
-        <!-- Spacer đẩy icon fav sang phải -->
         <View
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -178,7 +80,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="#66000000"
+                android:background="#bfbfbf"
                 android:fontFamily="@font/tenorsans"
                 android:gravity="center"
                 android:paddingHorizontal="4dp"
@@ -196,7 +98,7 @@
                 android:text="MAN"
                 android:textSize="16sp"
                 android:textColor="#FFFFFF"
-                android:background="#66000000"
+                android:background="#bfbfbf"
                 android:paddingVertical="6dp"
                 android:paddingHorizontal="4dp"
                 android:fontFamily="@font/tenorsans" />
@@ -210,14 +112,14 @@
                 android:text="KIDS"
                 android:textSize="16sp"
                 android:textColor="#FFFFFF"
-                android:background="#66000000"
+                android:background="#bfbfbf"
                 android:paddingVertical="6dp"
                 android:paddingHorizontal="4dp"
                 android:fontFamily="@font/tenorsans" />
 
         </LinearLayout>
 
-        <!-- Vertical reel indicator container (we add custom view programmatically) -->
+        <!-- Vertical reel indicator container -->
         <FrameLayout
             android:id="@+id/reelIndicatorContainer"
             android:layout_width="28dp"

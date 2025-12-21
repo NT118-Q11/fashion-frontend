@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/yellow_skin"
+    android:background="#F4F1EC"
     android:fitsSystemWindows="true">
 
     <!-- BACK -->
@@ -21,101 +21,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
-    <!-- LOGO NOIVÉ -->
-    <LinearLayout
+    <ImageView
         android:id="@+id/logo_noive"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:clipChildren="false"
-        android:clipToPadding="false"
-        android:orientation="horizontal"
-        android:layout_marginTop="20dp"
-        app:layout_constraintTop_toTopOf="@id/btnBack"
-        app:layout_constraintBottom_toBottomOf="@id/btnBack"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="5dp"
+        android:contentDescription="Logo Noive"
+        android:scaleType="fitCenter"
+        android:src="@drawable/noive_logo"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <FrameLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:clipChildren="false"
-            android:clipToPadding="false"
-            android:paddingStart="24dp">
-
-            <!-- Stroke đen -->
-            <TextView
-                android:id="@+id/tvNStroke"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/greatvibes"
-                android:includeFontPadding="false"
-                android:shadowColor="#80000000"
-                android:shadowDx="3"
-                android:shadowDy="4"
-                android:shadowRadius="8"
-                android:text="N"
-                android:textColor="#000000"
-                android:textSize="40sp" />
-
-            <!-- Chữ trắng -->
-            <TextView
-                android:id="@+id/tvN"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/greatvibes"
-                android:includeFontPadding="false"
-                android:shadowColor="#FFEB3B"
-                android:shadowDx="0"
-                android:shadowDy="0"
-                android:shadowRadius="6"
-                android:text="N "
-                android:textColor="#FFFFFF"
-                android:textSize="40sp"
-                android:translationX="-1dp"
-                android:translationY="-1dp" />
-        </FrameLayout>
-
-        <FrameLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:clipChildren="false"
-            android:clipToPadding="false">
-
-            <!-- Stroke -->
-            <TextView
-                android:id="@+id/tvOiveStroke"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/quicksand"
-                android:includeFontPadding="false"
-                android:shadowColor="#80000000"
-                android:shadowDx="3"
-                android:shadowDy="4"
-                android:shadowRadius="8"
-                android:text="oivé"
-                android:textColor="#000000"
-                android:textSize="30sp"
-                android:translationX="-15dp" />
-
-            <!-- Chữ trắng -->
-            <TextView
-                android:id="@+id/tvOive"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/quicksand"
-                android:includeFontPadding="false"
-                android:shadowColor="#000000"
-                android:shadowDx="0"
-                android:shadowDy="0"
-                android:shadowRadius="6"
-                android:text="oivé"
-                android:textColor="#FFFFFF"
-                android:textSize="30sp"
-                android:translationX="-15dp"
-                android:translationY="-1dp" />
-        </FrameLayout>
-    </LinearLayout>
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"/>
 
     <!-- SEARCH -->
     <ImageButton
@@ -161,7 +78,7 @@
                 android:id="@+id/viewPagerProduct"
                 android:layout_width="0dp"
                 android:padding="20dp"
-                android:layout_height="420dp"
+                android:layout_height="450dp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />

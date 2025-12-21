@@ -5,106 +5,20 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:fitsSystemWindows="true"
-    android:background="@color/white">
+    android:background="#F4F1EC">
 
-    <!-- LOGO NOIVÉ -->
-    <LinearLayout
+    <ImageView
         android:id="@+id/logo_noive"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:clipChildren="false"
-        android:clipToPadding="false"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="5dp"
+        android:contentDescription="Logo Noive"
+        android:scaleType="fitCenter"
+        android:src="@drawable/noive_logo"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <FrameLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:clipChildren="false"
-            android:clipToPadding="false"
-            android:paddingStart="24dp">
-
-            <!-- Lớp stroke đen -->
-            <TextView
-                android:id="@+id/tvNStroke"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/greatvibes"
-                android:includeFontPadding="false"
-                android:shadowColor="#80000000"
-                android:shadowDx="3"
-                android:shadowDy="4"
-                android:shadowRadius="8"
-                android:text="N"
-                android:textColor="#000000"
-                android:textSize="40sp" />
-
-            <!-- Lớp chữ trắng -->
-            <TextView
-                android:id="@+id/tvN"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/greatvibes"
-                android:includeFontPadding="false"
-                android:shadowColor="#FFEB3B"
-                android:shadowDx="0"
-                android:shadowDy="0"
-                android:shadowRadius="6"
-                android:text="N "
-                android:textColor="#FFFFFF"
-                android:textSize="40sp"
-                android:translationX="-1dp"
-                android:translationY="-1dp" />
-
-        </FrameLayout>
-
-        <FrameLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:clipChildren="false"
-            android:clipToPadding="false">
-
-            <!-- Lớp stroke -->
-            <TextView
-                android:id="@+id/tvOiveStroke"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/quicksand"
-                android:includeFontPadding="false"
-                android:shadowColor="#80000000"
-                android:shadowDx="3"
-                android:shadowDy="4"
-                android:shadowRadius="8"
-                android:text="oivé"
-                android:textColor="#000000"
-                android:textSize="30sp"
-                android:translationX="-15dp" />
-
-            <!-- Lớp chữ trắng -->
-            <TextView
-                android:id="@+id/tvOive"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/quicksand"
-                android:includeFontPadding="false"
-                android:shadowColor="#000000"
-                android:shadowDx="0"
-                android:shadowDy="0"
-                android:shadowRadius="6"
-                android:text="oivé"
-                android:textColor="#FFFFFF"
-                android:textSize="30sp"
-                android:translationX="-15dp"
-                android:translationY="-1dp" />
-
-        </FrameLayout>
-    </LinearLayout>
-
-
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"/>
 
     <LinearLayout
         android:id="@+id/shipping_address"

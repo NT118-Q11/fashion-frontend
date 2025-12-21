@@ -64,8 +64,14 @@ class ActivitySearchViewFragment : Fragment() {
         // Setup RecyclerView
         recycler.layoutManager = GridLayoutManager(requireContext(), 2)
         productAdapter = ProductAdapter(emptyList()) { product ->
-            // Handle product click - navigate to details
-            findNavController().navigate(R.id.action_activitySearchViewFragment_to_detailsFragment)
+            // Handle product click - navigate to details with product ID
+            val bundle = Bundle().apply {
+                putString("productId", product.id)
+            }
+            findNavController().navigate(
+                R.id.action_activitySearchViewFragment_to_detailsFragment,
+                bundle
+            )
         }
         recycler.adapter = productAdapter
 

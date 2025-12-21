@@ -1,5 +1,7 @@
 package com.example.fashionapp.adapter
 
+import android.graphics.BitmapFactory
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,9 +31,23 @@ class ProductAdapter(
             txtName.text = product.name
             txtPrice.text = "$${String.format("%.2f", product.price)}"
 
-            // TODO: Load image using Glide or Coil when implementing image loading
-            // For now, use placeholder
-            imgProduct.setImageResource(R.drawable.sample_woman)
+            // Load thumbnail from assets
+            val thumbnailPath = product.getThumbnailAssetPath()
+            if (!thumbnailPath.isNullOrEmpty()) {
+                try {
+                    itemView.context.assets.open(thumbnailPath).use { input ->
+                        val bitmap = BitmapFactory.decodeStream(input)
+                        imgProduct.setImageBitmap(bitmap)
+                        Log.d("ProductAdapter", "Loaded thumbnail: $thumbnailPath")
+                    }
+                } catch (e: Exception) {
+                    Log.e("ProductAdapter", "Failed to load thumbnail: $thumbnailPath -> ${e.message}")
+                    imgProduct.setImageResource(R.drawable.sample_woman)
+                }
+            } else {
+                // Use placeholder if no thumbnail available
+                imgProduct.setImageResource(R.drawable.sample_woman)
+            }
 
             // Handle favorite button click
             btnFavorite.setOnClickListener {

@@ -23,6 +23,22 @@
         app:srcCompat="@drawable/arrow_left"
         tools:ignore="TouchTargetSizeCheck" />
 
+    <ImageView
+        android:id="@+id/btn_favorite_details"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginTop="30dp"
+        android:background="?android:attr/selectableItemBackgroundBorderless"
+        android:clickable="true"
+        android:focusable="true"
+        android:contentDescription="Add to favorites"
+        android:scaleType="fitCenter"
+        app:srcCompat="@drawable/ic_favorite_border"
+        app:tint="#000000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/add_to_cart_button"
         android:layout_width="match_parent"

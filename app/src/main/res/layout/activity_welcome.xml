@@ -7,6 +7,7 @@
     android:clipChildren="false"
     android:clipToPadding="false">
 
+
     <VideoView
         android:id="@+id/backgroundVideo"
         android:layout_width="match_parent"
@@ -14,109 +15,24 @@
         android:keepScreenOn="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
 
-    <LinearLayout
+    <ImageView
         android:id="@+id/logo_noive"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
+        android:layout_marginStart="28dp"
         android:layout_marginTop="104dp"
-        android:clipChildren="false"
-        android:clipToPadding="false"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.033"
+        android:background="@drawable/bg_logo_circle_light"
+        android:clipToOutline="true"
+        android:padding="14dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/noive_logo"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <FrameLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:clipChildren="false"
-            android:clipToPadding="false"
-            android:paddingStart="24dp">
-
-            <!-- Lớp stroke đen -->
-            <TextView
-                android:id="@+id/tvNStroke"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/greatvibes"
-                android:includeFontPadding="false"
-                android:shadowColor="#80000000"
-                android:shadowDx="3"
-                android:shadowDy="4"
-                android:shadowRadius="8"
-                android:text="N"
-                android:textColor="#000000"
-                android:textSize="64sp" />
-
-            <!-- Lớp chữ trắng -->
-            <TextView
-                android:id="@+id/tvN"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/greatvibes"
-                android:includeFontPadding="false"
-                android:text="N "
-                android:textColor="#FFFFFF"
-                android:textSize="64sp"
-                android:translationX="-1dp"
-                android:translationY="-1dp"
-                android:shadowColor="#FFEB3B"
-                android:shadowDx="0"
-                android:shadowDy="0"
-                android:shadowRadius="6"/>
-
-        </FrameLayout>
-
-        <FrameLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:clipChildren="false"
-            android:clipToPadding="false">
-
-            <!-- Lớp stroke -->
-            <TextView
-                android:id="@+id/tvOiveStroke"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/quicksand"
-                android:includeFontPadding="false"
-                android:shadowColor="#80000000"
-                android:shadowDx="3"
-                android:shadowDy="4"
-                android:shadowRadius="8"
-                android:text="oivé"
-                android:textColor="#000000"
-                android:textSize="48sp"
-                android:translationX="-12dp"
-                />
-
-            <!-- Lớp chữ trắng -->
-            <TextView
-                android:id="@+id/tvOive"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/quicksand"
-                android:includeFontPadding="false"
-                android:shadowColor="#000000"
-                android:shadowDx="0"
-                android:shadowDy="0"
-                android:shadowRadius="6"
-                android:text="oivé"
-                android:textColor="#FFFFFF"
-                android:textSize="48sp"
-                android:translationX="-12dp"
-                android:translationY="-1dp" />
-
-        </FrameLayout>
-
-    </LinearLayout>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tvTagline"
@@ -135,6 +51,8 @@
         app:layout_constraintTop_toBottomOf="@id/logo_noive" />
 
     <!-- Nút SIGN IN -->
+
+    <!-- OR -->
     <Button
         android:id="@+id/button_sign_in"
         android:layout_width="0dp"
@@ -146,13 +64,13 @@
         android:text="SIGN IN"
         android:textColor="@color/white"
         android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintVertical_bias="0.57" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.651" />
 
-    <!-- OR -->
     <TextView
         android:id="@+id/text_or"
         android:layout_width="wrap_content"

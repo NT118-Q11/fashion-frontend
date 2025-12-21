@@ -1,6 +1,4 @@
-
 package com.example.fashionapp.uix
-
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -37,50 +35,31 @@ class DetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Initial image list for the main slider
-        val initialImages = listOf(
-            R.drawable.model_image_1,
-            R.drawable.model_image_2,
-            R.drawable.model_image_3
-        )
-
-        // Adapter for ViewPager2 (product images)
-        binding.viewPagerProduct.adapter = ImageSliderAdapter(initialImages)
-        TabLayoutMediator(binding.tabLayoutProduct, binding.viewPagerProduct) { _, _ -> }.attach()
-
-        // Back button
+        // Setup back button
         binding.btnBack.setOnClickListener {
             findNavController().popBackStack()
         }
 
-        // Tab navigation buttons
+        // Setup tab navigation buttons (match IDs from product_detail.xml)
         binding.tabInfo.setOnClickListener {
             findNavController().navigate(R.id.action_detailsFragment_to_details1Fragment)
-        }
-        binding.tabDescription.setOnClickListener {
-            findNavController().navigate(R.id.action_detailsFragment_to_details2Fragment)
         }
         binding.tabRating.setOnClickListener {
             findNavController().navigate(R.id.action_detailsFragment_to_details3Fragment)
         }
 
-        // ADD TO CART button: load product details (if productId) or show default data,
-        // and enable the add-to-cart action.
-        binding.btnAddToCart.setOnClickListener {
-            val productId = arguments?.getString("productId")
-            if (productId != null) {
-                loadProductDetails(productId)
-            } else {
-                setupDefaultData()
-            }
+        // Load product data if productId is provided
+        val productId = arguments?.getString("productId")
+        if (productId != null) {
+            loadProductDetails(productId)
+        } else {
+            // Show default/placeholder data
+            setupDefaultData()
         }
 
-        // If there is a separate actionable add-to-cart control in layout, map it here.
-        // Using btnAddToCart as the primary action to add item to cart.
-        binding.btnAddToCart.setOnLongClickListener {
-            // Example: long-press could directly add default/fallback item
+        // Setup add to cart button
+        binding.btnAddToCart.setOnClickListener {
             addToCart()
-            true
         }
     }
 
@@ -92,7 +71,7 @@ class DetailsFragment : Fragment() {
             try {
                 Log.d("DetailsFragment", "Loading product details for ID: $productId")
 
-                // Show loading state (disable button while loading)
+                // Show loading state (optional - you can add a progress bar to layout)
                 binding.btnAddToCart.isEnabled = false
 
                 currentProduct = AppRoute.product.getProductById(productId)
@@ -123,19 +102,32 @@ class DetailsFragment : Fragment() {
      * Setup UI with product data
      */
     private fun setupProductUI(product: Product) {
-        // For now use drawable placeholders; extend to load actual product images later
-        val imageList = mutableListOf(
-            R.drawable.model_image_1,
-            R.drawable.model_image_2,
-            R.drawable.model_image_3
-        )
+        // Setup image slider
+        val imageList = mutableListOf<Any>()
 
-        // TODO: if product.images or thumbnail are available, replace placeholders accordingly
+        // Add thumbnail from assets if available
+        val thumbnailPath = product.getThumbnailAssetPath()
+        if (!thumbnailPath.isNullOrEmpty()) {
+            imageList.add(thumbnailPath)
+            Log.d("DetailsFragment", "Loading thumbnail from assets: $thumbnailPath")
+        }
 
-        binding.viewPagerProduct.adapter = ImageSliderAdapter(imageList)
+        // Add additional images from product.images if available
+        // TODO: Handle product.images when they are provided
+
+        // If no images available, use placeholder drawables
+        if (imageList.isEmpty()) {
+            imageList.addAll(listOf(
+                R.drawable.model_image_1,
+                R.drawable.model_image_2,
+                R.drawable.model_image_3
+            ))
+        }
+
+        binding.viewPagerProduct.adapter = ImageSliderAdapter(imageList, requireContext())
         TabLayoutMediator(binding.tabLayoutProduct, binding.viewPagerProduct) { _, _ -> }.attach()
 
-        // You may pass product data to child fragments if needed
+        // Note: Product name, price, and other details are shown in Details1Fragment (Information tab)
     }
 
     /**
@@ -148,7 +140,7 @@ class DetailsFragment : Fragment() {
             R.drawable.model_image_3
         )
 
-        binding.viewPagerProduct.adapter = ImageSliderAdapter(imageList)
+        binding.viewPagerProduct.adapter = ImageSliderAdapter(imageList, requireContext())
         TabLayoutMediator(binding.tabLayoutProduct, binding.viewPagerProduct) { _, _ -> }.attach()
     }
 
@@ -160,17 +152,18 @@ class DetailsFragment : Fragment() {
 
         if (product != null) {
             val item = CartItem(
-                id = product.id.hashCode(),
+                id = product.id.hashCode(), // Convert string ID to int for CartItem
                 title = product.brand ?: "Unknown Brand",
                 description = product.name,
                 price = product.price,
-                imageRes = R.drawable.model_image_1,
+                imageRes = R.drawable.model_image_1, // Use placeholder for now
                 quantity = 1
             )
 
             CartManager.addItem(item)
             Toast.makeText(requireContext(), "Added ${product.name} to cart!", Toast.LENGTH_SHORT).show()
         } else {
+            // Fallback to default item
             val item = CartItem(
                 id = 1,
                 title = "LAMEREI",
@@ -181,6 +174,7 @@ class DetailsFragment : Fragment() {
             )
 
             CartManager.addItem(item)
+
             Toast.makeText(requireContext(), "Added to cart!", Toast.LENGTH_SHORT).show()
         }
     }

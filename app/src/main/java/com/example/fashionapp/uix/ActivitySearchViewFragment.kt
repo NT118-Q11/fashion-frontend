@@ -12,8 +12,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fashionapp.R
-import com.example.fashionapp.data.FavoritesManager
-import com.example.fashionapp.model.FavoriteItem
 
 class ActivitySearchViewFragment : Fragment() {
 
@@ -124,9 +122,7 @@ class ActivitySearchViewFragment : Fragment() {
         inner class VH(itemView: View, onClick: () -> Unit) : RecyclerView.ViewHolder(itemView) {
             // Use non-nullable views for robustness
             private val title: TextView = itemView.findViewById(R.id.txtTitle)
-            private val name: TextView = itemView.findViewById(R.id.txtName)
             private val price: TextView = itemView.findViewById(R.id.txtPrice)
-            private val btnFavorite: ImageView = itemView.findViewById(R.id.btnFavorite)
 
             init {
                 itemView.setOnClickListener { onClick() }
@@ -134,36 +130,7 @@ class ActivitySearchViewFragment : Fragment() {
 
             fun bind(text: String) {
                 title.text = text
-                name.text = getString(R.string.sample_product_name)
                 price.text = getString(R.string.price_format, 120)
-
-                // Create a FavoriteItem representation
-                val id = "search_${text.hashCode()}"
-                val favItem = FavoriteItem(
-                    id = id,
-                    name = text,
-                    desc = getString(R.string.sample_product_name),
-                    price = "$120",
-                    imageRes = R.drawable.sample_woman
-                )
-
-                fun updateIcon() {
-                    val isFav = FavoritesManager.isFavorite(favItem)
-                    btnFavorite.setImageResource(if (isFav) R.drawable.ic_favorite_filled else R.drawable.ic_favorite_border)
-                    // Use the color from xml (#E66A2C) for border, and maybe same or redder for filled
-                    btnFavorite.setColorFilter(Color.parseColor("#E66A2C"))
-                }
-
-                updateIcon()
-
-                btnFavorite.setOnClickListener {
-                    if (FavoritesManager.isFavorite(favItem)) {
-                        FavoritesManager.removeFavorite(favItem)
-                    } else {
-                        FavoritesManager.addFavorite(favItem)
-                    }
-                    updateIcon()
-                }
             }
         }
 

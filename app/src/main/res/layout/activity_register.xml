@@ -7,109 +7,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/noive_background">
 
-    <LinearLayout
+    <ImageView
         android:id="@+id/logo_noive"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:clipChildren="false"
-        android:clipToPadding="false"
-        android:orientation="horizontal"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="5dp"
+        android:contentDescription="Logo Noive"
+        android:scaleType="fitCenter"
+        android:src="@drawable/noive_logo"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.431"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <FrameLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:clipChildren="false"
-            android:clipToPadding="false"
-            android:paddingStart="24dp">
-
-            <!-- Lớp stroke đen -->
-            <TextView
-                android:id="@+id/tvNStroke"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/greatvibes"
-                android:includeFontPadding="false"
-                android:shadowColor="#80000000"
-                android:shadowDx="3"
-                android:shadowDy="4"
-                android:shadowRadius="8"
-                android:text="N"
-                android:textColor="#000000"
-                android:textSize="60sp" />
-
-            <!-- Lớp chữ trắng -->
-            <TextView
-                android:id="@+id/tvN"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/greatvibes"
-                android:includeFontPadding="false"
-                android:shadowColor="#FFEB3B"
-                android:shadowDx="0"
-                android:shadowDy="0"
-                android:shadowRadius="6"
-                android:text="N "
-                android:textColor="#FFFFFF"
-                android:textSize="60sp"
-                android:translationX="-1dp"
-                android:translationY="-1dp" />
-
-        </FrameLayout>
-
-        <FrameLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:clipChildren="false"
-            android:clipToPadding="false">
-
-            <!-- Lớp stroke -->
-            <TextView
-                android:id="@+id/tvOiveStroke"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/quicksand"
-                android:includeFontPadding="false"
-                android:shadowColor="#80000000"
-                android:shadowDx="3"
-                android:shadowDy="4"
-                android:shadowRadius="8"
-                android:text="oivé"
-                android:textColor="#000000"
-                android:textSize="44sp"
-                android:translationX="-15dp" />
-
-            <!-- Lớp chữ trắng -->
-            <TextView
-                android:id="@+id/tvOive"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/quicksand"
-                android:includeFontPadding="false"
-                android:shadowColor="#000000"
-                android:shadowDx="0"
-                android:shadowDy="0"
-                android:shadowRadius="6"
-                android:text="oivé"
-                android:textColor="#FFFFFF"
-                android:textSize="44sp"
-                android:translationX="-15dp"
-                android:translationY="-1dp" />
-
-        </FrameLayout>
-
-    </LinearLayout>
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"/>
 
     <LinearLayout
         android:id="@+id/tab_layout"
         android:layout_width="0dp"
         android:layout_height="86dp"
-        android:layout_marginTop="96dp"
+        android:layout_marginTop="100dp"
         android:orientation="horizontal"
         android:paddingTop="32dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -126,7 +41,7 @@
             android:text="SIGN IN"
             android:textAlignment="center"
             android:textColor="#999999"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
         <TextView
@@ -138,7 +53,7 @@
             android:text="REGISTER"
             android:textAlignment="center"
             android:textColor="#333333"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:textStyle="bold" />
     </LinearLayout>
 
@@ -150,7 +65,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginTop="20dp"
         android:hint="First Name"
-        android:textSize="18sp"
+        android:textSize="16sp"
         android:padding="10dp"
         android:inputType="textPersonName"
         android:fontFamily="@font/tenorsans"
@@ -166,7 +81,7 @@
         android:layout_height="48dp"
         android:layout_marginEnd="20dp"
         android:hint="Last Name"
-        android:textSize="18sp"
+        android:textSize="16sp"
         android:padding="10dp"
         android:inputType="textPersonName"
         android:fontFamily="@font/tenorsans"
@@ -188,7 +103,7 @@
         android:inputType="textEmailAddress"
         android:textColor="#979797"
         android:padding="10dp"
-        android:textSize="18sp"
+        android:textSize="16sp"
         android:fontFamily="@font/tenorsans"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -203,7 +118,7 @@
         android:inputType="textPassword"
         android:textColor="#979797"
         android:fontFamily="@font/tenorsans"
-        android:textSize="18sp"
+        android:textSize="16sp"
         android:padding="10dp"
         app:layout_constraintEnd_toEndOf="@id/et_email"
         app:layout_constraintStart_toStartOf="@id/et_email"
@@ -218,32 +133,32 @@
         android:inputType="textPassword"
         android:textColor="#979797"
         android:fontFamily="@font/tenorsans"
-        android:textSize="18sp"
+        android:textSize="16sp"
         android:padding="10dp"
         app:layout_constraintEnd_toEndOf="@id/et_email"
         app:layout_constraintStart_toStartOf="@id/et_email"
         app:layout_constraintTop_toBottomOf="@id/et_password" />
-    <!-- Terms -->
-    <TextView
-        android:id="@+id/tvTerms"
+
+    <EditText
+        android:id="@+id/phone_number"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_marginTop="10dp"
-        android:layout_marginStart="29dp"
-        android:text="By clicking Register Now, you agree to our                             Terms &amp; Conditions and Privacy Policy."
-        android:textColor="#000000"
-        android:textSize="14sp"
+        android:hint="Enter your phone number"
         android:fontFamily="@font/tenorsans"
+        android:textColor="#979797"
+        android:textSize="16sp"
+        android:padding="10dp"
         app:layout_constraintTop_toBottomOf="@id/et_confirm_password"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintStart_toStartOf="@id/et_email"
+        app:layout_constraintEnd_toEndOf="@id/et_email"/>
 
     <Button
         android:id="@+id/button_sign_in"
         android:layout_width="0dp"
         android:layout_height="60dp"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="30dp"
         android:backgroundTint="@color/vintage_gray"
         android:fontFamily="@font/tenorsans"
@@ -252,7 +167,7 @@
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_confirm_password" />
+        app:layout_constraintTop_toBottomOf="@+id/phone_number" />
 
     <TextView
         android:id="@+id/text_or"
@@ -269,46 +184,25 @@
         app:layout_constraintTop_toBottomOf="@+id/button_sign_in" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/button_sign_in_facebook"
-        android:layout_width="0dp"
-        android:layout_height="60dp"
-        android:text="SIGN IN WITH FACEBOOK"
-        android:textColor="#333333"
-        android:backgroundTint="#ffffff"
-        android:layout_marginTop="10dp"
-        android:fontFamily="@font/tenorsans"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        app:strokeColor="#cccccc"
-        app:strokeWidth="1dp"
-        app:icon="@drawable/ic_facebook"
-        app:iconTint="@null"
-        app:iconGravity="start"
-        app:layout_constraintTop_toBottomOf="@id/text_or"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:iconSize="24dp"/>
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/button_sign_in_google"
-        android:layout_width="0dp"
-        android:layout_height="60dp"
-        android:text="SIGN IN WITH GOOGLE"
-        android:textColor="#333333"
-        android:backgroundTint="#ffffff"
-        android:layout_marginTop="10dp"
-        android:fontFamily="@font/tenorsans"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        app:strokeColor="#cccccc"
-        app:strokeWidth="1dp"
-        app:icon="@drawable/ic_google"
-        app:iconTint="@null"
-        app:iconGravity="start"
-        app:layout_constraintTop_toBottomOf="@id/button_sign_in_facebook"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:iconSize="24dp"/>
+            android:id="@+id/button_sign_in_google"
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:text="SIGN IN WITH GOOGLE"
+            android:textColor="#333333"
+            android:backgroundTint="#ffffff"
+            android:fontFamily="@font/tenorsans"
+            android:layout_marginStart="32dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toBottomOf="@id/text_or"
+            app:strokeColor="#cccccc"
+            app:strokeWidth="1dp"
+            app:icon="@drawable/ic_google"
+            app:iconTint="@null"
+            app:iconGravity="start"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:iconSize="24dp"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

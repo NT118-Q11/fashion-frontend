@@ -3,18 +3,31 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#F4F1EC"
     android:fitsSystemWindows="true">
 
+    <ImageView
+        android:id="@+id/logo_noive"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="5dp"
+        android:contentDescription="Logo Noive"
+        android:scaleType="fitCenter"
+        android:src="@drawable/noive_logo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"/>
 
     <LinearLayout
         android:id="@+id/profile"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="90dp"
+        android:layout_marginTop="16dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/logo_noive">
 
         <TextView
             android:id="@+id/textView"
@@ -28,7 +41,7 @@
             android:textSize="20sp" />
 
         <ImageView
-            android:layout_width="150dp"
+            android:layout_width="146dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:backgroundTint="@color/white"
@@ -36,23 +49,18 @@
             android:src="@drawable/underline" />
     </LinearLayout>
 
-    <!--
-        FIX 1: Centered the profile picture layout horizontally by constraining both start and end to the parent.
-        This provides more predictable positioning on different screen sizes.
-        FIX 2: Corrected the excessive margin between the two ImageViews for better alignment.
-    -->
+    <!-- Profile picture -->
     <LinearLayout
         android:id="@+id/profile_picture"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="24dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:layout_marginStart="35dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/profile">
-
 
         <com.google.android.material.imageview.ShapeableImageView
             android:layout_width="80dp"
@@ -75,10 +83,6 @@
             android:src="@drawable/upload" />
     </LinearLayout>
 
-    <!--
-       FIX 4: Removed the unnecessary wrapping ConstraintLayout to simplify the view hierarchy.
-       The TextView and EditText are now constrained directly to their parent.
-    -->
     <TextView
         android:id="@+id/first_name_label"
         android:layout_width="wrap_content"
@@ -217,21 +221,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/phone_number" />
 
-
     <LinearLayout
         android:id="@+id/bottomNavBar"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_alignParentBottom="true"
         android:orientation="horizontal"
         android:background="@color/black"
         android:gravity="center"
         android:paddingHorizontal="0dp"
         app:layout_constraintBottom_toBottomOf="parent">
 
-        <!-- Home Icon -->
-
-        <!-- Notifications Icon -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/navHome"
             style="?attr/materialIconButtonStyle"
@@ -258,7 +257,6 @@
             app:iconGravity="textStart"
             android:contentDescription="Notifications" />
 
-        <!-- Cart Icon -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/navCart"
             android:backgroundTint="@color/black"
@@ -272,7 +270,6 @@
             app:iconGravity="textStart"
             android:contentDescription="Cart" />
 
-        <!-- Profile Icon -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/navProfile"
             style="?attr/materialIconButtonStyle"

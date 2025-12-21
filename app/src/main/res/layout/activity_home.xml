@@ -8,53 +8,12 @@
     android:background="#F5F1E8"
     android:fitsSystemWindows="true">
 
-    <LinearLayout
-        android:id="@+id/top_bar"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:paddingTop="16dp"
-        android:paddingBottom="8dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <!-- Search -->
-        <ImageView
-            android:id="@+id/ic_search"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:contentDescription="Search"
-            app:srcCompat="@drawable/ic_search"
-            app:tint="#1E1E1E"
-            android:layout_marginTop="5dp"/>
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1"/>
-
-        <!-- Favorite -->
-        <ImageView
-            android:id="@+id/ic_fav_top"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:contentDescription="Favorites"
-            android:layout_marginTop="5dp"
-            app:srcCompat="@drawable/ic_favorite_border"
-            app:tint="#1E1E1E" />
-
-    </LinearLayout>
-
-    <!-- Reel container between top bar and bottom nav -->
+    <!-- Reel container (Full Screen) -->
     <FrameLayout
         android:id="@+id/image_container"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@id/top_bar"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/bottomNavBar">
@@ -71,23 +30,21 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_gravity="top"
-            android:layout_marginTop="20dp"
-            android:orientation="horizontal">
-
+            android:layout_marginTop="60dp"
+            android:orientation="horizontal"
+            android:background="@android:color/transparent"
+            android:elevation="8dp">
 
             <TextView
                 android:id="@+id/cat_women"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="#bfbfbf"
-                android:fontFamily="@font/tenorsans"
                 android:gravity="center"
-                android:paddingHorizontal="4dp"
-                android:paddingVertical="6dp"
                 android:text="WOMEN"
-                android:textColor="#FFFFFF"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:textColor="#000000"
+                android:fontFamily="@font/tenorsans" />
 
             <TextView
                 android:id="@+id/cat_man"
@@ -97,10 +54,7 @@
                 android:gravity="center"
                 android:text="MAN"
                 android:textSize="16sp"
-                android:textColor="#FFFFFF"
-                android:background="#bfbfbf"
-                android:paddingVertical="6dp"
-                android:paddingHorizontal="4dp"
+                android:textColor="#000000"
                 android:fontFamily="@font/tenorsans" />
 
             <TextView
@@ -111,12 +65,8 @@
                 android:gravity="center"
                 android:text="KIDS"
                 android:textSize="16sp"
-                android:textColor="#FFFFFF"
-                android:background="#bfbfbf"
-                android:paddingVertical="6dp"
-                android:paddingHorizontal="4dp"
+                android:textColor="#000000"
                 android:fontFamily="@font/tenorsans" />
-
         </LinearLayout>
 
         <!-- Vertical reel indicator container -->
@@ -130,6 +80,45 @@
             android:paddingHorizontal="6dp"/>
     </FrameLayout>
 
+    <!-- Top bar (Overlay) -->
+    <LinearLayout
+        android:id="@+id/top_bar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingTop="16dp"
+        android:paddingBottom="8dp"
+        android:elevation="10dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <ImageView
+            android:id="@+id/ic_search"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:contentDescription="Search"
+            app:srcCompat="@drawable/ic_search"
+            app:tint="#1E1E1E" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
+
+        <ImageView
+            android:id="@+id/ic_fav_top"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:contentDescription="Favorites"
+            app:srcCompat="@drawable/ic_favorite_border"
+            app:tint="#1E1E1E"/>
+    </LinearLayout>
+
+    <!-- Bottom Nav Bar -->
     <LinearLayout
         android:id="@+id/bottomNavBar"
         android:layout_width="match_parent"

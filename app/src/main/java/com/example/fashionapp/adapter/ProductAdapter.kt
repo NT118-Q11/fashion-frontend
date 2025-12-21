@@ -22,13 +22,11 @@ class ProductAdapter(
     inner class ProductViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val imgProduct: ImageView = itemView.findViewById(R.id.imgProduct)
         private val txtTitle: TextView = itemView.findViewById(R.id.txtTitle)
-        private val txtName: TextView = itemView.findViewById(R.id.txtName)
         private val txtPrice: TextView = itemView.findViewById(R.id.txtPrice)
         private val btnFavorite: ImageView = itemView.findViewById(R.id.btnFavorite)
 
         fun bind(product: Product) {
-            txtTitle.text = product.brand ?: "Fashion Item"
-            txtName.text = product.name
+            txtTitle.text = product.name
             txtPrice.text = "$${String.format("%.2f", product.price)}"
 
             // Load thumbnail from assets

@@ -49,7 +49,9 @@ data class UserDto(
     @SerializedName("phone_number")
     val phoneNumber: String? = null,
     @SerializedName("user_address")
-    val userAddress: String? = null
+    val userAddress: String? = null,
+    val firstName: String? = null,
+    val lastName: String? = null
 )
 
 // Generic API response wrapper used by the backend

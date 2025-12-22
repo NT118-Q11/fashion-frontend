@@ -1,44 +1,53 @@
 package com.example.fashionapp.uix
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.example.fashionapp.AppRoute
 import com.example.fashionapp.R
 import com.example.fashionapp.adapter.ImageSliderAdapter
-import com.example.fashionapp.data.CartItem
 import com.example.fashionapp.data.CartManager
+import com.example.fashionapp.data.UserManager
 import com.example.fashionapp.databinding.ProductDetailBinding
+import com.example.fashionapp.model.Product
 import com.google.android.material.tabs.TabLayoutMediator
+import kotlinx.coroutines.launch
 
 class DetailsFragment : Fragment() {
 
     private var _binding: ProductDetailBinding? = null
     private val binding get() = _binding!!
+    
+    private var productId: String? = null
+    private var currentProduct: Product? = null
+    private lateinit var userManager: UserManager
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = ProductDetailBinding.inflate(inflater, container, false)
+        userManager = UserManager.getInstance(requireContext())
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val imageList = listOf(
-            R.drawable.model_image_1,
-            R.drawable.model_image_2,
-            R.drawable.model_image_3
-        )
+        productId = arguments?.getString("productId")
+        Log.d("DetailsFragment", "Current Product ID: $productId")
 
-        binding.viewPagerProduct.adapter = ImageSliderAdapter(imageList)
-
-        TabLayoutMediator(binding.tabLayoutProduct, binding.viewPagerProduct) { _, _ -> }.attach()
+        if (productId != null) {
+            loadProductDetails(productId!!)
+        } else {
+            fetchDemoProduct()
+        }
 
         binding.btnBack.setOnClickListener {
             findNavController().popBackStack()
@@ -54,19 +63,69 @@ class DetailsFragment : Fragment() {
 
         // NÚT ADD TO CART
         binding.btnAddToCart.setOnClickListener {
+            addToCart()
+        }
+    }
 
-            val item = CartItem(
-                id = 1,
-                title = "LAMEREI",
-                description = "Recycle Boucle Knit Cardigan Pink",
-                price = 120.0,
-                imageRes = R.drawable.model_image_1,
-                quantity = 1
+    private fun loadProductDetails(id: String) {
+        lifecycleScope.launch {
+            try {
+                val product = AppRoute.product.getProductById(id)
+                currentProduct = product
+                updateUI(product)
+            } catch (e: Exception) {
+                Log.e("DetailsFragment", "Error loading product: $id", e)
+                Toast.makeText(context, "Product not found", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun fetchDemoProduct() {
+        loadProductDetails("6949194c50f862c6c91de7a") 
+    }
+
+    private fun updateUI(product: Product) {
+        binding.apply {
+            tvName.text = product.name
+            tvDescription.text = product.description
+            tvPrice.text = "$${product.price}"
+            btnAddToCart.text = "Add To Cart · $${product.price}"
+            
+            // Update image slider with placeholders for now
+            val placeholderList = listOf(
+                R.drawable.model_image_1,
+                R.drawable.model_image_2,
+                R.drawable.model_image_3
             )
+            viewPagerProduct.adapter = ImageSliderAdapter(placeholderList)
+            TabLayoutMediator(tabLayoutProduct, viewPagerProduct) { _, _ -> }.attach()
+        }
+    }
 
-            CartManager.addItem(item)
+    private fun addToCart() {
+        val uid = userManager.getUserId()
+        val pid = currentProduct?.id ?: productId
 
-            Toast.makeText(requireContext(), "Added to cart!", Toast.LENGTH_SHORT).show()
+        if (uid == null) {
+            Toast.makeText(context, "Please login first", Toast.LENGTH_SHORT).show()
+            return
+        }
+        
+        if (pid == null) {
+            Toast.makeText(context, "Product data not loaded", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        lifecycleScope.launch {
+            binding.btnAddToCart.isEnabled = false
+            val success = CartManager.addToCart(uid, pid, 1)
+            binding.btnAddToCart.isEnabled = true
+            
+            if (success) {
+                Toast.makeText(requireContext(), "Added to cart!", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(requireContext(), "Failed to add to cart", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 

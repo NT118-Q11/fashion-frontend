@@ -239,7 +239,10 @@ class ActivitySearchViewFragment : Fragment() {
         recycler.adapter = SearchResultAdapter(pageItems) { product ->
             // Navigate to details with product ID
             // You can pass the product ID via arguments if needed
-            findNavController().navigate(R.id.action_activitySearchViewFragment_to_detailsFragment)
+            val bundle = Bundle().apply {
+                putString("productId", product.id)
+            }
+            findNavController().navigate(R.id.action_activitySearchViewFragment_to_detailsFragment, bundle)
         }
 
         // Update pagination button states

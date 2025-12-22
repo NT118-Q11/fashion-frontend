@@ -1,45 +1,45 @@
 package com.example.fashionapp.uix
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.fashionapp.R
 import com.example.fashionapp.adapter.CartAdapter
 import com.example.fashionapp.data.CartManager
+import com.example.fashionapp.data.UserManager
 import com.example.fashionapp.databinding.ActivityCartBinding
+import com.example.fashionapp.model.Cart
+import kotlinx.coroutines.launch
 
 class CartFragment : Fragment() {
 
     private var _binding: ActivityCartBinding? = null
     private val binding get() = _binding!!
+    
+    private lateinit var userManager: UserManager
+    private var cartAdapter: CartAdapter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = ActivityCartBinding.inflate(inflater, container, false)
+        userManager = UserManager.getInstance(requireContext())
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val cartItems = CartManager.getItems().toMutableList()
-
-        val cartAdapter = CartAdapter(cartItems) { updatedItems ->
-            updateSubtotal(updatedItems)
-        }
-
-        binding.rvCart.apply {
-            layoutManager = LinearLayoutManager(context)
-            adapter = cartAdapter
-        }
-
-        updateSubtotal(cartItems)
+        setupRecyclerView()
+        loadCartData()
 
         binding.btnCheckout.setOnClickListener {
             findNavController().navigate(R.id.action_cartFragment_to_checkoutFragment)
@@ -53,21 +53,83 @@ class CartFragment : Fragment() {
             findNavController().navigate(R.id.action_cartFragment_to_myAccountFragment)
         }
         binding.navNotifications.setOnClickListener {
-            findNavController().navigate(R.id.action_cartFragment_to_notificationFragment)
+            findNavController().navigate(R.id.NotificationFragment)
         }
     }
 
-    private fun updateSubtotal(items: List<com.example.fashionapp.data.CartItem>) {
-        val total = items.sumOf { it.price * it.quantity }
-        binding.tvSubtotalPrice.text = "$${String.format("%.2f", total)}"
+    private fun setupRecyclerView() {
+        cartAdapter = CartAdapter(
+            mutableListOf(),
+            onIncrease = { item -> updateQuantity(item.id, item.quantity + 1) },
+            onDecrease = { item -> 
+                if (item.quantity > 1) {
+                    updateQuantity(item.id, item.quantity - 1)
+                } else {
+                    removeItem(item.id)
+                }
+            },
+            onRemove = { item -> removeItem(item.id) }
+        )
 
-        // cập nhật CartManager để giữ dữ liệu đồng bộ
-        CartManager.updateQuantities(items)
+        binding.rvCart.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = cartAdapter
+        }
+    }
+
+    private fun loadCartData() {
+        val userId = userManager.getUserId() ?: return
+        
+        lifecycleScope.launch {
+            // Note: progressBar not available in layout
+            val cart = CartManager.getCart(userId)
+            
+            if (cart != null) {
+                updateUI(cart)
+            } else {
+                Toast.makeText(context, "Failed to load cart", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun updateQuantity(itemId: String, newQuantity: Int) {
+        val userId = userManager.getUserId() ?: return
+        lifecycleScope.launch {
+            val success = CartManager.updateQuantity(itemId, userId, newQuantity)
+            if (success) {
+                loadCartData() 
+            } else {
+                Toast.makeText(context, "Failed to update quantity", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun removeItem(itemId: String) {
+        val userId = userManager.getUserId() ?: return
+        lifecycleScope.launch {
+            val success = CartManager.removeItem(itemId, userId)
+            if (success) {
+                loadCartData()
+            } else {
+                Toast.makeText(context, "Failed to remove item", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun updateUI(cart: Cart) {
+        cartAdapter?.updateItems(cart.items)
+        binding.tvSubtotalPrice.text = "$${String.format("%.2f", cart.totalPrice)}"
+        
+        // Note: tvEmptyCart not available in layout
+        if (cart.items.isEmpty()) {
+            binding.rvCart.visibility = View.GONE
+        } else {
+            binding.rvCart.visibility = View.VISIBLE
+        }
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        binding.rvCart.adapter = null
         _binding = null
     }
 }

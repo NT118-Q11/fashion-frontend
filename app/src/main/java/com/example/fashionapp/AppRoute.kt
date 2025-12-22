@@ -1,6 +1,7 @@
 package com.example.fashionapp
 
 import com.example.fashionapp.data.ProductApi
+import com.example.fashionapp.data.UserApi
 import com.example.fashionapp.data.CartApi
 import com.google.gson.annotations.SerializedName
 import okhttp3.OkHttpClient
@@ -83,14 +84,39 @@ object AppRoute {
     private var baseUrl: String = "http://10.0.2.2:8080"
 
     private val client = OkHttpClient.Builder()
+        .followRedirects(false) // Disable automatic redirects to avoid loops
+        .followSslRedirects(false) // Disable SSL redirects too
         .addInterceptor { chain ->
             val request = chain.request()
             android.util.Log.d("AppRoute", "Making request to: ${request.url}")
             android.util.Log.d("AppRoute", "Method: ${request.method}")
 
             val response = chain.proceed(request)
+
+            // Log the chain of prior responses (redirects, retries)
+            var prior = response.priorResponse
+            var redirectCount = 0
+            while (prior != null) {
+                redirectCount++
+                android.util.Log.d(
+                    "AppRoute",
+                    "Prior response #$redirectCount: code=${prior.code}, requestUrl=${prior.request.url}"
+                )
+                val priorLocation = prior.headers["Location"]
+                if (priorLocation != null) {
+                    android.util.Log.d("AppRoute", "  └─ Location header: $priorLocation")
+                }
+                prior = prior.priorResponse
+            }
+
             android.util.Log.d("AppRoute", "Response code: ${response.code}")
             android.util.Log.d("AppRoute", "Response message: ${response.message}")
+
+            // Log Location header if present (helps see redirects)
+            val location = response.headers["Location"]
+            if (location != null) {
+                android.util.Log.d("AppRoute", "Location header: $location")
+            }
 
             // Log response body for debugging
             val responseBody = response.body
@@ -127,6 +153,7 @@ object AppRoute {
 
     val auth: AuthApi by lazy { retrofit.create(AuthApi::class.java) }
     val product: ProductApi by lazy { retrofit.create(ProductApi::class.java) }
+    val user: UserApi by lazy { retrofit.create(UserApi::class.java) }
     val cart: CartApi by lazy { retrofit.create(CartApi::class.java) }
 
     // Allow overriding the base URL (call before accessing `auth` to take effect)

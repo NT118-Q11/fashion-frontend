@@ -183,38 +183,107 @@ class ActivitySearchViewFragment : Fragment() {
 
         paginationContainer.visibility = View.VISIBLE
 
+        // Calculate which pages to show (max 7 buttons to prevent overflow)
+        val pagesToShow = calculatePagesToShow(currentPage, totalPages)
+
         // Add page buttons dynamically
-        for (page in 1..totalPages) {
-            val pageButton = TextView(requireContext()).apply {
-                text = page.toString()
-                textSize = 16f
-                setPadding(24, 16, 24, 16)
-                setTextColor(if (page == currentPage) Color.WHITE else Color.BLACK)
-                setBackgroundResource(
-                    if (page == currentPage) R.drawable.page_selected_bg
-                    else R.drawable.page_unselected_bg
-                )
-                setOnClickListener {
-                    currentPage = page
-                    updatePageUI()
-                    updatePaginationButtons()
+        var isFirstButton = true
+        for (pageOrEllipsis in pagesToShow) {
+            if (pageOrEllipsis == -1) {
+                // Add ellipsis
+                val ellipsisView = TextView(requireContext()).apply {
+                    text = "..."
+                    textSize = 16f
+                    setPadding(16, 16, 16, 16)
+                    setTextColor(Color.GRAY)
+                    isClickable = false
                 }
-            }
 
-            val layoutParams = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-            ).apply {
-                marginStart = if (page == 1) 0 else 16
-            }
+                val layoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+                ).apply {
+                    marginStart = if (isFirstButton) 0 else 16
+                }
 
-            // Insert before the "next" arrow
-            paginationContainer.addView(pageButton, paginationContainer.childCount - 1, layoutParams)
+                paginationContainer.addView(ellipsisView, paginationContainer.childCount - 1, layoutParams)
+            } else {
+                // Add page button
+                val page = pageOrEllipsis
+                val pageButton = TextView(requireContext()).apply {
+                    text = page.toString()
+                    textSize = 16f
+                    setPadding(24, 16, 24, 16)
+                    setTextColor(if (page == currentPage) Color.WHITE else Color.BLACK)
+                    setBackgroundResource(
+                        if (page == currentPage) R.drawable.page_selected_bg
+                        else R.drawable.page_unselected_bg
+                    )
+                    setOnClickListener {
+                        currentPage = page
+                        updatePageUI()
+                        updatePaginationButtons()
+                    }
+                }
+
+                val layoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+                ).apply {
+                    marginStart = if (isFirstButton) 0 else 16
+                }
+
+                paginationContainer.addView(pageButton, paginationContainer.childCount - 1, layoutParams)
+            }
+            isFirstButton = false
         }
 
         // Update arrow states
         pagePrev.alpha = if (currentPage > 1) 1.0f else 0.3f
         pageNext.alpha = if (currentPage < totalPages) 1.0f else 0.3f
+    }
+
+    private fun calculatePagesToShow(current: Int, total: Int): List<Int> {
+        if (total <= 7) {
+            // Show all pages if total is 7 or less
+            return (1..total).toList()
+        }
+
+        val pages = mutableListOf<Int>()
+
+        // Always show first page
+        pages.add(1)
+
+        when {
+            current <= 4 -> {
+                // Near the beginning: 1 2 3 4 5 ... 10
+                for (i in 2..minOf(5, total - 1)) {
+                    pages.add(i)
+                }
+                if (total > 6) {
+                    pages.add(-1) // ellipsis
+                }
+                pages.add(total)
+            }
+            current >= total - 3 -> {
+                // Near the end: 1 ... 6 7 8 9 10
+                pages.add(-1) // ellipsis
+                for (i in maxOf(2, total - 4)..total) {
+                    pages.add(i)
+                }
+            }
+            else -> {
+                // In the middle: 1 ... 4 5 6 ... 10
+                pages.add(-1) // ellipsis
+                for (i in current - 1..current + 1) {
+                    pages.add(i)
+                }
+                pages.add(-1) // ellipsis
+                pages.add(total)
+            }
+        }
+
+        return pages
     }
 
     private fun updatePageUI() {

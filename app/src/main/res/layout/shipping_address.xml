@@ -58,42 +58,155 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/shipping_address">
 
-        <TextView
-            android:id="@+id/name"
-            android:layout_width="wrap_content"
+        <!-- Display Mode -->
+        <LinearLayout
+            android:id="@+id/display_mode"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:layout_marginStart="40dp"
-            android:fontFamily="@font/tenorsans"
-            android:text="Name"
-            android:textColor="@color/gray"
-            android:textSize="18sp"
+            android:orientation="vertical"
+            android:visibility="visible"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintEnd_toStartOf="@id/imageButton1"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/address"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:fontFamily="@font/tenorsans"
-            android:text="2365 Green Street, D2, California"
-            android:textColor="@color/gray"
-            android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="@id/name"
-            app:layout_constraintTop_toBottomOf="@id/name" />
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:layout_marginStart="40dp"
+                android:fontFamily="@font/tenorsans"
+                android:text="Name"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textSize="18sp" />
 
-        <TextView
-            android:id="@+id/phone_number"
-            android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="40dp"
+                android:fontFamily="@font/tenorsans"
+                android:text="2365 Green Street, D2, California"
+                android:textColor="@color/gray"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/phone_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginStart="40dp"
+                android:fontFamily="@font/tenorsans"
+                android:text="096 0000 000"
+                android:textColor="@color/gray"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <!-- Edit Mode -->
+        <LinearLayout
+            android:id="@+id/edit_mode"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:fontFamily="@font/tenorsans"
-            android:text="096 0000 000"
-            android:textColor="@color/gray"
-            android:textSize="18sp"
-            app:layout_constraintStart_toStartOf="@id/address"
-            app:layout_constraintTop_toBottomOf="@id/address" />
+            android:layout_marginHorizontal="32dp"
+            android:layout_marginTop="30dp"
+            android:orientation="vertical"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <!-- Name Input -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/name_input_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Full Name"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:boxStrokeColor="@color/black"
+                app:hintTextColor="@color/gray">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/name_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/tenorsans"
+                    android:inputType="textPersonName"
+                    android:textSize="16sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Address Input -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/address_input_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:hint="Address"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:boxStrokeColor="@color/black"
+                app:hintTextColor="@color/gray">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/address_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/tenorsans"
+                    android:inputType="textPostalAddress"
+                    android:minLines="2"
+                    android:textSize="16sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Phone Input -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/phone_input_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:hint="Phone Number"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:boxStrokeColor="@color/black"
+                app:hintTextColor="@color/gray">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/phone_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/tenorsans"
+                    android:inputType="phone"
+                    android:textSize="16sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Action Buttons -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal"
+                android:gravity="end">
+
+                <Button
+                    android:id="@+id/btn_cancel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
+                    android:text="Cancel"
+                    android:fontFamily="@font/tenorsans"
+                    android:textColor="@color/black"
+                    android:backgroundTint="@color/white"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
+
+                <Button
+                    android:id="@+id/btn_save"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Save"
+                    android:fontFamily="@font/tenorsans"
+                    android:textColor="@color/white"
+                    android:backgroundTint="@color/black" />
+            </LinearLayout>
+
+        </LinearLayout>
 
         <ImageButton
             android:id="@+id/imageButton1"
@@ -106,73 +219,10 @@
             android:clickable="true"
             android:contentDescription="@string/edit_profile"
             android:scaleType="fitCenter"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.517"
             app:srcCompat="@drawable/edit_pen" />
 
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <!-- FIX: Constrained to the bottom of the correct view -->
-    <ImageView
-        android:id="@+id/line1"
-        android:layout_width="360dp"
-        android:layout_height="wrap_content"
-        android:adjustViewBounds="true"
-        android:src="@drawable/straight_line"
-        app:layout_constraintTop_toBottomOf="@id/profile_container"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
-
-
-    <!-- FIX: Constrained to the bottom of the correct view -->
-    <ImageView
-        android:id="@+id/line2"
-        android:layout_width="360dp"
-        android:layout_height="wrap_content"
-        android:adjustViewBounds="true"
-        android:src="@drawable/straight_line"
-        app:layout_constraintTop_toBottomOf="@id/profile_container"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
-
-    <!-- ADD NEW SHIPPING ADDRESS (LEFT - RIGHT) -->
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/add_new_address"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:minHeight="48dp"
-        android:paddingHorizontal="32dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/line1">
-
-        <TextView
-            android:id="@+id/tvAddAddress"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/tenorsans"
-            android:text="  Add New Shipping Address"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/ivAdd"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:src="@drawable/ic_plus"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:tint="@color/black" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

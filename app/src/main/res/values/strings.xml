@@ -6,6 +6,9 @@
     <string name="new_password_hint">Enter new password</string>
     <string name="confirm_new_password_hint">Confirm new password</string>
     <string name="confirm_button_text">CONFIRM</string>
+    <string name="updating_text">Updating...</string>
+    <string name="saving_text">Saving...</string>
+    <string name="save_text">Save</string>
     <string name="change_password_settings">Change your password</string>
     <string name="edit_profile">EDIT PROFILE</string>
     <string name="log_out">Log out</string>

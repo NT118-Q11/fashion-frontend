@@ -2,17 +2,14 @@ package com.example.fashionapp.uix
 
 import android.graphics.Color
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.ProgressBar
 import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -20,26 +17,25 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fashionapp.AppRoute
 import com.example.fashionapp.R
-import com.example.fashionapp.adapter.ProductAdapter
 import com.example.fashionapp.model.Product
 import kotlinx.coroutines.launch
 
 class ActivitySearchViewFragment : Fragment() {
 
+    // Views
     private lateinit var recycler: RecyclerView
-    private lateinit var searchInput: EditText
-    private lateinit var tvResultCount: TextView
-    private lateinit var tvEmptyState: TextView
-    private lateinit var loadingIndicator: View
     private lateinit var paginationContainer: LinearLayout
     private lateinit var pagePrev: ImageView
     private lateinit var pageNext: ImageView
-    private lateinit var productAdapter: ProductAdapter
+    private lateinit var tvResultCount: TextView
+    private lateinit var loadingIndicator: ProgressBar
+    private lateinit var tvEmptyState: TextView
+    private lateinit var searchInput: EditText
 
+    // State
     private var currentPage = 1
     private val itemsPerPage = 4
     private var allProducts: List<Product> = emptyList()
-    private var filteredProducts: List<Product> = emptyList()
     private var currentSearchKeyword: String = ""
 
     override fun onCreateView(
@@ -53,41 +49,30 @@ class ActivitySearchViewFragment : Fragment() {
 
         // Initialize views
         recycler = view.findViewById(R.id.rcv_search_results)
-        searchInput = view.findViewById(R.id.search_input)
-        tvResultCount = view.findViewById(R.id.tv_result_count)
-        tvEmptyState = view.findViewById(R.id.tv_empty_state)
-        loadingIndicator = view.findViewById(R.id.loading_indicator)
         paginationContainer = view.findViewById(R.id.pagination_container)
         pagePrev = view.findViewById(R.id.page_prev)
         pageNext = view.findViewById(R.id.page_next)
+        tvResultCount = view.findViewById(R.id.tv_result_count)
+        loadingIndicator = view.findViewById(R.id.loading_indicator)
+        tvEmptyState = view.findViewById(R.id.tv_empty_state)
+        searchInput = view.findViewById(R.id.search_input)
 
         // Setup RecyclerView
         recycler.layoutManager = GridLayoutManager(requireContext(), 2)
-        productAdapter = ProductAdapter(emptyList()) { product ->
-            // Handle product click - navigate to details with product ID
-            val bundle = Bundle().apply {
-                putString("productId", product.id)
-            }
-            findNavController().navigate(
-                R.id.action_activitySearchViewFragment_to_detailsFragment,
-                bundle
-            )
-        }
-        recycler.adapter = productAdapter
 
         // Setup navigation listeners
-        view.findViewById<View>(R.id.btn_back)?.setOnClickListener {
-            findNavController().navigateUp()
-        }
+        view.findViewById<View>(R.id.btn_back)?.setOnClickListener { findNavController().navigateUp() }
         view.findViewById<View>(R.id.btn_close)?.setOnClickListener {
             searchInput.text.clear()
             currentSearchKeyword = ""
-            loadAllProducts()
+            // Reload all products when clearing search
+            loadProducts()
         }
         view.findViewById<View>(R.id.btn_filter)?.setOnClickListener {
             // Trigger search
             performSearch()
         }
+
         view.findViewById<View>(R.id.navHome)?.setOnClickListener {
             findNavController().navigate(R.id.action_activitySearchViewFragment_to_homeFragment)
         }
@@ -102,20 +87,16 @@ class ActivitySearchViewFragment : Fragment() {
         }
 
         // Setup search input listener
-        searchInput.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-            override fun afterTextChanged(s: Editable?) {
-                // Auto-search when user stops typing (you can add debounce here)
-                currentSearchKeyword = s?.toString() ?: ""
-            }
-        })
+        searchInput.setOnEditorActionListener { _, _, _ ->
+            performSearch()
+            true
+        }
 
         // Setup pagination listeners
         pagePrev.setOnClickListener {
             if (currentPage > 1) {
                 currentPage--
-                updateUI()
+                updatePageUI()
             }
         }
 
@@ -123,225 +104,279 @@ class ActivitySearchViewFragment : Fragment() {
             val totalPages = getTotalPages()
             if (currentPage < totalPages) {
                 currentPage++
-                updateUI()
+                updatePageUI()
             }
         }
 
-        // Load initial data
-        loadAllProducts()
+        // Load all products initially
+        loadProducts()
     }
 
-    /**
-     * Load all products from API
-     */
-    private fun loadAllProducts() {
-        lifecycleScope.launch {
-            try {
-                showLoading(true)
-                Log.d("SearchView", "Loading all products...")
-                allProducts = AppRoute.product.getAllProducts()
-                filteredProducts = allProducts
-                currentPage = 1
-                Log.d("SearchView", "Loaded ${allProducts.size} products")
-                showLoading(false)
-                updateUI()
-            } catch (e: Exception) {
-                Log.e("SearchView", "Error loading products", e)
-                showLoading(false)
-                Toast.makeText(
-                    requireContext(),
-                    "Failed to load products: ${e.message}",
-                    Toast.LENGTH_SHORT
-                ).show()
-                // Show empty state
-                allProducts = emptyList()
-                filteredProducts = emptyList()
-                updateUI()
-            }
-        }
-    }
-
-    /**
-     * Perform search based on keyword
-     */
     private fun performSearch() {
-        val keyword = searchInput.text.toString().trim()
-        if (keyword.isEmpty()) {
-            loadAllProducts()
-            return
-        }
+        currentSearchKeyword = searchInput.text.toString().trim()
+        currentPage = 1
+        loadProducts()
+    }
 
+    private fun loadProducts() {
         lifecycleScope.launch {
             try {
                 showLoading(true)
-                Log.d("SearchView", "Searching for: $keyword")
-                filteredProducts = AppRoute.product.searchProducts(keyword)
-                currentPage = 1
-                Log.d("SearchView", "Found ${filteredProducts.size} products")
+
+                allProducts = if (currentSearchKeyword.isNotEmpty()) {
+                    AppRoute.product.searchProducts(currentSearchKeyword)
+                } else {
+                    AppRoute.product.getAllProducts()
+                }
+
                 showLoading(false)
-                updateUI()
+
+                // Show empty state only when search returns no results
+                if (allProducts.isEmpty()) {
+                    showEmptyState(true)
+                } else {
+                    showEmptyState(false)
+                    updateResultCount()
+                    updatePageUI()
+                    updatePaginationButtons()
+                }
+
             } catch (e: Exception) {
-                Log.e("SearchView", "Error searching products", e)
                 showLoading(false)
-                Toast.makeText(
-                    requireContext(),
-                    "Search failed: ${e.message}",
-                    Toast.LENGTH_SHORT
-                ).show()
+                showEmptyState(true)
+                e.printStackTrace()
             }
         }
     }
 
-    /**
-     * Calculate total number of pages
-     */
-    private fun getTotalPages(): Int {
-        return if (filteredProducts.isEmpty()) 1
-        else (filteredProducts.size + itemsPerPage - 1) / itemsPerPage
+    private fun showLoading(show: Boolean) {
+        loadingIndicator.visibility = if (show) View.VISIBLE else View.GONE
+        recycler.visibility = if (show) View.GONE else View.VISIBLE
+        tvEmptyState.visibility = View.GONE
     }
 
-    /**
-     * Get products for current page
-     */
-    private fun getCurrentPageProducts(): List<Product> {
-        val startIndex = (currentPage - 1) * itemsPerPage
-        val endIndex = minOf(startIndex + itemsPerPage, filteredProducts.size)
-        return if (startIndex < filteredProducts.size) {
-            filteredProducts.subList(startIndex, endIndex)
-        } else {
-            emptyList()
-        }
+    private fun showEmptyState(show: Boolean) {
+        tvEmptyState.visibility = if (show) View.VISIBLE else View.GONE
+        recycler.visibility = if (show) View.GONE else View.VISIBLE
+        paginationContainer.visibility = if (show) View.GONE else View.VISIBLE
     }
 
-    /**
-     * Update UI with current page data
-     */
-    private fun updateUI() {
-        // Update result count
+    private fun updateResultCount() {
+        val count = allProducts.size
         val searchText = if (currentSearchKeyword.isNotEmpty()) {
-            currentSearchKeyword.uppercase()
+            "\"$currentSearchKeyword\""
         } else {
             "ALL PRODUCTS"
         }
-        tvResultCount.text = "${filteredProducts.size} RESULT${if (filteredProducts.size != 1) "S" else ""} OF $searchText"
+        tvResultCount.text = "$count RESULT${if (count != 1) "S" else ""} OF $searchText"
+    }
 
-        // Update RecyclerView
-        val pageProducts = getCurrentPageProducts()
-        productAdapter.updateProducts(pageProducts)
+    private fun getTotalPages(): Int {
+        return if (allProducts.isEmpty()) 1 else (allProducts.size + itemsPerPage - 1) / itemsPerPage
+    }
 
-        // Show/hide empty state
-        if (filteredProducts.isEmpty()) {
-            tvEmptyState.visibility = View.VISIBLE
-            recycler.visibility = View.GONE
-            paginationContainer.visibility = View.GONE
-        } else {
-            tvEmptyState.visibility = View.GONE
-            recycler.visibility = View.VISIBLE
-            paginationContainer.visibility = View.VISIBLE
-            // Update pagination
-            updatePagination()
+    private fun updatePaginationButtons() {
+        // Clear existing page buttons (except prev/next arrows)
+        val childCount = paginationContainer.childCount
+        if (childCount > 2) {
+            paginationContainer.removeViews(1, childCount - 2)
         }
-    }
 
-    /**
-     * Show or hide loading indicator
-     */
-    private fun showLoading(isLoading: Boolean) {
-        loadingIndicator.visibility = if (isLoading) View.VISIBLE else View.GONE
-        recycler.visibility = if (isLoading) View.GONE else View.VISIBLE
-        paginationContainer.visibility = if (isLoading) View.GONE else View.VISIBLE
-    }
-
-    /**
-     * Update pagination UI dynamically
-     */
-    private fun updatePagination() {
         val totalPages = getTotalPages()
 
-        // Clear existing page buttons
-        paginationContainer.removeAllViews()
-
-        // Re-add prev button
-        paginationContainer.addView(pagePrev)
-
-        // Calculate page range to display
-        val maxPagesToShow = 5
-        val startPage: Int
-        val endPage: Int
-
-        when {
-            totalPages <= maxPagesToShow -> {
-                // Show all pages
-                startPage = 1
-                endPage = totalPages
-            }
-            currentPage <= 3 -> {
-                // Near the beginning
-                startPage = 1
-                endPage = maxPagesToShow
-            }
-            currentPage >= totalPages - 2 -> {
-                // Near the end
-                startPage = totalPages - maxPagesToShow + 1
-                endPage = totalPages
-            }
-            else -> {
-                // In the middle
-                startPage = currentPage - 2
-                endPage = currentPage + 2
-            }
+        if (totalPages <= 1) {
+            paginationContainer.visibility = View.GONE
+            return
         }
 
-        // Create page buttons
-        for (page in startPage..endPage) {
-            val pageButton = createPageButton(page, page == currentPage)
-            paginationContainer.addView(pageButton)
+        paginationContainer.visibility = View.VISIBLE
+
+        // Calculate which pages to show (max 7 buttons to prevent overflow)
+        val pagesToShow = calculatePagesToShow(currentPage, totalPages)
+
+        // Add page buttons dynamically
+        var isFirstButton = true
+        for (pageOrEllipsis in pagesToShow) {
+            if (pageOrEllipsis == -1) {
+                // Add ellipsis
+                val ellipsisView = TextView(requireContext()).apply {
+                    text = "..."
+                    textSize = 16f
+                    setPadding(16, 16, 16, 16)
+                    setTextColor(Color.GRAY)
+                    isClickable = false
+                }
+
+                val layoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+                ).apply {
+                    marginStart = if (isFirstButton) 0 else 16
+                }
+
+                paginationContainer.addView(ellipsisView, paginationContainer.childCount - 1, layoutParams)
+            } else {
+                // Add page button
+                val page = pageOrEllipsis
+                val pageButton = TextView(requireContext()).apply {
+                    text = page.toString()
+                    textSize = 16f
+                    setPadding(24, 16, 24, 16)
+                    setTextColor(if (page == currentPage) Color.WHITE else Color.BLACK)
+                    setBackgroundResource(
+                        if (page == currentPage) R.drawable.page_selected_bg
+                        else R.drawable.page_unselected_bg
+                    )
+                    setOnClickListener {
+                        currentPage = page
+                        updatePageUI()
+                        updatePaginationButtons()
+                    }
+                }
+
+                val layoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+                ).apply {
+                    marginStart = if (isFirstButton) 0 else 16
+                }
+
+                paginationContainer.addView(pageButton, paginationContainer.childCount - 1, layoutParams)
+            }
+            isFirstButton = false
         }
 
-        // Re-add next button
-        paginationContainer.addView(pageNext)
-
-        // Enable/disable navigation arrows
+        // Update arrow states
         pagePrev.alpha = if (currentPage > 1) 1.0f else 0.3f
-        pagePrev.isEnabled = currentPage > 1
-
         pageNext.alpha = if (currentPage < totalPages) 1.0f else 0.3f
-        pageNext.isEnabled = currentPage < totalPages
     }
 
-    /**
-     * Create a page button dynamically
-     */
-    private fun createPageButton(pageNumber: Int, isSelected: Boolean): TextView {
-        val buttonSizePx = (32 * resources.displayMetrics.density).toInt()
-        val marginStartPx = (8 * resources.displayMetrics.density).toInt()
-        val marginBetweenPx = (6 * resources.displayMetrics.density).toInt()
+    private fun calculatePagesToShow(current: Int, total: Int): List<Int> {
+        if (total <= 7) {
+            // Show all pages if total is 7 or less
+            return (1..total).toList()
+        }
 
-        val pageButton = TextView(requireContext())
-        pageButton.apply {
-            text = pageNumber.toString()
-            width = buttonSizePx
-            height = buttonSizePx
-            gravity = android.view.Gravity.CENTER
-            textSize = 14f
+        val pages = mutableListOf<Int>()
 
-            setBackgroundResource(
-                if (isSelected) R.drawable.page_selected_bg
-                else R.drawable.page_unselected_bg
-            )
-            setTextColor(if (isSelected) Color.WHITE else Color.BLACK)
+        // Always show first page
+        pages.add(1)
 
-            // Set margins
-            val params = LinearLayout.LayoutParams(buttonSizePx, buttonSizePx)
-            params.marginStart = if (pageNumber == 1) marginStartPx else marginBetweenPx
-            layoutParams = params
-
-            // Set click listener
-            setOnClickListener {
-                currentPage = pageNumber
-                updateUI()
+        when {
+            current <= 4 -> {
+                // Near the beginning: 1 2 3 4 5 ... 10
+                for (i in 2..minOf(5, total - 1)) {
+                    pages.add(i)
+                }
+                if (total > 6) {
+                    pages.add(-1) // ellipsis
+                }
+                pages.add(total)
+            }
+            current >= total - 3 -> {
+                // Near the end: 1 ... 6 7 8 9 10
+                pages.add(-1) // ellipsis
+                for (i in maxOf(2, total - 4)..total) {
+                    pages.add(i)
+                }
+            }
+            else -> {
+                // In the middle: 1 ... 4 5 6 ... 10
+                pages.add(-1) // ellipsis
+                for (i in current - 1..current + 1) {
+                    pages.add(i)
+                }
+                pages.add(-1) // ellipsis
+                pages.add(total)
             }
         }
-        return pageButton
+
+        return pages
+    }
+
+    private fun updatePageUI() {
+        // Calculate items for the current page
+        val startIndex = (currentPage - 1) * itemsPerPage
+        val endIndex = minOf(startIndex + itemsPerPage, allProducts.size)
+        val pageItems = if (startIndex < allProducts.size) {
+            allProducts.subList(startIndex, endIndex)
+        } else {
+            emptyList()
+        }
+
+        // Show empty state if no products
+        if (pageItems.isEmpty()) {
+            showEmptyState(true)
+            return
+        }
+
+        showEmptyState(false)
+
+        // Update RecyclerView with items for the current page
+        recycler.adapter = SearchResultAdapter(pageItems) { product ->
+            // Navigate to details with product ID
+            // You can pass the product ID via arguments if needed
+            val bundle = Bundle().apply {
+                putString("productId", product.id)
+            }
+            findNavController().navigate(R.id.action_activitySearchViewFragment_to_detailsFragment, bundle)
+        }
+
+        // Update pagination button states
+        updatePaginationButtons()
+    }
+
+    private inner class SearchResultAdapter(
+        private val products: List<Product>,
+        private val onClick: (Product) -> Unit
+    ) : RecyclerView.Adapter<SearchResultAdapter.VH>() {
+
+        inner class VH(itemView: View) : RecyclerView.ViewHolder(itemView) {
+            private val imgProduct: ImageView = itemView.findViewById(R.id.imgProduct)
+            private val title: TextView = itemView.findViewById(R.id.txtTitle)
+            private val price: TextView = itemView.findViewById(R.id.txtPrice)
+            private val btnFavorite: ImageView = itemView.findViewById(R.id.btnFavorite)
+
+            fun bind(product: Product) {
+                title.text = product.name
+                price.text = "$${String.format("%.2f", product.price)}"
+
+                // Load product image from assets
+                val assetPath = product.getThumbnailAssetPath()
+                if (assetPath != null) {
+                    try {
+                        val inputStream = requireContext().assets.open(assetPath)
+                        val drawable = android.graphics.drawable.Drawable.createFromStream(inputStream, null)
+                        imgProduct.setImageDrawable(drawable)
+                        inputStream.close()
+                    } catch (e: Exception) {
+                        // Fallback to default image if asset not found
+                        imgProduct.setImageResource(R.drawable.sample_woman)
+                        e.printStackTrace()
+                    }
+                } else {
+                    imgProduct.setImageResource(R.drawable.sample_woman)
+                }
+
+                // Handle favorite button (optional - implement favorite logic if needed)
+                btnFavorite.setOnClickListener {
+                    // TODO: Add to favorites
+                }
+
+                itemView.setOnClickListener { onClick(product) }
+            }
+        }
+
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
+            val view = LayoutInflater.from(parent.context)
+                .inflate(R.layout.item_search_result, parent, false)
+            return VH(view)
+        }
+
+        override fun onBindViewHolder(holder: VH, position: Int) {
+            holder.bind(products[position])
+        }
+
+        override fun getItemCount(): Int = products.size
     }
 }

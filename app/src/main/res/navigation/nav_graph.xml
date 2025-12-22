@@ -28,8 +28,8 @@
             app:destination="@id/MyFavoritesFragment" />
 
         <action
-            android:id="@+id/action_homeFragment_to_activitySearchFragment"
-            app:destination="@id/activitySearchFragment" />
+            android:id="@+id/action_homeFragment_to_activitySearchViewFragment"
+            app:destination="@id/activitySearchViewFragment" />
 
         <action
             android:id="@+id/action_homeFragment_to_detailsFragment"
@@ -235,26 +235,99 @@
         android:name="com.example.fashionapp.uix.SettingFragment"
         android:label="Setting"
         tools:layout="@layout/settings">
+
+        <action
+            android:id="@+id/action_settingFragment_to_myAccountFragment"
+            app:destination="@id/myAccountFragment" />
+
+        <action
+            android:id="@+id/action_settingFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+
+        <action
+            android:id="@+id/action_settingFragment_to_cartFragment"
+            app:destination="@id/cartFragment" />
+
+        <action
+            android:id="@+id/action_settingFragment_to_notificationFragment"
+            app:destination="@id/NotificationFragment" />
+
     </fragment>
 
     <fragment
         android:id="@+id/changePasswordFragment"
         android:name="com.example.fashionapp.uix.ChangePasswordFragment"
         android:label="Change Password"
-        tools:layout="@layout/change_password" />
+        tools:layout="@layout/change_password">
+
+        <action
+            android:id="@+id/action_changePasswordFragment_to_myAccountFragment"
+            app:destination="@id/myAccountFragment" />
+
+        <action
+            android:id="@+id/action_changePasswordFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+
+        <action
+            android:id="@+id/action_changePasswordFragment_to_cartFragment"
+            app:destination="@id/cartFragment" />
+
+        <action
+            android:id="@+id/action_changePasswordFragment_to_notificationFragment"
+            app:destination="@id/NotificationFragment" />
+
+    </fragment>
     <fragment
         android:id="@+id/shippingAddressFragment"
         android:name="com.example.fashionapp.uix.ShippingAddressFragment"
         android:label="Shipping Address"
-        tools:layout="@layout/shipping_address" />
+        tools:layout="@layout/shipping_address">
+
+        <action
+            android:id="@+id/action_shippingAddressFragment_to_myAccountFragment"
+            app:destination="@id/myAccountFragment" />
+
+        <action
+            android:id="@+id/action_shippingAddressFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+
+        <action
+            android:id="@+id/action_shippingAddressFragment_to_cartFragment"
+            app:destination="@id/cartFragment" />
+
+        <action
+            android:id="@+id/action_shippingAddressFragment_to_notificationFragment"
+            app:destination="@id/NotificationFragment" />
+
+    </fragment>
 
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.example.fashionapp.uix.ProfileFragment"
         android:label="Profile"
-        tools:layout="@layout/profile" />
+        tools:layout="@layout/profile">
 
-    <!-- Added: Search -> Search View -> Details -> Details 1 -> Details 2 -> Details 3 flow -->
+        <action
+            android:id="@+id/action_profileFragment_to_myAccountFragment"
+            app:destination="@id/myAccountFragment" />
+
+        <action
+            android:id="@+id/action_profileFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+
+        <action
+            android:id="@+id/action_profileFragment_to_cartFragment"
+            app:destination="@id/cartFragment" />
+
+        <action
+            android:id="@+id/action_profileFragment_to_notificationFragment"
+            app:destination="@id/NotificationFragment" />
+
+    </fragment>
+
+    <!-- Removed: ActivitySearchFragment is now merged with ActivitySearchViewFragment -->
+    <!-- The unified search experience shows empty state initially, then search results -->
+    <!--
     <fragment
         android:id="@+id/activitySearchFragment"
         android:name="com.example.fashionapp.uix.ActivitySearchFragment"
@@ -280,6 +353,7 @@
             android:id="@+id/action_activitySearchFragment_to_notificationFragment"
             app:destination="@id/NotificationFragment" />
     </fragment>
+    -->
 
     <fragment
         android:id="@+id/activitySearchViewFragment"

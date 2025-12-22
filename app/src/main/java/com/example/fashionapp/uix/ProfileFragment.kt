@@ -6,9 +6,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import com.example.fashionapp.AppRoute
+import com.example.fashionapp.R
 import com.example.fashionapp.databinding.ProfileBinding
 import com.example.fashionapp.data.UserManager
+import com.example.fashionapp.data.UpdateNameRequest
+import com.example.fashionapp.data.UpdateEmailRequest
+import com.example.fashionapp.data.UpdatePhoneRequest
+import kotlinx.coroutines.launch
 
 class ProfileFragment : Fragment() {
 
@@ -43,6 +50,23 @@ class ProfileFragment : Fragment() {
         // Save button to update profile
         binding.confirmButton.setOnClickListener {
             saveUserProfile()
+        }
+
+        // Bottom navigation bar
+        binding.navHome.setOnClickListener {
+            findNavController().navigate(R.id.action_profileFragment_to_homeFragment)
+        }
+
+        binding.navCart.setOnClickListener {
+            findNavController().navigate(R.id.action_profileFragment_to_cartFragment)
+        }
+
+        binding.navNotifications.setOnClickListener {
+            findNavController().navigate(R.id.action_profileFragment_to_notificationFragment)
+        }
+
+        binding.navProfile.setOnClickListener {
+            findNavController().navigate(R.id.action_profileFragment_to_myAccountFragment)
         }
     }
 
@@ -86,15 +110,62 @@ class ProfileFragment : Fragment() {
             return
         }
 
-        // Update profile information
-        userManager.updateProfile(
-            firstName = firstName,
-            lastName = lastName,
-            email = email,
-            phoneNumber = phoneNumber
-        )
+        val userId = userManager.getUserId()
+        if (userId.isNullOrEmpty()) {
+            Toast.makeText(requireContext(), "User not logged in", Toast.LENGTH_SHORT).show()
+            return
+        }
 
-        Toast.makeText(requireContext(), "Profile updated successfully!", Toast.LENGTH_SHORT).show()
+        // Show loading state
+        binding.confirmButton.isEnabled = false
+        binding.confirmButton.text = getString(R.string.updating_text)
+
+        lifecycleScope.launch {
+            try {
+                // Update name
+                AppRoute.user.updateUserName(
+                    userId,
+                    UpdateNameRequest(firstName, lastName)
+                )
+
+                // Update email
+                AppRoute.user.updateUserEmail(
+                    userId,
+                    UpdateEmailRequest(email)
+                )
+
+                // Update phone
+                AppRoute.user.updateUserPhone(
+                    userId,
+                    UpdatePhoneRequest(phoneNumber)
+                )
+
+                // Update local storage with new values
+                userManager.updateProfile(
+                    firstName = firstName,
+                    lastName = lastName,
+                    email = email,
+                    phoneNumber = phoneNumber
+                )
+
+                Toast.makeText(requireContext(), "Profile updated successfully!", Toast.LENGTH_SHORT).show()
+
+                // Navigate back
+                findNavController().popBackStack()
+
+            } catch (e: Exception) {
+                android.util.Log.e("ProfileFragment", "Error updating profile", e)
+                Toast.makeText(
+                    requireContext(),
+                    "Failed to update profile: ${e.message}",
+                    Toast.LENGTH_LONG
+                ).show()
+            } finally {
+                // Reset button state
+                binding.confirmButton.isEnabled = true
+                binding.confirmButton.text = getString(R.string.confirm_button_text)
+            }
+        }
     }
 
     override fun onDestroyView() {

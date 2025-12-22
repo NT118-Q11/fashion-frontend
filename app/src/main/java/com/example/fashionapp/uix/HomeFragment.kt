@@ -9,13 +9,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
+import com.example.fashionapp.AppRoute
 import com.example.fashionapp.R
 import com.example.fashionapp.adapter.ReelPagerAdapter
 import com.example.fashionapp.databinding.ActivityHomeBinding
+import com.example.fashionapp.model.Product
 import com.example.fashionapp.model.ReelItem
+import kotlinx.coroutines.launch
+import java.util.Locale
 
 class HomeFragment : Fragment() {
     private var _binding: ActivityHomeBinding? = null
@@ -46,7 +52,10 @@ class HomeFragment : Fragment() {
         reelAdapter = ReelPagerAdapter(requireContext())
         reelAdapter?.onItemClick = { item ->
             try {
-                findNavController().navigate(R.id.detailsFragment)
+                val bundle = Bundle().apply {
+                    putString("productId", item.id)
+                }
+                findNavController().navigate(R.id.detailsFragment, bundle)
             } catch (e: Exception) {
                 Log.e("HomeFragment", "Navigation failed", e)
             }
@@ -76,46 +85,13 @@ class HomeFragment : Fragment() {
             }
         })
 
-        // Build master data once
-        allItems.clear()
-        val specs = listOf(
-            Triple("WOMEN", "woman", "women"),
-            Triple("MAN", "men", "men"),
-            Triple("KIDS", "kid", "kids")
-        )
-        for (spec in specs) {
-            val (brand, folder, prefix) = spec
-            try {
-                val files = requireContext().assets.list(folder) ?: emptyArray()
-                for (fileName in files) {
-                    if (!fileName.endsWith(".jpg") && !fileName.endsWith(".png") && !fileName.endsWith(".jpeg")) continue
-
-                    val filePath = "$folder/$fileName"
-                    Log.d("HomeFragment", "Adding reel asset: $filePath")
-
-                    // Try to extract a number for the name, or just use a counter/hash
-                    val numberStr = fileName.filter { it.isDigit() }
-                    val n = if (numberStr.isNotEmpty()) numberStr.toInt() else (1..100).random()
-
-                    val name = when (brand) {
-                        "WOMEN" -> "Fashion Item $n"
-                        "MAN" -> "Men Style $n"
-                        else -> "Kids Wear $n"
-                    }
-                    allItems.add(ReelItem(filePath, brand, name, "$${(80..140).random()}"))
-                }
-            } catch (e: Exception) {
-                Log.e("HomeFragment", "Error listing assets for $folder", e)
-            }
-        }
+        // Load data from Backend API
+        loadProductsFromApi()
 
         // Category clicks -> filter items
         binding.catWomen.setOnClickListener { setCategory("WOMEN") }
         binding.catMan.setOnClickListener { setCategory("MAN") }
         binding.catKids.setOnClickListener { setCategory("KIDS") }
-
-        // Default selection
-        setCategory(selectedCategory)
 
         binding.navProfile.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_myAccountFragment)
@@ -134,9 +110,83 @@ class HomeFragment : Fragment() {
         }
 
         binding.icSearch.setOnClickListener {
-            findNavController().navigate(R.id.action_homeFragment_to_activitySearchFragment)
+            findNavController().navigate(R.id.action_homeFragment_to_activitySearchViewFragment)
         }
     }
+
+    private fun loadProductsFromApi() {
+        lifecycleScope.launch {
+            try {
+                val products = AppRoute.product.getAllProducts()
+
+                allItems.clear()
+                products.forEach { product ->
+                    // Determine category based on multiple criteria
+                    val category = determineProductCategory(product)
+
+                    // Only add if we can determine a category
+                    if (category != null) {
+                        allItems.add(
+                            ReelItem(
+                                id = product.id,
+                                imageAssetPath = product.getThumbnailAssetPath() ?: "woman/women1.jpg",
+                                brand = category,
+                                name = product.name,
+                                description = product.description ?: "",
+                                priceText = "$${String.format(Locale.US, "%.2f", product.price)}"
+                            )
+                        )
+                    }
+                }
+
+                // Shuffle the list for random display order
+                allItems.shuffle()
+
+                // Default selection
+                setCategory(selectedCategory)
+
+            } catch (e: Exception) {
+                Log.e("HomeFragment", "Failed to load products from API", e)
+                Toast.makeText(context, "Failed to load products", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    /**
+     * Intelligently determine product category by checking gender, name, and description
+     */
+    private fun determineProductCategory(product: Product): String? {
+        val searchText = buildString {
+            append(product.gender ?: "")
+            append(" ")
+            append(product.name)
+            append(" ")
+            append(product.description ?: "")
+            append(" ")
+            append(product.category ?: "")
+        }.lowercase()
+
+        return when {
+            // Check for WOMEN category
+            searchText.contains("woman") ||
+            searchText.contains("women") ||
+            searchText.contains("female") -> "WOMEN"
+
+            // Check for MAN category
+            searchText.contains("man") && !searchText.contains("woman") ||
+            searchText.contains("men") && !searchText.contains("women") ||
+            searchText.contains("male") && !searchText.contains("female") -> "MAN"
+
+            // Check for KIDS category
+            searchText.contains("kid") ||
+            searchText.contains("child") ||
+            searchText.contains("boy") ||
+            searchText.contains("girl") -> "KIDS"
+
+            else -> null // Unknown category, skip this product
+        }
+    }
+
 
     private fun setCategory(category: String) {
         selectedCategory = category

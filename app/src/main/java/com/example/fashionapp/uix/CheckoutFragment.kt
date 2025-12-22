@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.fashionapp.R
@@ -17,6 +18,7 @@ class CheckoutFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val basePrice = 240
+    private var currentShippingFee = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -58,8 +60,8 @@ class CheckoutFragment : Fragment() {
                     position: Int,
                     id: Long
                 ) {
-                    val shippingFee = if (position == 0) 0 else 10
-                    updateTotal(shippingFee)
+                    currentShippingFee = if (position == 0) 0 else 10
+                    updateTotal(currentShippingFee)
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>) {}
@@ -73,10 +75,28 @@ class CheckoutFragment : Fragment() {
             findNavController().popBackStack()
         }
 
+        binding.cardAddress.setOnClickListener {
+            // TODO: Navigate to address edit screen or show address picker dialog
+            // For now, you can implement a dialog or navigate to an address screen
+            // Example: findNavController().navigate(R.id.action_checkoutFragment_to_addressFragment)
+        }
+
         binding.btnPlaceOrder.setOnClickListener {
-            // Payment mặc định là COD
+            // Get shipping address from the card
+            val shippingAddress = "${binding.tvAddressName.text}\n" +
+                    "${binding.tvAddressStreet.text}\n" +
+                    "${binding.tvAddressCity.text}\n" +
+                    "${binding.tvAddressPhone.text}"
+
+            // Pass shipping info to ConfirmFragment
+            val bundle = bundleOf(
+                "shippingAddress" to shippingAddress,
+                "shippingFee" to currentShippingFee
+            )
+
             findNavController().navigate(
-                R.id.action_checkoutFragment_to_confirmFragment
+                R.id.action_checkoutFragment_to_confirmFragment,
+                bundle
             )
         }
     }

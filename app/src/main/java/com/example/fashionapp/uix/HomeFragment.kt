@@ -9,13 +9,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
+import com.example.fashionapp.AppRoute
 import com.example.fashionapp.R
 import com.example.fashionapp.adapter.ReelPagerAdapter
 import com.example.fashionapp.databinding.ActivityHomeBinding
 import com.example.fashionapp.model.ReelItem
+import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment() {
     private var _binding: ActivityHomeBinding? = null
@@ -46,7 +50,10 @@ class HomeFragment : Fragment() {
         reelAdapter = ReelPagerAdapter(requireContext())
         reelAdapter?.onItemClick = { item ->
             try {
-                findNavController().navigate(R.id.detailsFragment)
+                val bundle = Bundle().apply {
+                    putString("productId", item.id)
+                }
+                findNavController().navigate(R.id.detailsFragment, bundle)
             } catch (e: Exception) {
                 Log.e("HomeFragment", "Navigation failed", e)
             }
@@ -76,56 +83,13 @@ class HomeFragment : Fragment() {
             }
         })
 
-        // Build master data once
-        allItems.clear()
-        val specs = listOf(
-            Triple("WOMEN", "woman", "women"),
-            Triple("MAN", "men", "men"),
-            Triple("KIDS", "kid", "kids")
-        )
-        for (spec in specs) {
-            val (brand, folder, prefix) = spec
-            try {
-                val files = requireContext().assets.list(folder) ?: emptyArray()
-                for (fileName in files) {
-                    if (!fileName.endsWith(".jpg") && !fileName.endsWith(".png") && !fileName.endsWith(".jpeg")) continue
-
-                    val filePath = "$folder/$fileName"
-                    Log.d("HomeFragment", "Adding reel asset: $filePath")
-
-                    // Try to extract a number for the name, or just use a counter/hash
-                    val numberStr = fileName.filter { it.isDigit() }
-                    val n = if (numberStr.isNotEmpty()) numberStr.toInt() else (1..100).random()
-                    val id = "${brand}_${n}_${fileName.hashCode()}"
-                    val name = when (brand) {
-                        "WOMEN" -> "Fashion Item $n"
-                        "MAN" -> "Men Style $n"
-                        "KIDS" -> "Kid Outfit $n"
-                        else -> "Item $n"
-                    }
-                    val price = "$${(50..300).random()}"
-                    allItems.add(
-                        ReelItem(
-                            id = id,
-                            imageAssetPath = filePath,
-                            brand = brand,
-                            name = name,
-                            priceText = price
-                        )
-                    )
-                }
-            } catch (e: Exception) {
-                Log.e("HomeFragment", "Error listing assets for $folder", e)
-            }
-        }
+        // Load data from Backend API
+        loadProductsFromApi()
 
         // Category clicks -> filter items
         binding.catWomen.setOnClickListener { setCategory("WOMEN") }
         binding.catMan.setOnClickListener { setCategory("MAN") }
         binding.catKids.setOnClickListener { setCategory("KIDS") }
-
-        // Default selection
-        setCategory(selectedCategory)
 
         binding.navProfile.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_myAccountFragment)
@@ -145,6 +109,43 @@ class HomeFragment : Fragment() {
 
         binding.icSearch.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_activitySearchFragment)
+        }
+    }
+
+    private fun loadProductsFromApi() {
+        lifecycleScope.launch {
+            try {
+                val products = AppRoute.product.getAllProducts()
+
+                allItems.clear()
+                products.forEach { product ->
+                    allItems.add(
+                        ReelItem(
+                            id = product.id,
+                            imageAssetPath = product.getThumbnailAssetPath() ?: "woman/women1.jpg",
+                            brand = mapGenderToCategory(product.gender),
+                            name = product.name,
+                            priceText = "$${product.price}"
+                        )
+                    )
+                }
+
+                // Default selection
+                setCategory(selectedCategory)
+
+            } catch (e: Exception) {
+                Log.e("HomeFragment", "Failed to load products from API", e)
+                Toast.makeText(context, "Failed to load products", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun mapGenderToCategory(gender: String?): String {
+        return when (gender?.lowercase()) {
+            "male", "man" -> "MAN"
+            "female", "woman", "women" -> "WOMEN"
+            "kids", "kid" -> "KIDS"
+            else -> "WOMEN"
         }
     }
 

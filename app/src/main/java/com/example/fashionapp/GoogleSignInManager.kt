@@ -35,23 +35,6 @@ class GoogleSignInManager(private val context: Context) {
         var clientId = EnvironmentConfig.getGoogleClientId()
         println("GoogleSignInManager: Retrieved clientId = '$clientId'")
 
-        // Log application id and build type to help diagnose mismatch issues (status code 10)
-        try {
-            Log.i("GoogleSignInManager", "=== GOOGLE SIGN-IN CONFIGURATION ===")
-            Log.i("GoogleSignInManager", "ApplicationId=${com.example.fashionapp.BuildConfig.APPLICATION_ID}, BuildType=${com.example.fashionapp.BuildConfig.BUILD_TYPE}")
-            Log.i("GoogleSignInManager", "Web ClientId for requestIdToken='$clientId'")
-            Log.i("GoogleSignInManager", "Package name: ${context.packageName}")
-            Log.i("GoogleSignInManager", "=== REQUIRED IN GOOGLE CLOUD CONSOLE ===")
-            Log.i("GoogleSignInManager", "1. Web OAuth client with this Client ID")
-            Log.i("GoogleSignInManager", "2. Android OAuth client with package: ${context.packageName}")
-            Log.i("GoogleSignInManager", "3. Android client must have SHA-1: 81:30:0C:1B:2A:95:84:68:AE:4F:1D:C0:EB:21:E3:69:51:AD:63:68 (debug)")
-            Log.i("GoogleSignInManager", "====================================")
-            println("GoogleSignInManager: Web ClientId = '$clientId'")
-            println("GoogleSignInManager: Package = '${context.packageName}'")
-        } catch (ignored: Exception) {
-            // BuildConfig may not be accessible in some contexts — fallback to println
-            println("GoogleSignInManager: BuildConfig not available for logging: ${ignored.message}")
-        }
 
         // If empty, try reinitializing once more
         if (clientId.isEmpty()) {

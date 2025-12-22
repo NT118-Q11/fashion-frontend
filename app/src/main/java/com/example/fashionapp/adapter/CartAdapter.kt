@@ -3,12 +3,15 @@ package com.example.fashionapp.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.fashionapp.data.CartItem
 import com.example.fashionapp.databinding.ItemCartBinding
+import com.example.fashionapp.model.CartItemResponse
+import com.example.fashionapp.R
 
 class CartAdapter(
-    private val items: MutableList<CartItem>,
-    private val onQuantityChange: (List<CartItem>) -> Unit
+    private val items: MutableList<CartItemResponse>,
+    private val onIncrease: (CartItemResponse) -> Unit,
+    private val onDecrease: (CartItemResponse) -> Unit,
+    private val onRemove: (CartItemResponse) -> Unit
 ) : RecyclerView.Adapter<CartAdapter.CartViewHolder>() {
 
     inner class CartViewHolder(val binding: ItemCartBinding) :
@@ -21,57 +24,52 @@ class CartAdapter(
 
     override fun onBindViewHolder(holder: CartViewHolder, position: Int) {
         val item = items[position]
+        val product = item.product
 
         holder.binding.apply {
-
-            tvTitle.text = item.title
-            tvDesc.text = item.description
-            tvPrice.text = "$${item.price}"
+            tvTitle.text = product?.name ?: "Unknown Product"
+            tvDesc.text = product?.description ?: ""
+            tvPrice.text = "$${product?.price ?: 0.0}"
             tvQuantity.text = item.quantity.toString()
-            imgProduct.setImageResource(item.imageRes)
+
+            // Load product image from assets
+            val assetPath = product?.getThumbnailAssetPath()
+            if (assetPath != null) {
+                try {
+                    val context = root.context
+                    val inputStream = context.assets.open(assetPath)
+                    val drawable = android.graphics.drawable.Drawable.createFromStream(inputStream, null)
+                    imgProduct.setImageDrawable(drawable)
+                    inputStream.close()
+                } catch (e: Exception) {
+                    imgProduct.setImageResource(R.drawable.sample_woman)
+                }
+            } else {
+                imgProduct.setImageResource(R.drawable.sample_woman)
+            }
 
             // Nút tăng
             btnPlus.setOnClickListener {
-                val pos = holder.adapterPosition
-                if (pos != RecyclerView.NO_POSITION) {
-                    items[pos].quantity++
-                    notifyItemChanged(pos)
-                    onQuantityChange(items)
-                }
+                onIncrease(item)
             }
 
             // Nút giảm
             btnMinus.setOnClickListener {
-                val pos = holder.adapterPosition
-                if (pos != RecyclerView.NO_POSITION) {
-                    if (items[pos].quantity > 1) {
-                        items[pos].quantity--
-                        notifyItemChanged(pos)
-                    } else {
-                        // Nếu quantity = 1 thì xóa
-                        removeItem(pos)
-                    }
-                    onQuantityChange(items)
-                }
+                onDecrease(item)
             }
 
             // Nút X để xóa khỏi giỏ
             btnRemove.setOnClickListener {
-                val pos = holder.adapterPosition
-                if (pos != RecyclerView.NO_POSITION) {
-                    removeItem(pos)
-                    onQuantityChange(items)
-                }
+                onRemove(item)
             }
         }
     }
 
     override fun getItemCount(): Int = items.size
 
-    // Hàm xóa item
-    private fun removeItem(position: Int) {
-        items.removeAt(position)
-        notifyItemRemoved(position)
-        notifyItemRangeChanged(position, items.size)
+    fun updateItems(newItems: List<CartItemResponse>) {
+        items.clear()
+        items.addAll(newItems)
+        notifyDataSetChanged()
     }
 }

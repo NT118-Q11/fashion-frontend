@@ -4,10 +4,10 @@ import com.example.fashionapp.data.ProductApi
 import com.example.fashionapp.data.UserApi
 import com.example.fashionapp.data.CartApi
 import com.example.fashionapp.data.OrderApi
+import com.example.fashionapp.data.FavoriteApi
 import com.google.gson.annotations.SerializedName
 import okhttp3.OkHttpClient
 import okhttp3.ResponseBody
-import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -157,6 +157,7 @@ object AppRoute {
     val user: UserApi by lazy { retrofit.create(UserApi::class.java) }
     val cart: CartApi by lazy { retrofit.create(CartApi::class.java) }
     val order: OrderApi by lazy { retrofit.create(OrderApi::class.java) }
+    val favorite: FavoriteApi by lazy { retrofit.create(FavoriteApi::class.java) }
 
     // Allow overriding the base URL (call before accessing `auth` to take effect)
     fun init(newBaseUrl: String) {

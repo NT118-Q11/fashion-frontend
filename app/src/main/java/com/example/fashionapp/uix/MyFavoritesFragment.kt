@@ -9,6 +9,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.fashionapp.R
@@ -16,6 +17,7 @@ import com.example.fashionapp.adapter.FavoritesAdapter
 import com.example.fashionapp.data.FavoritesManager
 import com.example.fashionapp.databinding.ActivityMyFavoritesBinding
 import com.example.fashionapp.model.FavoriteItem
+import kotlinx.coroutines.launch
 
 class MyFavoritesFragment : Fragment() {
     private var _binding: ActivityMyFavoritesBinding? = null
@@ -23,6 +25,7 @@ class MyFavoritesFragment : Fragment() {
 
     private lateinit var pagePrev: ImageView
     private lateinit var pageNext: ImageView
+    private lateinit var favoritesManager: FavoritesManager
 
     private var currentPage = 1
     private val itemsPerPage = 4
@@ -39,6 +42,7 @@ class MyFavoritesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        favoritesManager = FavoritesManager.getInstance(requireContext())
         loadFavorites()
 
         binding.rvFavorites.layoutManager = GridLayoutManager(requireContext(), 2)
@@ -85,14 +89,26 @@ class MyFavoritesFragment : Fragment() {
     }
 
     private fun loadFavorites() {
-        allItems = FavoritesManager.getFavorites()
-        // Reset current page if it exceeds total pages after deletion
-        val totalPages = getTotalPages()
-        if (currentPage > totalPages && currentPage > 1) {
-            currentPage = totalPages
-        }
-        if (allItems.isEmpty()) {
-            currentPage = 1
+        // Show loading state
+        binding.rvFavorites.visibility = View.GONE
+
+        // Reload favorites from server
+        favoritesManager.reloadFavorites { success ->
+            // Hide loading and show content
+            binding.rvFavorites.visibility = View.VISIBLE
+
+            if (success) {
+                allItems = favoritesManager.getFavorites()
+                // Reset current page if it exceeds total pages after deletion
+                val totalPages = getTotalPages()
+                if (currentPage > totalPages && currentPage > 1) {
+                    currentPage = totalPages
+                }
+                if (allItems.isEmpty()) {
+                    currentPage = 1
+                }
+                updatePageUI()
+            }
         }
     }
 
@@ -233,9 +249,12 @@ class MyFavoritesFragment : Fragment() {
         }
 
         binding.rvFavorites.adapter = FavoritesAdapter(pageItems) { itemToRemove ->
-            FavoritesManager.removeFavorite(itemToRemove)
-            loadFavorites()
-            updatePageUI()
+            favoritesManager.removeFavorite(itemToRemove) { success ->
+                if (success) {
+                    loadFavorites()
+                    updatePageUI()
+                }
+            }
         }
 
         // Update pagination buttons

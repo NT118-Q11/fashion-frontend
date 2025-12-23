@@ -18,8 +18,10 @@ import com.example.fashionapp.AppRoute
 import com.example.fashionapp.R
 import com.example.fashionapp.adapter.ReelPagerAdapter
 import com.example.fashionapp.databinding.ActivityHomeBinding
+import com.example.fashionapp.model.Product
 import com.example.fashionapp.model.ReelItem
 import kotlinx.coroutines.launch
+import java.util.Locale
 
 class HomeFragment : Fragment() {
     private var _binding: ActivityHomeBinding? = null
@@ -119,16 +121,26 @@ class HomeFragment : Fragment() {
 
                 allItems.clear()
                 products.forEach { product ->
-                    allItems.add(
-                        ReelItem(
-                            id = product.id,
-                            imageAssetPath = product.getThumbnailAssetPath() ?: "woman/women1.jpg",
-                            brand = mapGenderToCategory(product.gender),
-                            name = product.name,
-                            priceText = "$${product.price}"
+                    // Determine category based on multiple criteria
+                    val category = determineProductCategory(product)
+
+                    // Only add if we can determine a category
+                    if (category != null) {
+                        allItems.add(
+                            ReelItem(
+                                id = product.id,
+                                imageAssetPath = product.getThumbnailAssetPath() ?: "woman/women1.jpg",
+                                brand = category,
+                                name = product.name,
+                                description = product.description ?: "",
+                                priceText = "$${String.format(Locale.US, "%.2f", product.price)}"
+                            )
                         )
-                    )
+                    }
                 }
+
+                // Shuffle the list for random display order
+                allItems.shuffle()
 
                 // Default selection
                 setCategory(selectedCategory)
@@ -140,14 +152,41 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun mapGenderToCategory(gender: String?): String {
-        return when (gender?.lowercase()) {
-            "male", "man" -> "MAN"
-            "female", "woman", "women" -> "WOMEN"
-            "kids", "kid" -> "KIDS"
-            else -> "WOMEN"
+    /**
+     * Intelligently determine product category by checking gender, name, and description
+     */
+    private fun determineProductCategory(product: Product): String? {
+        val searchText = buildString {
+            append(product.gender ?: "")
+            append(" ")
+            append(product.name)
+            append(" ")
+            append(product.description ?: "")
+            append(" ")
+            append(product.category ?: "")
+        }.lowercase()
+
+        return when {
+            // Check for WOMEN category
+            searchText.contains("woman") ||
+            searchText.contains("women") ||
+            searchText.contains("female") -> "WOMEN"
+
+            // Check for MAN category
+            searchText.contains("man") && !searchText.contains("woman") ||
+            searchText.contains("men") && !searchText.contains("women") ||
+            searchText.contains("male") && !searchText.contains("female") -> "MAN"
+
+            // Check for KIDS category
+            searchText.contains("kid") ||
+            searchText.contains("child") ||
+            searchText.contains("boy") ||
+            searchText.contains("girl") -> "KIDS"
+
+            else -> null // Unknown category, skip this product
         }
     }
+
 
     private fun setCategory(category: String) {
         selectedCategory = category

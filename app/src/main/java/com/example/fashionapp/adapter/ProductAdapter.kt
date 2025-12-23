@@ -1,6 +1,7 @@
 package com.example.fashionapp.adapter
 
 import android.graphics.BitmapFactory
+import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fashionapp.R
+import com.example.fashionapp.data.FavoritesManager
+import com.example.fashionapp.model.FavoriteItem
 import com.example.fashionapp.model.Product
 
 /**
@@ -24,6 +27,7 @@ class ProductAdapter(
         private val txtTitle: TextView = itemView.findViewById(R.id.txtTitle)
         private val txtPrice: TextView = itemView.findViewById(R.id.txtPrice)
         private val btnFavorite: ImageView = itemView.findViewById(R.id.btnFavorite)
+        private val favoritesManager = FavoritesManager.getInstance(itemView.context)
 
         fun bind(product: Product) {
             txtTitle.text = product.name
@@ -47,9 +51,34 @@ class ProductAdapter(
                 imgProduct.setImageResource(R.drawable.sample_woman)
             }
 
+            // Create favorite item from product
+            val favItem = FavoriteItem(
+                id = product.id,
+                name = product.name,
+                desc = product.description ?: product.brand ?: "",
+                price = "$${String.format("%.2f", product.price)}",
+                imagePath = product.getThumbnailAssetPath() ?: ""
+            )
+
+            // Update favorite button icon
+            fun updateFavoriteIcon() {
+                val isFav = favoritesManager.isFavorite(favItem)
+                btnFavorite.setImageResource(
+                    if (isFav) R.drawable.ic_favorite_filled else R.drawable.ic_favorite_border
+                )
+            }
+
+            updateFavoriteIcon()
+
             // Handle favorite button click
             btnFavorite.setOnClickListener {
-                // TODO: Implement favorite functionality
+                favoritesManager.toggleFavorite(favItem) { isFavorite, success ->
+                    if (success) {
+                        updateFavoriteIcon()
+                    } else {
+                        Log.e("ProductAdapter", "Failed to toggle favorite")
+                    }
+                }
             }
 
             // Handle item click

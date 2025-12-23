@@ -29,6 +29,7 @@ class ReelPagerAdapter(
     var onItemClick: ((ReelItem) -> Unit)? = null
 
     private val topColorCache: MutableMap<Int, Triple<Int, Int, Int>> = ConcurrentHashMap()
+    private val favoritesManager = FavoritesManager.getInstance(context)
 
     fun getTopColorsFor(position: Int): Triple<Int, Int, Int>? = topColorCache[position]
 
@@ -128,7 +129,7 @@ class ReelPagerAdapter(
         )
 
         fun updateFavoriteIcon() {
-            val isFav = FavoritesManager.isFavorite(favItem)
+            val isFav = favoritesManager.isFavorite(favItem)
             holder.binding.reelFavorite.setImageResource(
                 if (isFav) R.drawable.ic_favorite_filled else R.drawable.ic_favorite_border
             )
@@ -140,12 +141,13 @@ class ReelPagerAdapter(
         updateFavoriteIcon()
 
         holder.binding.reelFavorite.setOnClickListener {
-            if (FavoritesManager.isFavorite(favItem)) {
-                FavoritesManager.removeFavorite(favItem)
-            } else {
-                FavoritesManager.addFavorite(favItem)
+            favoritesManager.toggleFavorite(favItem) { isFavorite, success ->
+                if (success) {
+                    updateFavoriteIcon()
+                } else {
+                    Log.e("ReelPagerAdapter", "Failed to toggle favorite")
+                }
             }
-            updateFavoriteIcon()
         }
 
         try {

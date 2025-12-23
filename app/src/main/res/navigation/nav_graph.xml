@@ -397,6 +397,12 @@
         <action
             android:id="@+id/action_detailsFragment_to_details1Fragment"
             app:destination="@id/details1Fragment" />
+        <action
+            android:id="@+id/action_detailsFragment_to_activitySearchViewFragment"
+            app:destination="@id/activitySearchViewFragment" />
+        <action
+            android:id="@+id/action_detailsFragment_to_cartFragment"
+            app:destination="@id/cartFragment" />
     </fragment>
 
     <fragment

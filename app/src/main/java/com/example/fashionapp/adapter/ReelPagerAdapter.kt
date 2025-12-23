@@ -114,6 +114,7 @@ class ReelPagerAdapter(
         val item = items[position]
         holder.binding.reelBrand.text = item.brand
         holder.binding.reelName.text = item.name
+        holder.binding.reelDescription.text = item.description ?: ""
         holder.binding.reelPrice.text = item.priceText
         val path = item.imageAssetPath
 
@@ -121,7 +122,7 @@ class ReelPagerAdapter(
         val favItem = FavoriteItem(
             id = item.id,
             name = item.name,
-            desc = item.brand,
+            desc = item.description ?: item.brand,
             price = item.priceText,
             imagePath = item.imageAssetPath
         )
@@ -163,10 +164,12 @@ class ReelPagerAdapter(
                 val chosenTextColor = if (isBright) Color.BLACK else Color.WHITE
                 holder.binding.reelBrand.setTextColor(chosenTextColor)
                 holder.binding.reelName.setTextColor(chosenTextColor)
+                holder.binding.reelDescription.setTextColor(chosenTextColor)
                 holder.binding.reelPrice.setTextColor(chosenTextColor)
                 val shadowColor = if (isBright) 0x33000000 else 0x66000000
                 holder.binding.reelBrand.setShadowLayer(6f, 0f, 2f, shadowColor)
                 holder.binding.reelName.setShadowLayer(6f, 0f, 2f, shadowColor)
+                holder.binding.reelDescription.setShadowLayer(6f, 0f, 2f, shadowColor)
                 holder.binding.reelPrice.setShadowLayer(6f, 0f, 2f, shadowColor)
                 holder.binding.reelInfo.setBackgroundColor(Color.TRANSPARENT)
 

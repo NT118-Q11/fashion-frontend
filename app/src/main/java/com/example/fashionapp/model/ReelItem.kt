@@ -5,5 +5,6 @@ data class ReelItem(
     val imageAssetPath: String, // e.g., "women/women1.jpg"
     val brand: String,
     val name: String,
+    val description: String?,
     val priceText: String
 )

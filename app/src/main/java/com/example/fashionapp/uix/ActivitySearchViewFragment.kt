@@ -2,8 +2,6 @@ package com.example.fashionapp.uix
 
 import android.graphics.Color
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +10,6 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -25,6 +22,7 @@ import kotlinx.coroutines.launch
 
 class ActivitySearchViewFragment : Fragment() {
 
+    // Views
     private lateinit var recycler: RecyclerView
     private lateinit var paginationContainer: LinearLayout
     private lateinit var pagePrev: ImageView
@@ -34,6 +32,7 @@ class ActivitySearchViewFragment : Fragment() {
     private lateinit var tvEmptyState: TextView
     private lateinit var searchInput: EditText
 
+    // State
     private var currentPage = 1
     private val itemsPerPage = 4
     private var allProducts: List<Product> = emptyList()
@@ -66,12 +65,14 @@ class ActivitySearchViewFragment : Fragment() {
         view.findViewById<View>(R.id.btn_close)?.setOnClickListener {
             searchInput.text.clear()
             currentSearchKeyword = ""
+            // Reload all products when clearing search
             loadProducts()
         }
         view.findViewById<View>(R.id.btn_filter)?.setOnClickListener {
             // Trigger search
             performSearch()
         }
+
         view.findViewById<View>(R.id.navHome)?.setOnClickListener {
             findNavController().navigate(R.id.action_activitySearchViewFragment_to_homeFragment)
         }
@@ -107,7 +108,7 @@ class ActivitySearchViewFragment : Fragment() {
             }
         }
 
-        // Load initial products
+        // Load all products initially
         loadProducts()
     }
 
@@ -129,9 +130,16 @@ class ActivitySearchViewFragment : Fragment() {
                 }
 
                 showLoading(false)
-                updateResultCount()
-                updatePageUI()
-                updatePaginationButtons()
+
+                // Show empty state only when search returns no results
+                if (allProducts.isEmpty()) {
+                    showEmptyState(true)
+                } else {
+                    showEmptyState(false)
+                    updateResultCount()
+                    updatePageUI()
+                    updatePaginationButtons()
+                }
 
             } catch (e: Exception) {
                 showLoading(false)

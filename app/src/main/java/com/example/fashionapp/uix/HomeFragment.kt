@@ -110,7 +110,7 @@ class HomeFragment : Fragment() {
         }
 
         binding.icSearch.setOnClickListener {
-            findNavController().navigate(R.id.action_homeFragment_to_activitySearchFragment)
+            findNavController().navigate(R.id.action_homeFragment_to_activitySearchViewFragment)
         }
     }
 

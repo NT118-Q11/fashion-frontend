@@ -28,8 +28,8 @@
             app:destination="@id/MyFavoritesFragment" />
 
         <action
-            android:id="@+id/action_homeFragment_to_activitySearchFragment"
-            app:destination="@id/activitySearchFragment" />
+            android:id="@+id/action_homeFragment_to_activitySearchViewFragment"
+            app:destination="@id/activitySearchViewFragment" />
 
         <action
             android:id="@+id/action_homeFragment_to_detailsFragment"
@@ -325,7 +325,9 @@
 
     </fragment>
 
-    <!-- Added: Search -> Search View -> Details -> Details 1 -> Details 2 -> Details 3 flow -->
+    <!-- Removed: ActivitySearchFragment is now merged with ActivitySearchViewFragment -->
+    <!-- The unified search experience shows empty state initially, then search results -->
+    <!--
     <fragment
         android:id="@+id/activitySearchFragment"
         android:name="com.example.fashionapp.uix.ActivitySearchFragment"
@@ -351,6 +353,7 @@
             android:id="@+id/action_activitySearchFragment_to_notificationFragment"
             app:destination="@id/NotificationFragment" />
     </fragment>
+    -->
 
     <fragment
         android:id="@+id/activitySearchViewFragment"

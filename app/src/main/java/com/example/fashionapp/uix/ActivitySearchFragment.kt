@@ -1,5 +1,25 @@
 package com.example.fashionapp.uix
 
+/**
+ * DEPRECATED: This fragment has been merged into ActivitySearchViewFragment
+ *
+ * Reason: To create a unified search experience with state management.
+ * Instead of having two separate fragments (Search + SearchView), we now have
+ * one fragment that handles both initial empty state and active search state.
+ *
+ * See UNIFIED_SEARCH_DESIGN.md for full documentation.
+ *
+ * Migration:
+ * - All functionality moved to ActivitySearchViewFragment
+ * - Initial empty state (search icon + greeting) is now State 1
+ * - Search results is now State 2
+ * - Single fragment manages both states seamlessly
+ *
+ * This file is kept for reference only.
+ * Date deprecated: December 23, 2025
+ */
+
+/*
 import androidx.fragment.app.Fragment
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -59,3 +79,4 @@ class ActivitySearchFragment : Fragment() {
         _binding = null
     }
 }
+*/

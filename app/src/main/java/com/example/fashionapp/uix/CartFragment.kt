@@ -1,7 +1,6 @@
 package com.example.fashionapp.uix
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,6 +24,7 @@ class CartFragment : Fragment() {
     
     private lateinit var userManager: UserManager
     private var cartAdapter: CartAdapter? = null
+    private var currentCart: Cart? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,8 +41,30 @@ class CartFragment : Fragment() {
         setupRecyclerView()
         loadCartData()
 
+        binding.btnSearch.setOnClickListener {
+            findNavController().navigate(R.id.action_cartFragment_to_activitySearchViewFragment)
+        }
+
         binding.btnCheckout.setOnClickListener {
-            findNavController().navigate(R.id.action_cartFragment_to_checkoutFragment)
+            // Validate cart is not empty
+            val cart = currentCart
+            if (cart == null || cart.items.isEmpty()) {
+                Toast.makeText(
+                    context,
+                    "Your cart is empty. Please add items before checkout.",
+                    Toast.LENGTH_SHORT
+                ).show()
+                return@setOnClickListener
+            }
+
+            // Pass cart total to checkout
+            val bundle = Bundle().apply {
+                putDouble("cartTotal", cart.totalPrice)
+            }
+            findNavController().navigate(
+                R.id.action_cartFragment_to_checkoutFragment,
+                bundle
+            )
         }
 
         // bottom nav
@@ -117,6 +139,7 @@ class CartFragment : Fragment() {
     }
 
     private fun updateUI(cart: Cart) {
+        currentCart = cart // Lưu cart hiện tại
         cartAdapter?.updateItems(cart.items)
         binding.tvSubtotalPrice.text = "$${String.format("%.2f", cart.totalPrice)}"
         

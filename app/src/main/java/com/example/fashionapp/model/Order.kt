@@ -7,7 +7,7 @@ package com.example.fashionapp.model
 data class OrderRequest(
     val userId: String,
     val items: List<OrderItemRequest>,
-    val totalAmount: Double,
+    val totalPrice: Double,
     val shippingAddress: String,
     val paymentMethod: String = "COD",
     val status: String = "PENDING"

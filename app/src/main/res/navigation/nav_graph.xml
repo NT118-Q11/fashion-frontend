@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph"
     xmlns:tools="http://schemas.android.com/tools"
-    app:startDestination="@id/welcomeFragment">
+    app:startDestination="@id/homeFragment">
 
     <fragment
         android:id="@+id/homeFragment"
@@ -155,6 +155,10 @@
         <action
             android:id="@+id/action_myAccountFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
+
+        <action
+            android:id="@+id/action_myAccountFragment_to_ordersFragment"
+            app:destination="@id/orderHistoryFragment" />
 
         <action
             android:id="@+id/action_myAccountFragment_to_homeFragment"
@@ -420,6 +424,7 @@
         android:name="com.example.fashionapp.uix.Details3Fragment"
         android:label="Details 3"
         tools:layout="@layout/details_3" />
+
     <fragment
         android:id="@+id/forgotPasswordFragment"
         android:name="com.example.fashionapp.uix.ForgotPasswordFragment"
@@ -430,5 +435,10 @@
             android:id="@+id/action_forgotPasswordFragment_to_signInFragment"
             app:destination="@id/signInFragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/orderHistoryFragment"
+        android:name="com.example.fashionapp.uix.OrderHistoryFragment"
+        android:label="Order History" />
 
 </navigation>

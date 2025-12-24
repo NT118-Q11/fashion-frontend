@@ -56,6 +56,12 @@ class MyAccountFragment: Fragment() {
             findNavController().navigate(R.id.action_myAccountFragment_to_notificationFragment)
         }
 
+        // 4. Click Orders
+        binding.tvOrderhistory.setOnClickListener {
+            findNavController().navigate(
+                R.id.action_myAccountFragment_to_ordersFragment
+            )
+        }
 
     }
 

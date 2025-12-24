@@ -196,6 +196,10 @@
             android:id="@+id/action_cartFragment_to_notificationFragment"
             app:destination="@id/NotificationFragment" />
 
+        <action
+            android:id="@+id/action_cartFragment_to_activitySearchViewFragment"
+            app:destination="@id/activitySearchViewFragment" />
+
     </fragment>
 
     <fragment

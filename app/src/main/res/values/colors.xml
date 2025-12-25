@@ -25,6 +25,8 @@
     <color name="for_small_text">#777777</color>
     <color name="yellow_white">#FAF7F2</color>
     <color name="green">#4CAF50</color>
+    <color name="red">#F44336</color>
+    <color name="light_gray">#F5F5F5</color>
 
 
 </resources>

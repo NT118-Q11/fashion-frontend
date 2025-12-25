@@ -5,58 +5,97 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="12dp"
-    app:cardCornerRadius="12dp"
-    app:cardElevation="3dp">
+    app:cardCornerRadius="16dp"
+    app:cardElevation="2dp"
+    android:fitsSystemWindows="true"
+    android:backgroundTint="@android:color/white">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="12dp">
+        android:padding="20dp">
 
+        <!-- Left Icon -->
+        <ImageView
+            android:id="@+id/ivOrderIcon"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/ic_shopping_bag"
+            android:padding="10dp"
+            android:background="@drawable/bg_logo_circle_light"
+            app:tint="@color/noive_accent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <!-- Order ID -->
         <TextView
             android:id="@+id/tvOrderId"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="#ORD001"
             android:textStyle="bold"
-            android:textSize="18sp"
+            android:textSize="16sp"
+            android:textColor="@color/noive_text_primary"
             android:fontFamily="@font/tenorsans"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            android:layout_marginStart="16dp"
+            app:layout_constraintStart_toEndOf="@id/ivOrderIcon"
+            app:layout_constraintEnd_toStartOf="@id/tvTotal"
+            app:layout_constraintTop_toTopOf="@id/ivOrderIcon"/>
 
+        <!-- Date -->
+        <TextView
+            android:id="@+id/tvDate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="20 Aug 2025"
+            android:textSize="13sp"
+            android:textColor="@color/noive_text_secondary"
+            android:fontFamily="@font/tenorsans"
+            android:layout_marginTop="4dp"
+            app:layout_constraintStart_toStartOf="@id/tvOrderId"
+            app:layout_constraintEnd_toStartOf="@id/tvTotal"
+            app:layout_constraintTop_toBottomOf="@id/tvOrderId"/>
+
+        <!-- Status Badge -->
         <TextView
             android:id="@+id/tvStatus"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Delivered"
             android:textStyle="bold"
+            android:textSize="12sp"
             android:fontFamily="@font/tenorsans"
             android:textColor="@color/green"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="4dp"
+            android:background="@drawable/bg_size_selected"
+            android:layout_marginTop="6dp"
+            app:layout_constraintStart_toStartOf="@id/tvOrderId"
+            app:layout_constraintTop_toBottomOf="@id/tvDate"/>
 
-        <TextView
-            android:id="@+id/tvDate"
-            android:layout_width="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_height="wrap_content"
-            android:text="20 Aug 2025"
-            android:fontFamily="@font/tenorsans"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvOrderId"/>
-
+        <!-- Total Price -->
         <TextView
             android:id="@+id/tvTotal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="$120"
-            android:textSize="16dp"
-            android:textColor="@color/orange"
-            android:layout_marginTop="10dp"
+            android:text="$120.00"
+            android:textSize="18sp"
+            android:textColor="@color/noive_accent"
             android:textStyle="bold"
             android:fontFamily="@font/tenorsans"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvStatus"/>
+            app:layout_constraintTop_toTopOf="@id/tvOrderId"
+            app:layout_constraintBottom_toBottomOf="@id/tvOrderId"/>
+
+        <!-- Arrow Icon -->
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_arrow_right"
+            app:tint="@color/noive_text_secondary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

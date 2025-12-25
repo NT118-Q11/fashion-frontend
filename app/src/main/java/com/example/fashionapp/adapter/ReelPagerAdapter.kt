@@ -14,6 +14,10 @@ import com.example.fashionapp.data.FavoritesManager
 import com.example.fashionapp.databinding.ItemReelBinding
 import com.example.fashionapp.model.FavoriteItem
 import com.example.fashionapp.model.ReelItem
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.concurrent.ConcurrentHashMap
 import kotlin.math.pow
 
@@ -150,49 +154,65 @@ class ReelPagerAdapter(
             }
         }
 
-        try {
-            context.assets.open(path).use { input ->
-                val bmp = BitmapFactory.decodeStream(input)
-                holder.binding.reelImage.setImageBitmap(bmp)
+        // Set placeholder initially
+        holder.binding.reelImage.setImageResource(R.drawable.placeholder)
 
-                // Bottom text color & shadows
-                val bottomLum = sampleBottomLuminance(bmp)
-                val isBright = bottomLum > 150
-
-                holder.binding.reelImage.setOnClickListener {
-                    onItemClick?.invoke(item)
-                }
-
-                val chosenTextColor = if (isBright) Color.BLACK else Color.WHITE
-                holder.binding.reelBrand.setTextColor(chosenTextColor)
-                holder.binding.reelName.setTextColor(chosenTextColor)
-                holder.binding.reelDescription.setTextColor(chosenTextColor)
-                holder.binding.reelPrice.setTextColor(chosenTextColor)
-                val shadowColor = if (isBright) 0x33000000 else 0x66000000
-                holder.binding.reelBrand.setShadowLayer(6f, 0f, 2f, shadowColor)
-                holder.binding.reelName.setShadowLayer(6f, 0f, 2f, shadowColor)
-                holder.binding.reelDescription.setShadowLayer(6f, 0f, 2f, shadowColor)
-                holder.binding.reelPrice.setShadowLayer(6f, 0f, 2f, shadowColor)
-                holder.binding.reelInfo.setBackgroundColor(Color.TRANSPARENT)
-
-                // Per-label top colors
-                val (leftC, centerC, rightC) = sampleTopBandColors(bmp)
-                topColorCache[position] = Triple(leftC, centerC, rightC)
-                onTopTextColorsSuggested?.invoke(leftC, centerC, rightC)
-
-                // Palette accent for brand if safe
-                Palette.from(bmp).clearFilters().generate { palette ->
-                    palette?.vibrantSwatch?.let { swatch ->
-                        val contrast = calculateContrast(swatch.rgb, if (isBright) Color.BLACK else Color.WHITE)
-                        if (contrast > 3.0) holder.binding.reelBrand.setTextColor(swatch.rgb)
+        // Load bitmap asynchronously to prevent ANR
+        CoroutineScope(Dispatchers.Main).launch {
+            try {
+                val bmp = withContext(Dispatchers.IO) {
+                    context.assets.open(path).use { input ->
+                        BitmapFactory.decodeStream(input)
                     }
                 }
 
-                Log.d("ReelPagerAdapter", "Loaded asset: $path (${bmp.width}x${bmp.height})")
+                if (bmp != null) {
+                    holder.binding.reelImage.setImageBitmap(bmp)
+
+                    // Process colors on background thread
+                    val (bottomLum, topColors) = withContext(Dispatchers.Default) {
+                        val lum = sampleBottomLuminance(bmp)
+                        val colors = sampleTopBandColors(bmp)
+                        Pair(lum, colors)
+                    }
+
+                    val isBright = bottomLum > 150
+
+                    holder.binding.reelImage.setOnClickListener {
+                        onItemClick?.invoke(item)
+                    }
+
+                    val chosenTextColor = if (isBright) Color.BLACK else Color.WHITE
+                    holder.binding.reelBrand.setTextColor(chosenTextColor)
+                    holder.binding.reelName.setTextColor(chosenTextColor)
+                    holder.binding.reelDescription.setTextColor(chosenTextColor)
+                    holder.binding.reelPrice.setTextColor(chosenTextColor)
+                    val shadowColor = if (isBright) 0x33000000 else 0x66000000
+                    holder.binding.reelBrand.setShadowLayer(6f, 0f, 2f, shadowColor)
+                    holder.binding.reelName.setShadowLayer(6f, 0f, 2f, shadowColor)
+                    holder.binding.reelDescription.setShadowLayer(6f, 0f, 2f, shadowColor)
+                    holder.binding.reelPrice.setShadowLayer(6f, 0f, 2f, shadowColor)
+                    holder.binding.reelInfo.setBackgroundColor(Color.TRANSPARENT)
+
+                    // Per-label top colors
+                    val (leftC, centerC, rightC) = topColors
+                    topColorCache[position] = Triple(leftC, centerC, rightC)
+                    onTopTextColorsSuggested?.invoke(leftC, centerC, rightC)
+
+                    // Palette accent for brand - already async
+                    Palette.from(bmp).clearFilters().generate { palette ->
+                        palette?.vibrantSwatch?.let { swatch ->
+                            val contrast = calculateContrast(swatch.rgb, if (isBright) Color.BLACK else Color.WHITE)
+                            if (contrast > 3.0) holder.binding.reelBrand.setTextColor(swatch.rgb)
+                        }
+                    }
+
+                    Log.d("ReelPagerAdapter", "Loaded asset: $path (${bmp.width}x${bmp.height})")
+                }
+            } catch (e: Exception) {
+                Log.e("ReelPagerAdapter", "Failed to load asset: $path -> ${e.message}")
+                holder.binding.reelImage.setImageResource(R.drawable.placeholder)
             }
-        } catch (e: Exception) {
-            Log.e("ReelPagerAdapter", "Failed to load asset: $path -> ${e.message}")
-            holder.binding.reelImage.setImageResource(R.drawable.placeholder)
         }
     }
 

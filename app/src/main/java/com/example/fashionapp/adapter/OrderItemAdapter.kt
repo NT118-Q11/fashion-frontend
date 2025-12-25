@@ -1,5 +1,6 @@
 package com.example.fashionapp.adapter
 
+import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +9,10 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fashionapp.R
 import com.example.fashionapp.model.OrderItemResponse
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class OrderItemAdapter(
     private var items: List<OrderItemResponse>
@@ -29,29 +34,49 @@ class OrderItemAdapter(
 
     override fun onBindViewHolder(holder: OrderItemViewHolder, position: Int) {
         val item = items[position]
+        val itemPrice = item.priceAtPurchase ?: item.price
 
-        holder.tvProductName.text = item.product?.name ?: "Product #${item.productId}"
-        holder.tvProductPrice.text = "$${String.format("%.2f", item.price)}"
+        // Display product name (from response or fallback to product object)
+        val productName = item.productName ?: item.product?.name ?: "Unknown Product"
+
+        // Build variant info (size and color)
+        val variantParts = mutableListOf<String>()
+        item.size?.let { if (it.isNotEmpty()) variantParts.add("Size: $it") }
+        item.color?.let { if (it.isNotEmpty()) variantParts.add("Color: $it") }
+        val variantInfo = if (variantParts.isNotEmpty()) variantParts.joinToString(" | ") else ""
+
+        // Set product name with variant info
+        if (variantInfo.isNotEmpty()) {
+            holder.tvProductName.text = "$productName\n$variantInfo"
+        } else {
+            holder.tvProductName.text = productName
+        }
+
+        holder.tvProductPrice.text = "$${String.format("%.2f", itemPrice)}"
         holder.tvQuantity.text = "x${item.quantity}"
 
-        val subtotal = item.price * item.quantity
+        val subtotal = itemPrice * item.quantity
         holder.tvSubtotal.text = "$${String.format("%.2f", subtotal)}"
 
-        // Load product image if available
+        // Set placeholder initially
+        holder.ivProductImage.setImageResource(R.drawable.sample_woman)
+
+        // Load product image from assets asynchronously
         val imagePath = item.product?.getThumbnailAssetPath()
         if (imagePath != null) {
-            val resourceId = holder.itemView.context.resources.getIdentifier(
-                imagePath.replace("/", "_").replace(".jpg", "").replace(".png", ""),
-                "drawable",
-                holder.itemView.context.packageName
-            )
-            if (resourceId != 0) {
-                holder.ivProductImage.setImageResource(resourceId)
-            } else {
-                holder.ivProductImage.setImageResource(R.drawable.sample_woman)
+            val context = holder.itemView.context
+            CoroutineScope(Dispatchers.Main).launch {
+                try {
+                    val bitmap = withContext(Dispatchers.IO) {
+                        context.assets.open(imagePath).use { input ->
+                            BitmapFactory.decodeStream(input)
+                        }
+                    }
+                    holder.ivProductImage.setImageBitmap(bitmap)
+                } catch (e: Exception) {
+                    holder.ivProductImage.setImageResource(R.drawable.sample_woman)
+                }
             }
-        } else {
-            holder.ivProductImage.setImageResource(R.drawable.sample_woman)
         }
     }
 

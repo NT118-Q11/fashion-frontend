@@ -8,7 +8,7 @@ import com.example.fashionapp.UserDto
  * UserManager handles storing and retrieving user information
  * using SharedPreferences for persistence across app sessions.
  */
-class UserManager(context: Context) {
+class UserManager(private val context: Context) {
     private val prefs: SharedPreferences = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
 
     companion object {
@@ -55,6 +55,9 @@ class UserManager(context: Context) {
             putBoolean(KEY_IS_LOGGED_IN, true)
             apply()
         }
+
+        // Update FavoritesManager with user ID
+        FavoritesManager.getInstance(context).setUserId(user.id)
     }
 
     /**
@@ -118,6 +121,8 @@ class UserManager(context: Context) {
      */
     fun logout() {
         prefs.edit().clear().apply()
+        // Clear FavoritesManager userId
+        FavoritesManager.getInstance(context).setUserId(null)
     }
 
     /**

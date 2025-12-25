@@ -110,10 +110,15 @@
                 android:padding="12dp"
                 android:gravity="top|start"
                 android:minLines="3"
+                android:maxLines="5"
+                android:maxLength="500"
+                android:scrollbars="vertical"
                 android:inputType="textMultiLine|textCapSentences"
+                android:imeOptions="actionDone"
                 android:textColor="#3A3A3A"
                 android:fontFamily="@font/tenorsans"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:importantForAutofill="no" />
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>

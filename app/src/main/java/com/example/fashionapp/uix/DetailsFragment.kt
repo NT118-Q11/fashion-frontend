@@ -9,6 +9,9 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.widget.CompositePageTransformer
+import androidx.viewpager2.widget.MarginPageTransformer
 import com.example.fashionapp.AppRoute
 import com.example.fashionapp.R
 import com.example.fashionapp.adapter.ImageSliderAdapter
@@ -18,6 +21,7 @@ import com.example.fashionapp.databinding.ProductDetailBinding
 import com.example.fashionapp.model.Product
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.coroutines.launch
+import kotlin.math.abs
 
 class DetailsFragment : Fragment() {
 
@@ -51,6 +55,15 @@ class DetailsFragment : Fragment() {
 
         binding.btnBack.setOnClickListener {
             findNavController().popBackStack()
+        }
+
+        // Navigation buttons
+        binding.btnSearch.setOnClickListener {
+            findNavController().navigate(R.id.action_detailsFragment_to_activitySearchViewFragment)
+        }
+
+        binding.btnCart.setOnClickListener {
+            findNavController().navigate(R.id.action_detailsFragment_to_cartFragment)
         }
 
         // 3 nút chuyển fragment
@@ -91,14 +104,73 @@ class DetailsFragment : Fragment() {
             tvPrice.text = "$${product.price}"
             btnAddToCart.text = "Add To Cart · $${product.price}"
             
-            // Update image slider with placeholders for now
-            val placeholderList = listOf(
-                R.drawable.model_image_1,
-                R.drawable.model_image_2,
-                R.drawable.model_image_3
-            )
-            viewPagerProduct.adapter = ImageSliderAdapter(placeholderList)
+            // Get all product images from assets
+            val productImages = product.getImageAssetPaths(requireContext().assets)
+
+            if (productImages.isNotEmpty()) {
+                // Use real product images
+                Log.d("DetailsFragment", "Loading ${productImages.size} images for product: ${product.name}")
+                productImages.forEach { imagePath ->
+                    Log.d("DetailsFragment", "  - Image: $imagePath")
+                }
+                viewPagerProduct.adapter = ImageSliderAdapter(productImages, requireContext())
+            } else {
+                // Fallback to placeholder images if no images found
+                Log.w("DetailsFragment", "No images found for product: ${product.name}, using placeholders")
+                val placeholderList = listOf(
+                    R.drawable.model_image_1,
+                    R.drawable.model_image_2,
+                    R.drawable.model_image_3
+                )
+                viewPagerProduct.adapter = ImageSliderAdapter(placeholderList)
+            }
+
+            // Setup ViewPager2 for better display
+            setupImageSlider()
+
             TabLayoutMediator(tabLayoutProduct, viewPagerProduct) { _, _ -> }.attach()
+        }
+    }
+
+    private fun setupImageSlider() {
+        binding.viewPagerProduct.apply {
+            // Set offscreen page limit
+            offscreenPageLimit = 1
+
+            // Remove over-scroll effect
+            (getChildAt(0) as? RecyclerView)?.overScrollMode = RecyclerView.OVER_SCROLL_NEVER
+
+            // Create composite page transformer
+            val compositePageTransformer = CompositePageTransformer()
+
+            // Add margin between pages
+            compositePageTransformer.addTransformer(MarginPageTransformer(16))
+
+            // Add scale and alpha transformation
+            compositePageTransformer.addTransformer { page, position ->
+                val absPosition = abs(position)
+                page.apply {
+                    when {
+                        // Current page (centered)
+                        absPosition < 0.5f -> {
+                            scaleY = 1.0f - (absPosition * 0.1f)
+                            alpha = 1.0f
+                        }
+                        // Adjacent pages
+                        absPosition < 1.0f -> {
+                            scaleY = 0.95f - ((absPosition - 0.5f) * 0.1f)
+                            alpha = 0.5f + (1.0f - absPosition) * 0.5f
+                        }
+                        // Other pages
+                        else -> {
+                            scaleY = 0.85f
+                            alpha = 0.3f
+                        }
+                    }
+                }
+            }
+
+            setPageTransformer(compositePageTransformer)
         }
     }
 

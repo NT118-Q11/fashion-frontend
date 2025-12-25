@@ -52,7 +52,6 @@
 
     <!-- Nút SIGN IN -->
 
-    <!-- OR -->
     <Button
         android:id="@+id/button_sign_in"
         android:layout_width="0dp"

@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#F4F1EC">
+    android:background="#F4F1EC"
+    android:fitsSystemWindows="true">
 
     <ImageView
         android:id="@+id/logo_noive"
@@ -23,7 +24,7 @@
         android:id="@+id/setting"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="110dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -34,16 +35,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/tenorsans"
-            android:text="SETTING"
+            android:text="SETTINGS"
             android:textColor="@color/black"
             android:textAlignment="center"
-            android:textSize="20sp" />
+            android:textSize="22sp"
+            android:letterSpacing="0.1" />
 
         <ImageView
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/white"
             android:layout_gravity="center_horizontal"
+            android:layout_marginTop="4dp"
             android:src="@drawable/underline" />
     </LinearLayout>
 
@@ -51,7 +54,10 @@
         android:id="@+id/profile_container"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:paddingBottom="16dp"
+        android:layout_marginTop="24dp"
+        android:paddingVertical="20dp"
+        android:paddingHorizontal="32dp"
+        android:background="@android:color/transparent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/setting">
@@ -60,12 +66,11 @@
             android:id="@+id/profile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="16dp"
             android:fontFamily="@font/tenorsans"
             android:text="Profile"
             android:textColor="@color/black"
-            android:textSize="20sp"
+            android:textSize="18sp"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -73,11 +78,11 @@
             android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="8dp"
             android:fontFamily="@font/tenorsans"
             android:text="Name"
             android:textColor="@color/gray"
-            android:textSize="16sp"
+            android:textSize="15sp"
             app:layout_constraintStart_toStartOf="@id/profile"
             app:layout_constraintTop_toBottomOf="@id/profile" />
 
@@ -85,11 +90,11 @@
             android:id="@+id/gmail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="6dp"
             android:fontFamily="@font/tenorsans"
             android:text="example@gmail.com"
             android:textColor="@color/gray"
-            android:textSize="16sp"
+            android:textSize="15sp"
             app:layout_constraintStart_toStartOf="@id/name"
             app:layout_constraintTop_toBottomOf="@id/name" />
 
@@ -97,36 +102,39 @@
             android:id="@+id/phone_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="6dp"
             android:fontFamily="@font/tenorsans"
             android:text="096 0000 000"
             android:textColor="@color/gray"
-            android:textSize="16sp"
+            android:textSize="15sp"
             app:layout_constraintStart_toStartOf="@id/gmail"
             app:layout_constraintTop_toBottomOf="@id/gmail" />
 
         <ImageButton
             android:id="@+id/imageButton1"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginEnd="30dp"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
             android:backgroundTint="@color/white"
             android:contentDescription="@string/edit_profile"
             android:clickable="true"
+            android:scaleType="centerInside"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/arrow_right" />
+            app:srcCompat="@drawable/arrow_right"
+            app:tint="@color/black" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     <ImageView
         android:id="@+id/line1"
-        android:layout_width="360dp"
-        android:layout_height="wrap_content"
-        android:adjustViewBounds="true"
-        android:src="@drawable/straight_line"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginHorizontal="32dp"
+        android:background="@color/gray"
+        android:alpha="0.3"
         app:layout_constraintTop_toBottomOf="@id/profile_container"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>
@@ -135,7 +143,9 @@
         android:id="@+id/password_constraint"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:paddingBottom="16dp"
+        android:paddingVertical="20dp"
+        android:paddingHorizontal="32dp"
+        android:background="@android:color/transparent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/line1">
@@ -144,12 +154,11 @@
             android:id="@+id/password"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="16dp"
             android:fontFamily="@font/tenorsans"
             android:text="Password"
             android:textColor="@color/black"
-            android:textSize="20sp"
+            android:textSize="18sp"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -157,47 +166,50 @@
             android:id="@+id/change_password"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="8dp"
             android:fontFamily="@font/tenorsans"
             android:text="@string/change_password_settings"
             android:textColor="@color/gray"
-            android:textSize="16sp"
+            android:textSize="15sp"
             app:layout_constraintStart_toStartOf="@id/password"
             app:layout_constraintTop_toBottomOf="@id/password" />
 
-
         <ImageButton
             android:id="@+id/imageButton2"
-            android:layout_width="30dp"
-            android:layout_height="48dp"
-            android:layout_marginEnd="30dp"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
             android:backgroundTint="@color/white"
             android:contentDescription="@string/change_password_settings"
             android:clickable="true"
+            android:scaleType="centerInside"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/arrow_right" />
+            app:srcCompat="@drawable/arrow_right"
+            app:tint="@color/black" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     <ImageView
         android:id="@+id/line2"
-        android:layout_width="360dp"
-        android:layout_height="wrap_content"
-        android:adjustViewBounds="true"
-        android:src="@drawable/straight_line"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginHorizontal="32dp"
+        android:background="@color/gray"
+        android:alpha="0.3"
         app:layout_constraintTop_toBottomOf="@id/password_constraint"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"/>
-
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/logout_constraint"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:paddingVertical="20dp"
+        android:paddingHorizontal="32dp"
+        android:background="@android:color/transparent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/line2">
@@ -206,27 +218,29 @@
             android:id="@+id/logout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
             android:fontFamily="@font/tenorsans"
             android:text="@string/log_out"
             android:textColor="@color/black"
-            android:textSize="20sp"
+            android:textSize="18sp"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
 
         <ImageButton
             android:id="@+id/imageButton3"
-            android:layout_width="30dp"
-            android:layout_height="48dp"
-            android:layout_marginEnd="30dp"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
             android:backgroundTint="@color/white"
             android:contentDescription="@string/log_out"
             android:clickable="true"
+            android:scaleType="centerInside"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/arrow_right" />
+            app:srcCompat="@drawable/arrow_right"
+            app:tint="@color/black" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -306,7 +320,7 @@
         android:layout_height="30dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="28dp"
-        android:background="?android:attr/selectableItemBackgroundBorderless"
+        android:background="@drawable/noive_logo"
         android:backgroundTint="@color/white"
         android:clickable="true"
         android:contentDescription="Arrow left"

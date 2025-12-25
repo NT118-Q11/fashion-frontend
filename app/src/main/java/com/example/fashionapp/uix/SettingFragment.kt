@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.example.fashionapp.R
 import com.example.fashionapp.databinding.SettingsBinding
 
 class SettingFragment : Fragment() {
@@ -28,6 +29,23 @@ class SettingFragment : Fragment() {
         binding.backButton.setOnClickListener {
             // Lệnh này sẽ quay lại màn hình trước đó trong Back Stack (tức là MyAccountFragment)
             findNavController().popBackStack()
+        }
+
+        // Bottom navigation bar
+        binding.navHome.setOnClickListener {
+            findNavController().navigate(R.id.action_settingFragment_to_homeFragment)
+        }
+
+        binding.navCart.setOnClickListener {
+            findNavController().navigate(R.id.action_settingFragment_to_cartFragment)
+        }
+
+        binding.navNotifications.setOnClickListener {
+            findNavController().navigate(R.id.action_settingFragment_to_notificationFragment)
+        }
+
+        binding.navProfile.setOnClickListener {
+            findNavController().navigate(R.id.action_settingFragment_to_myAccountFragment)
         }
 
     }

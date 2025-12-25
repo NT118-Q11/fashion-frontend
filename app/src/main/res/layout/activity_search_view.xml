@@ -7,15 +7,36 @@
     android:background="#F4F1EC"
     android:fitsSystemWindows="true">
 
+    <!-- LOGO -->
+    <ImageView
+        android:id="@+id/logo_noive"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="12dp"
+        android:contentDescription="Logo Noive"
+        android:scaleType="fitCenter"
+        android:src="@drawable/noive_logo"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"/>
+
+    <!-- Top bar -->
     <LinearLayout
         android:id="@+id/top_bar"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:background="#F4F1EC"
         android:paddingHorizontal="16dp"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/logo_noive"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
         <!-- Nút Back -->
         <ImageView
             android:id="@+id/btn_back"
@@ -60,7 +81,8 @@
         android:id="@+id/search_line"
         android:layout_width="0dp"
         android:layout_height="1dp"
-        android:layout_marginHorizontal="16dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
         android:background="#000000"
         app:layout_constraintTop_toBottomOf="@id/top_bar"
         app:layout_constraintStart_toStartOf="parent"
@@ -80,15 +102,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
+
     <!--Danh sách kêt quả RecyclerView -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcv_search_results"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:spanCount="2"
-
         tools:listitem="@layout/item_search_result"
         android:paddingHorizontal="16dp"
         android:paddingTop="10dp"
@@ -164,9 +185,6 @@
         android:paddingHorizontal="0dp"
         app:layout_constraintBottom_toBottomOf="parent">
 
-        <!-- Home Icon -->
-
-        <!-- Notifications Icon -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/navHome"
             style="?attr/materialIconButtonStyle"
@@ -193,7 +211,6 @@
             app:iconGravity="textStart"
             android:contentDescription="Notifications" />
 
-        <!-- Cart Icon -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/navCart"
             android:backgroundTint="@color/black"
@@ -207,7 +224,6 @@
             app:iconGravity="textStart"
             android:contentDescription="Cart" />
 
-        <!-- Profile Icon -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/navProfile"
             style="?attr/materialIconButtonStyle"
@@ -220,7 +236,6 @@
             app:iconGravity="textStart"
             app:iconSize="30dp"
             app:tint="@color/white" />
-
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

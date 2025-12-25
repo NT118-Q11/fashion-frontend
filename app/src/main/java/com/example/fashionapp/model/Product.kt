@@ -1,9 +1,14 @@
 package com.example.fashionapp.model
 
 import com.google.gson.annotations.SerializedName
+import com.google.gson.JsonDeserializer
+import com.google.gson.JsonDeserializationContext
+import com.google.gson.JsonElement
+import java.lang.reflect.Type
 
 /**
  * Product model matching backend ProductResponse
+ * Automatically handles pipe-delimited strings from backend (e.g., "S|M|L" or "Gray|Black")
  */
 data class Product(
     val id: String,
@@ -180,3 +185,82 @@ data class DeleteResponse(
     val message: String
 )
 
+/**
+ * Custom Gson deserializer for Product to handle backend pipe-delimited strings
+ * Backend returns: color: "Gray|Black|Beige", size: "S|M|L"
+ * This converts them to: colors: ["Gray", "Black", "Beige"], sizes: ["S", "M", "L"]
+ */
+class ProductDeserializer : JsonDeserializer<Product> {
+    private val allSizes = listOf("S", "M", "L", "XL", "XXL")
+
+    override fun deserialize(
+        json: JsonElement,
+        typeOfT: Type,
+        context: JsonDeserializationContext
+    ): Product {
+        val jsonObject = json.asJsonObject
+
+        // Parse sizes from pipe-delimited string or array
+        val sizes = when {
+            jsonObject.has("sizes") && !jsonObject.get("sizes").isJsonNull -> {
+                // Already an array
+                context.deserialize<List<String>>(jsonObject.get("sizes"), object : com.google.gson.reflect.TypeToken<List<String>>() {}.type)
+                    ?.map { it.uppercase().trim() }
+                    ?.filter { it in allSizes }
+            }
+            jsonObject.has("size") && !jsonObject.get("size").isJsonNull -> {
+                // Pipe-delimited string
+                val sizeStr = jsonObject.get("size").asString
+                parseDelimitedString(sizeStr)
+                    ?.map { it.uppercase().trim() }
+                    ?.filter { it in allSizes }
+            }
+            else -> null
+        }
+
+        // Parse colors from pipe-delimited string or array
+        val colors = when {
+            jsonObject.has("colors") && !jsonObject.get("colors").isJsonNull -> {
+                // Already an array
+                context.deserialize<List<String>>(jsonObject.get("colors"), object : com.google.gson.reflect.TypeToken<List<String>>() {}.type)
+                    ?.map { it.trim() }
+                    ?.filter { it.isNotEmpty() }
+            }
+            jsonObject.has("color") && !jsonObject.get("color").isJsonNull -> {
+                // Pipe-delimited string
+                val colorStr = jsonObject.get("color").asString
+                parseDelimitedString(colorStr)
+                    ?.map { it.trim() }
+                    ?.filter { it.isNotEmpty() }
+            }
+            else -> null
+        }
+
+        // Parse other fields normally
+        return Product(
+            id = jsonObject.get("id").asString,
+            name = jsonObject.get("name").asString,
+            description = jsonObject.get("description")?.takeIf { !it.isJsonNull }?.asString,
+            price = jsonObject.get("price").asDouble,
+            category = jsonObject.get("category")?.takeIf { !it.isJsonNull }?.asString,
+            brand = jsonObject.get("brand")?.takeIf { !it.isJsonNull }?.asString,
+            gender = jsonObject.get("gender")?.takeIf { !it.isJsonNull }?.asString,
+            sizes = sizes,
+            colors = colors,
+            images = context.deserialize(jsonObject.get("images"), object : com.google.gson.reflect.TypeToken<List<String>>() {}.type),
+            thumbnail = jsonObject.get("thumbnail")?.takeIf { !it.isJsonNull }?.asString,
+            stock = jsonObject.get("stock")?.takeIf { !it.isJsonNull }?.asInt,
+            createdAt = jsonObject.get("createdAt")?.takeIf { !it.isJsonNull }?.asString,
+            updatedAt = jsonObject.get("updatedAt")?.takeIf { !it.isJsonNull }?.asString
+        )
+    }
+
+    private fun parseDelimitedString(value: String?): List<String>? {
+        if (value.isNullOrBlank()) return null
+
+        return value.split('|')
+            .map { it.trim() }
+            .filter { it.isNotEmpty() }
+            .takeIf { it.isNotEmpty() }
+    }
+}

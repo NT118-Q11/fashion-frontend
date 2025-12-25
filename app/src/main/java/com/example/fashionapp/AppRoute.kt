@@ -143,6 +143,7 @@ object AppRoute {
     private val gson = GsonBuilder()
         .setLenient() // More lenient JSON parsing
         .serializeNulls() // Handle null values properly
+        .registerTypeAdapter(com.example.fashionapp.model.Product::class.java, com.example.fashionapp.model.ProductDeserializer())
         .create()
 
     private val retrofit: Retrofit by lazy {

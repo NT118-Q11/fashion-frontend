@@ -5,6 +5,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
@@ -31,6 +33,12 @@ class DetailsFragment : Fragment() {
     private var productId: String? = null
     private var currentProduct: Product? = null
     private lateinit var userManager: UserManager
+
+    private var selectedColor: String? = null
+    private var selectedSize: String? = null
+
+    // Fixed available sizes
+    private val ALL_SIZES = listOf("S", "M", "L", "XL", "XXL")
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -98,6 +106,10 @@ class DetailsFragment : Fragment() {
     }
 
     private fun updateUI(product: Product) {
+        // Reset selection state for new product
+        selectedColor = null
+        selectedSize = null
+
         binding.apply {
             tvName.text = product.name
             tvDescription.text = product.description
@@ -129,6 +141,10 @@ class DetailsFragment : Fragment() {
             setupImageSlider()
 
             TabLayoutMediator(tabLayoutProduct, viewPagerProduct) { _, _ -> }.attach()
+
+            // Setup colors and sizes
+            setupColors(product)
+            setupSizes(product)
         }
     }
 
@@ -174,9 +190,179 @@ class DetailsFragment : Fragment() {
         }
     }
 
+    private fun setupColors(product: Product) {
+        // Parse colors from product
+        val availableColors = product.colors.orEmpty()
+
+        if (availableColors.isEmpty()) {
+            // Hide entire color container if no colors
+            binding.colorContainer.visibility = View.GONE
+            return
+        }
+
+        // Show color container
+        binding.colorContainer.visibility = View.VISIBLE
+
+        // List of color views (ShapeableImageView)
+        val colorViews = listOf(binding.color1, binding.color2, binding.color3)
+
+        // Limit to maximum 3 colors
+        val colorsToShow = availableColors.take(3)
+
+        // Set first color as default selected
+        if (selectedColor == null && colorsToShow.isNotEmpty()) {
+            selectedColor = colorsToShow[0]
+        }
+
+        // Setup each color view
+        colorsToShow.forEachIndexed { index, colorName ->
+            if (index < colorViews.size) {
+                val colorView = colorViews[index]
+                colorView.visibility = View.VISIBLE
+
+                // Set the actual color as background
+                val colorInt = parseColorName(colorName)
+                colorView.setBackgroundColor(colorInt)
+
+                // Store color name in tag for selection tracking
+                colorView.tag = colorName
+
+                colorView.setOnClickListener {
+                    selectedColor = colorName
+                    updateColorSelection(colorsToShow)
+                }
+            }
+        }
+
+        // Hide unused color views
+        for (i in colorsToShow.size until colorViews.size) {
+            colorViews[i].visibility = View.GONE
+        }
+
+        updateColorSelection(colorsToShow)
+    }
+
+    private fun setupSizes(product: Product) {
+        // Parse sizes from product (already normalized to uppercase)
+        val availableSizes = product.sizes.orEmpty()
+
+        // Set first available size as default selected
+        if (selectedSize == null && availableSizes.isNotEmpty()) {
+            selectedSize = availableSizes[0]
+        }
+
+        // Setup Spinner with available sizes
+        if (availableSizes.isNotEmpty()) {
+            val adapter = ArrayAdapter(
+                requireContext(),
+                R.layout.spinner_size_item,
+                availableSizes
+            )
+            adapter.setDropDownViewResource(R.layout.spinner_size_dropdown_item)
+            binding.spinnerSize.adapter = adapter
+
+            // Set default selection
+            if (selectedSize != null && availableSizes.contains(selectedSize)) {
+                binding.spinnerSize.setSelection(availableSizes.indexOf(selectedSize))
+            }
+
+            // Handle size selection
+            binding.spinnerSize.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                    selectedSize = availableSizes[position]
+                    Log.d("DetailsFragment", "Size selected: $selectedSize")
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+                    // Do nothing
+                }
+            }
+        } else {
+            // No sizes available - hide the size selector
+            binding.sizeContainer.visibility = View.GONE
+        }
+    }
+
+    private fun updateColorSelection(availableColors: List<String>) {
+        // Update all color views to show selection state
+        val colorViews = listOf(binding.color1, binding.color2, binding.color3)
+
+        colorViews.forEach { colorView ->
+            if (colorView.visibility == View.VISIBLE) {
+                val isSelected = colorView.tag == selectedColor
+
+                // Update selection indicator using stroke (like details_1)
+                if (isSelected) {
+                    // Selected: show black stroke border
+                    colorView.strokeWidth = dpToPx(2).toFloat()
+                    colorView.strokeColor = resources.getColorStateList(R.color.black, null)
+                    colorView.elevation = dpToPx(2).toFloat()
+                } else {
+                    // Unselected: no stroke
+                    colorView.strokeWidth = 0f
+                    colorView.elevation = 0f
+                }
+            }
+        }
+    }
+
+
+    private fun parseColorName(colorName: String): Int {
+        // Map color names to actual color values
+        return when (colorName.lowercase().trim()) {
+            "black" -> resources.getColor(R.color.black, null)
+            "white" -> resources.getColor(R.color.white, null)
+            "red" -> android.graphics.Color.RED
+            "blue" -> android.graphics.Color.BLUE
+            "green" -> android.graphics.Color.GREEN
+            "yellow" -> android.graphics.Color.YELLOW
+            "orange" -> resources.getColor(R.color.orange, null)
+            "brown" -> resources.getColor(R.color.accent_brown, null)
+            "gray", "grey" -> resources.getColor(R.color.gray, null)
+            "beige" -> resources.getColor(R.color.vintage_beige, null)
+            "pink" -> android.graphics.Color.parseColor("#FFC0CB")
+            "purple" -> resources.getColor(R.color.purple_500, null)
+            // Additional brand colors
+            "khaki" -> android.graphics.Color.parseColor("#C3B091")
+            "ivory" -> android.graphics.Color.parseColor("#FFFFF0")
+            "navy" -> android.graphics.Color.parseColor("#000080")
+            "maroon" -> android.graphics.Color.parseColor("#800000")
+            "olive" -> android.graphics.Color.parseColor("#808000")
+            "teal" -> android.graphics.Color.parseColor("#008080")
+            "silver" -> android.graphics.Color.parseColor("#C0C0C0")
+            "gold" -> android.graphics.Color.parseColor("#FFD700")
+            "cream" -> android.graphics.Color.parseColor("#FFFDD0")
+            "charcoal" -> android.graphics.Color.parseColor("#36454F")
+            else -> {
+                // Try to parse as hex color
+                try {
+                    android.graphics.Color.parseColor(colorName)
+                } catch (e: Exception) {
+                    // Default to a medium gray if color not recognized
+                    android.graphics.Color.parseColor("#888888")
+                }
+            }
+        }
+    }
+
+    private fun dpToPx(dp: Int): Int {
+        return (dp * resources.displayMetrics.density).toInt()
+    }
+
+    /**
+     * Get the currently selected color
+     */
+    fun getSelectedColor(): String? = selectedColor
+
+    /**
+     * Get the currently selected size
+     */
+    fun getSelectedSize(): String? = selectedSize
+
     private fun addToCart() {
         val uid = userManager.getUserId()
         val pid = currentProduct?.id ?: productId
+        val product = currentProduct
 
         if (uid == null) {
             Toast.makeText(context, "Please login first", Toast.LENGTH_SHORT).show()
@@ -187,6 +373,15 @@ class DetailsFragment : Fragment() {
             Toast.makeText(context, "Product data not loaded", Toast.LENGTH_SHORT).show()
             return
         }
+
+        // Validate size selection if product has sizes
+        if (!product?.sizes.isNullOrEmpty() && selectedSize == null) {
+            Toast.makeText(context, "Please select a size", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        // Log selected variant for debugging
+        Log.d("DetailsFragment", "Adding to cart - Color: $selectedColor, Size: $selectedSize")
 
         lifecycleScope.launch {
             binding.btnAddToCart.isEnabled = false

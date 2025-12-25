@@ -443,6 +443,23 @@
     <fragment
         android:id="@+id/orderHistoryFragment"
         android:name="com.example.fashionapp.uix.OrderHistoryFragment"
-        android:label="Order History" />
+        android:label="Order History"
+        tools:layout="@layout/fragment_order_history">
+
+        <action
+            android:id="@+id/action_orderHistoryFragment_to_orderDetailFragment"
+            app:destination="@id/orderDetailFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/orderDetailFragment"
+        android:name="com.example.fashionapp.uix.OrderDetailFragment"
+        android:label="Order Details"
+        tools:layout="@layout/fragment_order_detail">
+
+        <argument
+            android:name="orderId"
+            app:argType="string" />
+    </fragment>
 
 </navigation>

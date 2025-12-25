@@ -10,16 +10,20 @@ data class OrderRequest(
     val totalPrice: Double,
     val shippingAddress: String,
     val paymentMethod: String = "COD",
-    val status: String = "PENDING"
+    val status: String = "SUCCESSFUL"
 )
 
 /**
  * Request for order item
  */
 data class OrderItemRequest(
+    val orderId: String? = null,
     val productId: String,
+    val productName: String? = null,
+    val size: String? = null,
+    val color: String? = null,
     val quantity: Int,
-    val price: Double
+    val priceAtPurchase: Double
 )
 
 /**
@@ -29,9 +33,13 @@ data class OrderItemResponse(
     val id: String?,
     val orderId: String?,
     val productId: String,
+    val productName: String? = null,
+    val size: String? = null,
+    val color: String? = null,
     val quantity: Int,
-    val price: Double,
-    val product: Product?
+    val priceAtPurchase: Double? = null,
+    val price: Double = priceAtPurchase ?: 0.0,
+    val product: Product? = null
 )
 
 /**

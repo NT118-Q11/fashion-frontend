@@ -94,12 +94,9 @@ class OrderHistoryFragment : Fragment() {
                 // Get all orders by user (showing all successful/completed orders)
                 val allOrders = AppRoute.order.getOrdersByUserId(userId)
 
-                // You can filter for specific statuses if needed, e.g., DELIVERED, SUCCESS
-                // For now, showing all orders
+                // Filter only SUCCESSFUL orders
                 val successOrders = allOrders.filter {
-                    it.status.equals("DELIVERED", ignoreCase = true) ||
-                    it.status.equals("SUCCESS", ignoreCase = true) ||
-                    it.status.equals("COMPLETED", ignoreCase = true)
+                    it.status.equals("SUCCESSFUL", ignoreCase = true)
                 }
 
                 adapter.updateOrders(successOrders)

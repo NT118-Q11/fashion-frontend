@@ -1,11 +1,16 @@
 package com.example.fashionapp.adapter
 
+import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fashionapp.databinding.ItemCartBinding
 import com.example.fashionapp.model.CartItemResponse
 import com.example.fashionapp.R
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class CartAdapter(
     private val items: MutableList<CartItemResponse>,
@@ -32,20 +37,25 @@ class CartAdapter(
             tvPrice.text = "$${product?.price ?: 0.0}"
             tvQuantity.text = item.quantity.toString()
 
-            // Load product image from assets
+            // Set placeholder initially
+            imgProduct.setImageResource(R.drawable.sample_woman)
+
+            // Load product image from assets asynchronously
             val assetPath = product?.getThumbnailAssetPath()
             if (assetPath != null) {
-                try {
-                    val context = root.context
-                    val inputStream = context.assets.open(assetPath)
-                    val drawable = android.graphics.drawable.Drawable.createFromStream(inputStream, null)
-                    imgProduct.setImageDrawable(drawable)
-                    inputStream.close()
-                } catch (e: Exception) {
-                    imgProduct.setImageResource(R.drawable.sample_woman)
+                val context = root.context
+                CoroutineScope(Dispatchers.Main).launch {
+                    try {
+                        val bitmap = withContext(Dispatchers.IO) {
+                            context.assets.open(assetPath).use { input ->
+                                BitmapFactory.decodeStream(input)
+                            }
+                        }
+                        imgProduct.setImageBitmap(bitmap)
+                    } catch (e: Exception) {
+                        imgProduct.setImageResource(R.drawable.sample_woman)
+                    }
                 }
-            } else {
-                imgProduct.setImageResource(R.drawable.sample_woman)
             }
 
             // Nút tăng

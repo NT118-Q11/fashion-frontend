@@ -1,5 +1,6 @@
 package com.example.fashionapp.uix
 
+import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -18,7 +19,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.fashionapp.AppRoute
 import com.example.fashionapp.R
 import com.example.fashionapp.model.Product
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class ActivitySearchViewFragment : Fragment() {
 
@@ -341,21 +345,25 @@ class ActivitySearchViewFragment : Fragment() {
                 title.text = product.name
                 price.text = "$${String.format("%.2f", product.price)}"
 
-                // Load product image from assets
+                // Set placeholder initially
+                imgProduct.setImageResource(R.drawable.sample_woman)
+
+                // Load product image from assets asynchronously
                 val assetPath = product.getThumbnailAssetPath()
                 if (assetPath != null) {
-                    try {
-                        val inputStream = requireContext().assets.open(assetPath)
-                        val drawable = android.graphics.drawable.Drawable.createFromStream(inputStream, null)
-                        imgProduct.setImageDrawable(drawable)
-                        inputStream.close()
-                    } catch (e: Exception) {
-                        // Fallback to default image if asset not found
-                        imgProduct.setImageResource(R.drawable.sample_woman)
-                        e.printStackTrace()
+                    CoroutineScope(Dispatchers.Main).launch {
+                        try {
+                            val bitmap = withContext(Dispatchers.IO) {
+                                requireContext().assets.open(assetPath).use { input ->
+                                    BitmapFactory.decodeStream(input)
+                                }
+                            }
+                            imgProduct.setImageBitmap(bitmap)
+                        } catch (e: Exception) {
+                            imgProduct.setImageResource(R.drawable.sample_woman)
+                            e.printStackTrace()
+                        }
                     }
-                } else {
-                    imgProduct.setImageResource(R.drawable.sample_woman)
                 }
 
                 // Handle favorite button (optional - implement favorite logic if needed)

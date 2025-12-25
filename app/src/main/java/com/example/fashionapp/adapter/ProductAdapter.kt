@@ -13,6 +13,10 @@ import com.example.fashionapp.R
 import com.example.fashionapp.data.FavoritesManager
 import com.example.fashionapp.model.FavoriteItem
 import com.example.fashionapp.model.Product
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 /**
  * Adapter for displaying products in a RecyclerView
@@ -33,22 +37,26 @@ class ProductAdapter(
             txtTitle.text = product.name
             txtPrice.text = "$${String.format("%.2f", product.price)}"
 
-            // Load thumbnail from assets
+            // Set placeholder initially
+            imgProduct.setImageResource(R.drawable.sample_woman)
+
+            // Load thumbnail from assets asynchronously
             val thumbnailPath = product.getThumbnailAssetPath()
             if (!thumbnailPath.isNullOrEmpty()) {
-                try {
-                    itemView.context.assets.open(thumbnailPath).use { input ->
-                        val bitmap = BitmapFactory.decodeStream(input)
+                CoroutineScope(Dispatchers.Main).launch {
+                    try {
+                        val bitmap = withContext(Dispatchers.IO) {
+                            itemView.context.assets.open(thumbnailPath).use { input ->
+                                BitmapFactory.decodeStream(input)
+                            }
+                        }
                         imgProduct.setImageBitmap(bitmap)
                         Log.d("ProductAdapter", "Loaded thumbnail: $thumbnailPath")
+                    } catch (e: Exception) {
+                        Log.e("ProductAdapter", "Failed to load thumbnail: $thumbnailPath -> ${e.message}")
+                        imgProduct.setImageResource(R.drawable.sample_woman)
                     }
-                } catch (e: Exception) {
-                    Log.e("ProductAdapter", "Failed to load thumbnail: $thumbnailPath -> ${e.message}")
-                    imgProduct.setImageResource(R.drawable.sample_woman)
                 }
-            } else {
-                // Use placeholder if no thumbnail available
-                imgProduct.setImageResource(R.drawable.sample_woman)
             }
 
             // Create favorite item from product

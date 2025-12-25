@@ -1,10 +1,16 @@
 package com.example.fashionapp.adapter
 
+import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.fashionapp.R
 import com.example.fashionapp.databinding.ItemFavoriteBinding
 import com.example.fashionapp.model.FavoriteItem
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class FavoritesAdapter(
     private val items: List<FavoriteItem>,
@@ -28,12 +34,21 @@ class FavoritesAdapter(
             if (item.imageRes != 0) {
                 imgProduct.setImageResource(item.imageRes)
             } else if (item.imagePath.isNotEmpty()) {
-                try {
-                    val inputStream = holder.itemView.context.assets.open(item.imagePath)
-                    val drawable = android.graphics.drawable.Drawable.createFromStream(inputStream, null)
-                    imgProduct.setImageDrawable(drawable)
-                } catch (e: Exception) {
-                    e.printStackTrace()
+                // Set placeholder initially
+                imgProduct.setImageResource(R.drawable.placeholder)
+
+                // Load async to prevent ANR
+                CoroutineScope(Dispatchers.Main).launch {
+                    try {
+                        val bitmap = withContext(Dispatchers.IO) {
+                            holder.itemView.context.assets.open(item.imagePath).use { input ->
+                                BitmapFactory.decodeStream(input)
+                            }
+                        }
+                        imgProduct.setImageBitmap(bitmap)
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
                 }
             }
 

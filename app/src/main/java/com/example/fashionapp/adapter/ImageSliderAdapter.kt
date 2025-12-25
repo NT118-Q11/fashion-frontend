@@ -8,6 +8,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fashionapp.R
 import com.example.fashionapp.databinding.ItemImageSliderBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 /**
  * Sealed class to represent different types of images
@@ -44,15 +48,23 @@ class ImageSliderAdapter(
 
         private fun loadImageFromAssets(path: String) {
             val ctx = context ?: binding.root.context
-            try {
-                ctx.assets.open(path).use { input ->
-                    val bitmap = BitmapFactory.decodeStream(input)
+            // Set placeholder initially
+            binding.sliderImageView.setImageResource(R.drawable.placeholder)
+
+            // Load asynchronously to prevent ANR
+            CoroutineScope(Dispatchers.Main).launch {
+                try {
+                    val bitmap = withContext(Dispatchers.IO) {
+                        ctx.assets.open(path).use { input ->
+                            BitmapFactory.decodeStream(input)
+                        }
+                    }
                     binding.sliderImageView.setImageBitmap(bitmap)
                     Log.d("ImageSliderAdapter", "Loaded asset: $path (${bitmap.width}x${bitmap.height})")
+                } catch (e: Exception) {
+                    Log.e("ImageSliderAdapter", "Failed to load asset: $path -> ${e.message}")
+                    binding.sliderImageView.setImageResource(R.drawable.placeholder)
                 }
-            } catch (e: Exception) {
-                Log.e("ImageSliderAdapter", "Failed to load asset: $path -> ${e.message}")
-                binding.sliderImageView.setImageResource(R.drawable.placeholder)
             }
         }
     }

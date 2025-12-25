@@ -48,9 +48,8 @@ class OrderHistoryAdapter(
         // Set status color based on status
         val context = holder.itemView.context
         when (order.status.uppercase()) {
-            "DELIVERED" -> holder.tvOrderStatus.setTextColor(context.getColor(R.color.green))
+            "SUCCESSFUL" -> holder.tvOrderStatus.setTextColor(context.getColor(R.color.green))
             "CANCELLED" -> holder.tvOrderStatus.setTextColor(context.getColor(R.color.red))
-            "PENDING" -> holder.tvOrderStatus.setTextColor(context.getColor(R.color.orange))
             else -> holder.tvOrderStatus.setTextColor(context.getColor(R.color.black))
         }
     }

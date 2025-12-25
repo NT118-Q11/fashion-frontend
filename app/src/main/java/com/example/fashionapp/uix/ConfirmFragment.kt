@@ -120,14 +120,27 @@ class ConfirmFragment : Fragment() {
                     return@launch
                 }
 
-                // Create order items from cart
-                val orderItems = cart.items.mapNotNull { cartItem ->
+                // Prepare order items data from cart with full product info
+                data class CartItemData(
+                    val productId: String,
+                    val productName: String,
+                    val quantity: Int,
+                    val price: Double,
+                    val size: String?,
+                    val color: String?
+                )
+
+                val cartItemsData = cart.items.mapNotNull { cartItem ->
                     val product = cartItem.product
                     if (product != null) {
-                        OrderItemRequest(
+                        CartItemData(
                             productId = product.id,
+                            productName = product.name,
                             quantity = cartItem.quantity,
-                            price = product.price
+                            price = product.price,
+                            // Get first available size and color as default
+                            size = product.sizes?.firstOrNull(),
+                            color = product.colors?.firstOrNull()
                         )
                     } else {
                         null
@@ -140,18 +153,50 @@ class ConfirmFragment : Fragment() {
                 // Use the current shipping address from display
                 val currentShippingAddress = "$streetAddress | $cityAddress"
 
-                // Create order request
+                // Create order request (without items, backend will handle separately)
                 val orderRequest = OrderRequest(
                     userId = userId,
-                    items = orderItems,
+                    items = emptyList(), // Send empty, we'll create items separately
                     totalPrice = totalPrice,
                     shippingAddress = currentShippingAddress,
                     paymentMethod = "COD",
-                    status = "PENDING"
+                    status = "SUCCESSFUL"
                 )
 
                 // Send order to backend
                 val orderResponse = AppRoute.order.createOrder(orderRequest)
+                val orderId = orderResponse.id
+
+                if (orderId == null) {
+                    Toast.makeText(context, "Failed to create order: No order ID returned", Toast.LENGTH_LONG).show()
+                    binding.ConfirmButton.isEnabled = true
+                    return@launch
+                }
+
+                // Now create order items with the orderId
+                var allItemsCreated = true
+                for (itemData in cartItemsData) {
+                    try {
+                        val orderItemRequest = OrderItemRequest(
+                            orderId = orderId,
+                            productId = itemData.productId,
+                            productName = itemData.productName,
+                            size = itemData.size,
+                            color = itemData.color,
+                            quantity = itemData.quantity,
+                            priceAtPurchase = itemData.price
+                        )
+                        AppRoute.orderItem.createOrderItem(orderItemRequest)
+                        Log.d("ConfirmFragment", "Created order item for product: ${itemData.productName}")
+                    } catch (e: Exception) {
+                        Log.e("ConfirmFragment", "Failed to create order item for product: ${itemData.productId}", e)
+                        allItemsCreated = false
+                    }
+                }
+
+                if (!allItemsCreated) {
+                    Log.w("ConfirmFragment", "Some order items failed to create")
+                }
 
                 // Clear cart after successful order
                 val cartCleared = CartManager.clearCart(userId)
@@ -160,8 +205,8 @@ class ConfirmFragment : Fragment() {
                     // Still proceed to success screen, but log the error
                 }
 
-                // Extract product IDs from order items for rating
-                val productIds = orderItems.map { it.productId }.toTypedArray()
+                // Extract product IDs from cart items for rating
+                val productIds = cartItemsData.map { it.productId }.toTypedArray()
 
                 // Navigate to payment success with order ID and product IDs
                 val bundle = bundleOf(

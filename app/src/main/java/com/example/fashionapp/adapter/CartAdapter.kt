@@ -1,8 +1,11 @@
 package com.example.fashionapp.adapter
 
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fashionapp.databinding.ItemCartBinding
 import com.example.fashionapp.model.CartItemResponse
@@ -18,6 +21,9 @@ class CartAdapter(
     private val onDecrease: (CartItemResponse) -> Unit,
     private val onRemove: (CartItemResponse) -> Unit
 ) : RecyclerView.Adapter<CartAdapter.CartViewHolder>() {
+
+    // Cache for product images to prevent flickering
+    private val imageCache = mutableMapOf<String, Bitmap>()
 
     inner class CartViewHolder(val binding: ItemCartBinding) :
         RecyclerView.ViewHolder(binding.root)
@@ -37,12 +43,28 @@ class CartAdapter(
             tvPrice.text = "$${product?.price ?: 0.0}"
             tvQuantity.text = item.quantity.toString()
 
-            // Set placeholder initially
-            imgProduct.setImageResource(R.drawable.sample_woman)
+            // Display size and color if available
+            val variantParts = mutableListOf<String>()
+            item.selectedSize?.let { variantParts.add("Size: $it") }
+            item.selectedColor?.let { variantParts.add("Color: $it") }
 
-            // Load product image from assets asynchronously
+            if (variantParts.isNotEmpty()) {
+                tvVariant.text = variantParts.joinToString(" | ")
+                tvVariant.visibility = View.VISIBLE
+            } else {
+                tvVariant.visibility = View.GONE
+            }
+
+            // Load product image from assets with caching
             val assetPath = product?.getThumbnailAssetPath()
-            if (assetPath != null) {
+            val cacheKey = assetPath ?: product?.id ?: ""
+
+            // Check cache first
+            val cachedBitmap = imageCache[cacheKey]
+            if (cachedBitmap != null) {
+                imgProduct.setImageBitmap(cachedBitmap)
+            } else if (assetPath != null) {
+                // Keep current image while loading to prevent flash
                 val context = root.context
                 CoroutineScope(Dispatchers.Main).launch {
                     try {
@@ -51,11 +73,15 @@ class CartAdapter(
                                 BitmapFactory.decodeStream(input)
                             }
                         }
+                        // Cache the bitmap
+                        imageCache[cacheKey] = bitmap
                         imgProduct.setImageBitmap(bitmap)
                     } catch (e: Exception) {
                         imgProduct.setImageResource(R.drawable.sample_woman)
                     }
                 }
+            } else {
+                imgProduct.setImageResource(R.drawable.sample_woman)
             }
 
             // Nút tăng
@@ -78,8 +104,44 @@ class CartAdapter(
     override fun getItemCount(): Int = items.size
 
     fun updateItems(newItems: List<CartItemResponse>) {
+        val diffCallback = CartDiffCallback(items, newItems)
+        val diffResult = DiffUtil.calculateDiff(diffCallback)
+
         items.clear()
         items.addAll(newItems)
-        notifyDataSetChanged()
+        diffResult.dispatchUpdatesTo(this)
+    }
+
+    /**
+     * Clear the image cache when adapter is no longer needed
+     */
+    fun clearCache() {
+        imageCache.clear()
+    }
+
+    /**
+     * DiffUtil callback to optimize RecyclerView updates and prevent flickering
+     */
+    private class CartDiffCallback(
+        private val oldList: List<CartItemResponse>,
+        private val newList: List<CartItemResponse>
+    ) : DiffUtil.Callback() {
+
+        override fun getOldListSize() = oldList.size
+
+        override fun getNewListSize() = newList.size
+
+        override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+            return oldList[oldItemPosition].id == newList[newItemPosition].id
+        }
+
+        override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+            val old = oldList[oldItemPosition]
+            val new = newList[newItemPosition]
+            return old.id == new.id &&
+                   old.quantity == new.quantity &&
+                   old.selectedSize == new.selectedSize &&
+                   old.selectedColor == new.selectedColor
+        }
     }
 }

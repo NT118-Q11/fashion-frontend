@@ -41,6 +41,18 @@
             android:textSize="14sp"
             android:textColor="#666" />
 
+        <!-- Size and Color info -->
+        <TextView
+            android:id="@+id/tv_variant"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Size: M | Color: Black"
+            android:fontFamily="@font/tenorsans"
+            android:textSize="12sp"
+            android:textColor="#999"
+            android:layout_marginTop="2dp"
+            android:visibility="gone" />
+
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="wrap_content"

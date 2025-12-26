@@ -11,16 +11,21 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import com.example.fashionapp.AppRoute
 import com.example.fashionapp.R
 import com.example.fashionapp.adapter.ImageSliderAdapter
+import com.example.fashionapp.adapter.RatingAdapter
+import com.example.fashionapp.adapter.RatingDisplayItem
 import com.example.fashionapp.data.CartManager
 import com.example.fashionapp.data.UserManager
 import com.example.fashionapp.databinding.ProductDetailBinding
 import com.example.fashionapp.model.Product
+import com.example.fashionapp.model.ProductInformation
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -39,6 +44,12 @@ class DetailsFragment : Fragment() {
     private var selectedColor: String? = null
     private var selectedSize: String? = null
 
+    // Tab selection state
+    private var isInfoTabSelected: Boolean = true
+
+    // Bottom Sheet
+    private lateinit var bottomSheetBehavior: BottomSheetBehavior<View>
+
     // Fixed available sizes
     private val ALL_SIZES = listOf("S", "M", "L", "XL", "XXL")
 
@@ -53,6 +64,9 @@ class DetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // Setup Bottom Sheet
+        setupBottomSheet()
 
         productId = arguments?.getString("productId")
         Log.d("DetailsFragment", "Current Product ID: $productId")
@@ -76,13 +90,20 @@ class DetailsFragment : Fragment() {
             findNavController().navigate(R.id.action_detailsFragment_to_cartFragment)
         }
 
-        // 3 nút chuyển fragment
+        // 3 nút chuyển tab (in-place)
         binding.tabInfo.setOnClickListener {
-            findNavController().navigate(R.id.action_detailsFragment_to_details1Fragment)
+            selectInfoTab()
+            // Expand bottom sheet to show content
+            bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
         }
         binding.tabRating.setOnClickListener {
-            findNavController().navigate(R.id.action_detailsFragment_to_details3Fragment)
+            selectRatingTab()
+            // Expand bottom sheet to show content
+            bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
         }
+
+        // Setup ratings RecyclerView
+        setupRatings()
 
         // NÚT ADD TO CART
         binding.btnAddToCart.setOnClickListener {
@@ -149,6 +170,64 @@ class DetailsFragment : Fragment() {
             // Setup colors and sizes
             setupColors(product)
             setupSizes(product)
+        }
+
+        // Update information tab content
+        updateProductInfo(product)
+    }
+
+    private fun setupBottomSheet() {
+        val bottomSheet = binding.bottomSheet
+        bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
+
+        // Set initial state
+        bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+        bottomSheetBehavior.peekHeight = dpToPx(280)
+        bottomSheetBehavior.isHideable = false
+
+        // Allow expanding to full screen
+        bottomSheetBehavior.isFitToContents = false
+        bottomSheetBehavior.halfExpandedRatio = 0.6f  // 60% of screen when half expanded
+        bottomSheetBehavior.expandedOffset = dpToPx(50)  // Leave 50dp from top when fully expanded
+
+        // Add callback for state changes
+        bottomSheetBehavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+                when (newState) {
+                    BottomSheetBehavior.STATE_EXPANDED -> {
+                        Log.d("DetailsFragment", "Bottom sheet expanded")
+                    }
+                    BottomSheetBehavior.STATE_COLLAPSED -> {
+                        Log.d("DetailsFragment", "Bottom sheet collapsed")
+                    }
+                    BottomSheetBehavior.STATE_HALF_EXPANDED -> {
+                        Log.d("DetailsFragment", "Bottom sheet half expanded")
+                    }
+                    BottomSheetBehavior.STATE_DRAGGING -> {
+                        Log.d("DetailsFragment", "Bottom sheet dragging")
+                    }
+                }
+            }
+
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {
+                // Optional: add visual effects during sliding
+                // slideOffset: -1 = hidden, 0 = collapsed, 1 = expanded
+            }
+        })
+
+        // Allow drag handle to expand/collapse
+        binding.dragHandle.setOnClickListener {
+            when (bottomSheetBehavior.state) {
+                BottomSheetBehavior.STATE_COLLAPSED -> {
+                    bottomSheetBehavior.state = BottomSheetBehavior.STATE_HALF_EXPANDED
+                }
+                BottomSheetBehavior.STATE_HALF_EXPANDED -> {
+                    bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+                }
+                else -> {
+                    bottomSheetBehavior.state = BottomSheetBehavior.STATE_COLLAPSED
+                }
+            }
         }
     }
 
@@ -353,6 +432,159 @@ class DetailsFragment : Fragment() {
         return (dp * resources.displayMetrics.density).toInt()
     }
 
+    private fun selectInfoTab() {
+        isInfoTabSelected = true
+
+        // Update tab appearance
+        binding.tabInfo.setTextColor(resources.getColor(R.color.black, null))
+        binding.tabRating.setTextColor(resources.getColor(R.color.noive_text_secondary, null))
+
+        // Show/hide content
+        binding.infoContent.visibility = View.VISIBLE
+        binding.ratingContent.visibility = View.GONE
+    }
+
+    private fun selectRatingTab() {
+        isInfoTabSelected = false
+
+        // Update tab appearance
+        binding.tabInfo.setTextColor(resources.getColor(R.color.noive_text_secondary, null))
+        binding.tabRating.setTextColor(resources.getColor(R.color.black, null))
+
+        // Show/hide content
+        binding.infoContent.visibility = View.GONE
+        binding.ratingContent.visibility = View.VISIBLE
+    }
+
+    private var ratingAdapter: RatingAdapter? = null
+
+    private fun setupRatings() {
+        // Initialize with empty list, will be populated from API
+        ratingAdapter = RatingAdapter(emptyList<RatingDisplayItem>())
+
+        binding.rvRatings.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = ratingAdapter
+            isNestedScrollingEnabled = false
+        }
+
+        // Show loading state
+        binding.tvReviewCount.text = "Loading reviews..."
+
+        // Load ratings from API when product is available
+        productId?.let { loadRatingsFromApi(it) }
+    }
+
+    /**
+     * Load ratings from backend API for the current product
+     */
+    private fun loadRatingsFromApi(productId: String) {
+        lifecycleScope.launch {
+            try {
+                val ratings = withContext(Dispatchers.IO) {
+                    AppRoute.rating.getRatingsByProduct(productId)
+                }
+
+                if (ratings.isNotEmpty()) {
+                    // Convert API responses to display items
+                    val displayItems = ratings.map { rating ->
+                        RatingDisplayItem.fromResponse(rating)
+                    }
+
+                    ratingAdapter?.updateRatings(displayItems)
+                    binding.tvReviewCount.text = "Based on ${ratings.size} reviews"
+
+                    // Update stars based on average rating
+                    val averageRating = ratings.map { it.rateStars }.average()
+                    updateStars(averageRating)
+
+                    Log.d("DetailsFragment", "Loaded ${ratings.size} ratings from API")
+                } else {
+                    // No ratings yet, show 0 stars and 0 reviews
+                    displayNoRatings()
+                }
+            } catch (e: Exception) {
+                Log.w("DetailsFragment", "Failed to load ratings from API", e)
+                // On error, show 0 ratings
+                displayNoRatings()
+            }
+        }
+    }
+
+    /**
+     * Display no ratings state - 0 stars and 0 reviews
+     */
+    private fun displayNoRatings() {
+        ratingAdapter?.updateRatings(emptyList())
+        binding.tvReviewCount.text = "No reviews yet"
+        updateStars(0.0)
+    }
+
+    private fun updateStars(rating: Double) {
+        val starViews = listOf(binding.star1, binding.star2, binding.star3, binding.star4, binding.star5)
+
+        starViews.forEachIndexed { index, starView ->
+            if (index < rating.toInt()) {
+                starView.setImageResource(R.drawable.yellow_star)
+            } else {
+                starView.setImageResource(R.drawable.uncolor_star)
+            }
+        }
+    }
+
+
+    private fun updateProductInfo(product: Product) {
+        // Update information tab content with product details
+        binding.tvProductType.text = product.category?.uppercase() ?: "PRODUCT"
+
+        // Load product information from API
+        loadProductInformation(product.id)
+    }
+
+    /**
+     * Load product information from backend API
+     */
+    private fun loadProductInformation(productId: String) {
+        lifecycleScope.launch {
+            try {
+                val productInfo = withContext(Dispatchers.IO) {
+                    AppRoute.productInformation.getProductInformationByProductId(productId)
+                }
+                // Update UI with product information from API
+                displayProductInformation(productInfo)
+                Log.d("DetailsFragment", "Product information loaded successfully for product: $productId")
+            } catch (e: Exception) {
+                Log.w("DetailsFragment", "Product information not found for product: $productId, using fallback", e)
+                // Fallback to basic product info if API fails
+                displayFallbackProductInfo()
+            }
+        }
+    }
+
+    /**
+     * Display product information from API response
+     */
+    private fun displayProductInformation(productInfo: ProductInformation) {
+        binding.tvProductType.text = productInfo.category.uppercase()
+        binding.tvInfoContent.text = productInfo.toDisplayText()
+    }
+
+    /**
+     * Display fallback product information when API fails
+     */
+    private fun displayFallbackProductInfo() {
+        val product = currentProduct
+        val infoText = buildString {
+            append("• Brand: ${product?.brand ?: "Premium"}\n")
+            append("• Category: ${product?.category ?: "Fashion"}\n")
+            append("• Gender: ${product?.gender ?: "Unisex"}\n")
+            append("• Fit: Regular fit\n")
+            append("• Care: Machine washable\n")
+            append("• Origin: Made in Vietnam")
+        }
+        binding.tvInfoContent.text = infoText
+    }
+
     /**
      * Get the currently selected color
      */
@@ -389,7 +621,7 @@ class DetailsFragment : Fragment() {
 
         lifecycleScope.launch {
             binding.btnAddToCart.isEnabled = false
-            val success = CartManager.addToCart(uid, pid, 1)
+            val success = CartManager.addToCart(uid, pid, 1, selectedSize, selectedColor)
             binding.btnAddToCart.isEnabled = true
             
             if (success) {

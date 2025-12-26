@@ -5,16 +5,46 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fashionapp.R
 import com.example.fashionapp.databinding.ItemForOverallRatingBinding
+import com.example.fashionapp.model.RatingResponse
 import com.example.fashionapp.uix.Details3Fragment
 
+/**
+ * Unified rating item that can be created from either API response or legacy Rating object
+ */
+data class RatingDisplayItem(
+    val username: String,
+    val stars: Int,
+    val comment: String
+) {
+    companion object {
+        fun fromResponse(response: RatingResponse, userName: String? = null): RatingDisplayItem {
+            return RatingDisplayItem(
+                username = userName ?: "User ${response.userId.takeLast(4)}",
+                stars = response.rateStars,
+                comment = response.comment ?: ""
+            )
+        }
 
-class RatingAdapter(private val ratings: List<Details3Fragment.Rating>) : RecyclerView.Adapter<RatingAdapter.RatingViewHolder>() {
+        fun fromLegacy(rating: Details3Fragment.Rating): RatingDisplayItem {
+            return RatingDisplayItem(
+                username = rating.username,
+                stars = rating.stars,
+                comment = rating.comment
+            )
+        }
+    }
+}
 
-    // ViewHolder bây giờ sẽ sử dụng đúng lớp ItemForOverallRatingBinding.
+class RatingAdapter(private var ratings: List<RatingDisplayItem>) : RecyclerView.Adapter<RatingAdapter.RatingViewHolder>() {
+
+    // Secondary constructor for backward compatibility with legacy Rating
+    constructor(legacyRatings: List<Details3Fragment.Rating>, dummy: Boolean = false) : this(
+        legacyRatings.map { RatingDisplayItem.fromLegacy(it) }
+    )
+
     inner class RatingViewHolder(val binding: ItemForOverallRatingBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RatingViewHolder {
-        // Inflate đúng layout ItemForOverallRatingBinding.
         val binding = ItemForOverallRatingBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return RatingViewHolder(binding)
     }
@@ -22,21 +52,13 @@ class RatingAdapter(private val ratings: List<Details3Fragment.Rating>) : Recycl
     override fun onBindViewHolder(holder: RatingViewHolder, position: Int) {
         val currentRating = ratings[position]
 
-        // Áp dụng logic trực tiếp trong onBindViewHolder để nhất quán và đơn giản hơn.
         holder.binding.apply {
-            // Giả sử item_for_overall_rating.xml có các id là 'tvUsername', 'tvComment', và 'star1', 'star2', v.v.
             tvUsername.text = currentRating.username
             tvComment.text = currentRating.comment
 
-            val starImageViews = listOf(
-                star1,
-                star2,
-                star3,
-                star4,
-                star5
-            )
+            val starImageViews = listOf(star1, star2, star3, star4, star5)
 
-            // Cập nhật hình ảnh các ngôi sao dựa trên điểm đánh giá.
+            // Cập nhật hình ảnh các ngôi sao dựa trên điểm đánh giá
             for (i in starImageViews.indices) {
                 if (i < currentRating.stars) {
                     starImageViews[i].setImageResource(R.drawable.yellow_star)
@@ -47,7 +69,13 @@ class RatingAdapter(private val ratings: List<Details3Fragment.Rating>) : Recycl
         }
     }
 
-    override fun getItemCount(): Int {
-        return ratings.size
+    override fun getItemCount(): Int = ratings.size
+
+    /**
+     * Update ratings with new data from API
+     */
+    fun updateRatings(newRatings: List<RatingDisplayItem>) {
+        ratings = newRatings
+        notifyDataSetChanged()
     }
 }

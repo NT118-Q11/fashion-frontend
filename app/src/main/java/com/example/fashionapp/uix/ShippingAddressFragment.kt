@@ -14,7 +14,9 @@ import com.example.fashionapp.data.UserManager
 import com.example.fashionapp.data.UpdateAddressRequest
 import com.example.fashionapp.data.UpdateNameRequest
 import com.example.fashionapp.data.UpdatePhoneRequest
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class ShippingAddressFragment : Fragment() {
     private var _binding: ShippingAddressBinding? = null
@@ -154,23 +156,26 @@ class ShippingAddressFragment : Fragment() {
 
         lifecycleScope.launch {
             try {
-                // Update name via API
-                AppRoute.user.updateUserName(
-                    userId,
-                    UpdateNameRequest(firstName, lastName)
-                )
+                // Update name, phone, address via API on IO thread
+                withContext(Dispatchers.IO) {
+                    // Update name via API
+                    AppRoute.user.updateUserName(
+                        userId,
+                        UpdateNameRequest(firstName, lastName)
+                    )
 
-                // Update phone via API
-                AppRoute.user.updateUserPhone(
-                    userId,
-                    UpdatePhoneRequest(newPhone)
-                )
+                    // Update phone via API
+                    AppRoute.user.updateUserPhone(
+                        userId,
+                        UpdatePhoneRequest(newPhone)
+                    )
 
-                // Update address via API
-                AppRoute.user.updateUserAddress(
-                    userId,
-                    UpdateAddressRequest(newAddress)
-                )
+                    // Update address via API
+                    AppRoute.user.updateUserAddress(
+                        userId,
+                        UpdateAddressRequest(newAddress)
+                    )
+                }
 
                 // Update local storage
                 userManager.updateProfile(

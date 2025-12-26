@@ -24,7 +24,9 @@ import com.example.fashionapp.databinding.DialogEditAddressBinding
 import com.example.fashionapp.model.OrderItemRequest
 import com.example.fashionapp.model.OrderRequest
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class ConfirmFragment : Fragment() {
 
@@ -163,8 +165,10 @@ class ConfirmFragment : Fragment() {
                     status = "SUCCESSFUL"
                 )
 
-                // Send order to backend
-                val orderResponse = AppRoute.order.createOrder(orderRequest)
+                // Send order to backend on IO thread
+                val orderResponse = withContext(Dispatchers.IO) {
+                    AppRoute.order.createOrder(orderRequest)
+                }
                 val orderId = orderResponse.id
 
                 if (orderId == null) {
@@ -186,7 +190,9 @@ class ConfirmFragment : Fragment() {
                             quantity = itemData.quantity,
                             priceAtPurchase = itemData.price
                         )
-                        AppRoute.orderItem.createOrderItem(orderItemRequest)
+                        withContext(Dispatchers.IO) {
+                            AppRoute.orderItem.createOrderItem(orderItemRequest)
+                        }
                         Log.d("ConfirmFragment", "Created order item for product: ${itemData.productName}")
                     } catch (e: Exception) {
                         Log.e("ConfirmFragment", "Failed to create order item for product: ${itemData.productId}", e)
@@ -378,23 +384,26 @@ class ConfirmFragment : Fragment() {
 
         lifecycleScope.launch {
             try {
-                // Update name via API
-                AppRoute.user.updateUserName(
-                    userId,
-                    UpdateNameRequest(firstName, lastName)
-                )
+                // Update name, phone, address via API on IO thread
+                withContext(Dispatchers.IO) {
+                    // Update name via API
+                    AppRoute.user.updateUserName(
+                        userId,
+                        UpdateNameRequest(firstName, lastName)
+                    )
 
-                // Update phone via API
-                AppRoute.user.updateUserPhone(
-                    userId,
-                    UpdatePhoneRequest(newPhone)
-                )
+                    // Update phone via API
+                    AppRoute.user.updateUserPhone(
+                        userId,
+                        UpdatePhoneRequest(newPhone)
+                    )
 
-                // Update address via API
-                AppRoute.user.updateUserAddress(
-                    userId,
-                    UpdateAddressRequest(combinedAddress)
-                )
+                    // Update address via API
+                    AppRoute.user.updateUserAddress(
+                        userId,
+                        UpdateAddressRequest(combinedAddress)
+                    )
+                }
 
                 // Update local storage
                 userManager.updateProfile(

@@ -15,7 +15,9 @@ import com.example.fashionapp.R
 import com.example.fashionapp.databinding.FragmentOrderHistoryBinding
 import com.example.fashionapp.adapter.OrderHistoryAdapter
 import com.example.fashionapp.data.UserManager
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class OrderHistoryFragment : Fragment() {
 
@@ -91,8 +93,10 @@ class OrderHistoryFragment : Fragment() {
             try {
                 binding.rvOrders.visibility = View.GONE
 
-                // Get all orders by user (showing all successful/completed orders)
-                val allOrders = AppRoute.order.getOrdersByUserId(userId)
+                // Get all orders by user on IO thread
+                val allOrders = withContext(Dispatchers.IO) {
+                    AppRoute.order.getOrdersByUserId(userId)
+                }
 
                 // Filter only SUCCESSFUL orders
                 val successOrders = allOrders.filter {

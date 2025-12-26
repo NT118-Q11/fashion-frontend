@@ -15,7 +15,9 @@ import com.example.fashionapp.data.CartManager
 import com.example.fashionapp.data.UserManager
 import com.example.fashionapp.databinding.ActivityPaymentSuccessBinding
 import com.example.fashionapp.model.RatingRequest
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
 class PaymentSuccessFragment : Fragment() {
@@ -123,7 +125,9 @@ class PaymentSuccessFragment : Fragment() {
                     comment = comment.ifEmpty { null }
                 )
 
-                AppRoute.rating.createRating(ratingRequest)
+                withContext(Dispatchers.IO) {
+                    AppRoute.rating.createRating(ratingRequest)
+                }
 
                 Toast.makeText(
                     requireContext(),

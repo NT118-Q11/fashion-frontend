@@ -12,7 +12,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.fashionapp.AppRoute
 import com.example.fashionapp.databinding.FragmentOrderDetailBinding
 import com.example.fashionapp.adapter.OrderItemAdapter
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class OrderDetailFragment : Fragment() {
 
@@ -78,16 +80,20 @@ class OrderDetailFragment : Fragment() {
             try {
                 binding.progressBar.visibility = View.VISIBLE
 
-                // Load order details
-                val order = AppRoute.order.getOrderById(orderId)
+                // Load order details on IO thread
+                val order = withContext(Dispatchers.IO) {
+                    AppRoute.order.getOrderById(orderId)
+                }
 
                 // Try to use items from order response first
                 // If empty, call OrderItemApi separately
                 val orderItems = if (order.items.isNotEmpty()) {
                     order.items
                 } else {
-                    // Fallback: Load order items using OrderItemApi
-                    AppRoute.orderItem.getOrderItemsByOrderId(orderId)
+                    // Fallback: Load order items using OrderItemApi on IO thread
+                    withContext(Dispatchers.IO) {
+                        AppRoute.orderItem.getOrderItemsByOrderId(orderId)
+                    }
                 }
 
                 // Update UI

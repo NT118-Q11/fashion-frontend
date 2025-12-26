@@ -16,7 +16,9 @@ import com.example.fashionapp.GoogleOAuth2UserInfo
 import com.example.fashionapp.GoogleSignInManager
 import com.example.fashionapp.databinding.ActivityRegisterBinding
 import com.example.fashionapp.data.UserManager
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
 class RegisterFragment : Fragment() {
@@ -151,7 +153,9 @@ class RegisterFragment : Fragment() {
                 Log.d("RegisterFragment", "Making registration request to backend...")
                 Log.d("RegisterFragment", "Request data - Username: $username, Email: $email, Phone: $phoneNumber, Name: $firstName $lastName")
 
-                val response = AppRoute.auth.register(request)
+                val response = withContext(Dispatchers.IO) {
+                    AppRoute.auth.register(request)
+                }
 
                 Log.d("RegisterFragment", "Backend response received")
                 Log.d("RegisterFragment", "Response message: ${response.message}")
@@ -226,8 +230,10 @@ class RegisterFragment : Fragment() {
                 Log.d("RegisterFragment", "Request email: ${googleUserInfo.email}")
                 Log.d("RegisterFragment", "Request name: ${googleUserInfo.name}")
 
-                // Call backend register-gmail endpoint
-                val response = AppRoute.auth.registerWithGoogle(googleUserInfo)
+                // Call backend register-gmail endpoint on IO thread
+                val response = withContext(Dispatchers.IO) {
+                    AppRoute.auth.registerWithGoogle(googleUserInfo)
+                }
 
                 Log.d("RegisterFragment", "Google registration response received")
                 Log.d("RegisterFragment", "Response message: ${response.message}")

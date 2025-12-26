@@ -28,9 +28,15 @@ object CartManager {
     /**
      * Add product to cart
      */
-    suspend fun addToCart(userId: String, productId: String, quantity: Int): Boolean = withContext(Dispatchers.IO) {
+    suspend fun addToCart(
+        userId: String,
+        productId: String,
+        quantity: Int,
+        selectedSize: String? = null,
+        selectedColor: String? = null
+    ): Boolean = withContext(Dispatchers.IO) {
         return@withContext try {
-            val request = AddToCartRequest(userId, productId, quantity)
+            val request = AddToCartRequest(userId, productId, quantity, selectedSize, selectedColor)
             val response = AppRoute.cart.addToCart(request)
             Log.d(TAG, "Add to cart response: ${response.message}")
             true

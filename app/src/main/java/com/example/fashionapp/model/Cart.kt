@@ -8,7 +8,9 @@ import com.google.gson.annotations.SerializedName
 data class AddToCartRequest(
     val userId: String,
     val productId: String,
-    val quantity: Int
+    val quantity: Int,
+    val selectedSize: String? = null,
+    val selectedColor: String? = null
 )
 
 /**
@@ -26,6 +28,8 @@ data class CartItemResponse(
     val id: String,
     val productId: String,
     val quantity: Int,
+    val selectedSize: String? = null,
+    val selectedColor: String? = null,
     val product: Product?
 )
 

@@ -1,6 +1,7 @@
 package com.example.fashionapp
 
 import com.example.fashionapp.data.ProductApi
+import com.example.fashionapp.data.ProductInformationApi
 import com.example.fashionapp.data.UserApi
 import com.example.fashionapp.data.CartApi
 import com.example.fashionapp.data.OrderApi
@@ -199,6 +200,7 @@ object AppRoute {
 
     val auth: AuthApi by lazy { retrofit.create(AuthApi::class.java) }
     val product: ProductApi by lazy { retrofit.create(ProductApi::class.java) }
+    val productInformation: ProductInformationApi by lazy { retrofit.create(ProductInformationApi::class.java) }
     val user: UserApi by lazy { retrofit.create(UserApi::class.java) }
     val cart: CartApi by lazy { retrofit.create(CartApi::class.java) }
     val order: OrderApi by lazy { retrofit.create(OrderApi::class.java) }

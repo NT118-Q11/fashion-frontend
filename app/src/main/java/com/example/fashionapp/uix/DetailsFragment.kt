@@ -22,7 +22,9 @@ import com.example.fashionapp.data.UserManager
 import com.example.fashionapp.databinding.ProductDetailBinding
 import com.example.fashionapp.model.Product
 import com.google.android.material.tabs.TabLayoutMediator
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import kotlin.math.abs
 
 class DetailsFragment : Fragment() {
@@ -91,7 +93,9 @@ class DetailsFragment : Fragment() {
     private fun loadProductDetails(id: String) {
         lifecycleScope.launch {
             try {
-                val product = AppRoute.product.getProductById(id)
+                val product = withContext(Dispatchers.IO) {
+                    AppRoute.product.getProductById(id)
+                }
                 currentProduct = product
                 updateUI(product)
             } catch (e: Exception) {

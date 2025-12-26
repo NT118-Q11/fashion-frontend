@@ -15,7 +15,9 @@ import com.example.fashionapp.data.UserManager
 import com.example.fashionapp.data.UpdateNameRequest
 import com.example.fashionapp.data.UpdateEmailRequest
 import com.example.fashionapp.data.UpdatePhoneRequest
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class ProfileFragment : Fragment() {
 
@@ -122,23 +124,26 @@ class ProfileFragment : Fragment() {
 
         lifecycleScope.launch {
             try {
-                // Update name
-                AppRoute.user.updateUserName(
-                    userId,
-                    UpdateNameRequest(firstName, lastName)
-                )
+                // Update name, email, phone via API on IO thread
+                withContext(Dispatchers.IO) {
+                    // Update name
+                    AppRoute.user.updateUserName(
+                        userId,
+                        UpdateNameRequest(firstName, lastName)
+                    )
 
-                // Update email
-                AppRoute.user.updateUserEmail(
-                    userId,
-                    UpdateEmailRequest(email)
-                )
+                    // Update email
+                    AppRoute.user.updateUserEmail(
+                        userId,
+                        UpdateEmailRequest(email)
+                    )
 
-                // Update phone
-                AppRoute.user.updateUserPhone(
-                    userId,
-                    UpdatePhoneRequest(phoneNumber)
-                )
+                    // Update phone
+                    AppRoute.user.updateUserPhone(
+                        userId,
+                        UpdatePhoneRequest(phoneNumber)
+                    )
+                }
 
                 // Update local storage with new values
                 userManager.updateProfile(

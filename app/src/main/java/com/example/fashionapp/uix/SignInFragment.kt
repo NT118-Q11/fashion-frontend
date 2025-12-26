@@ -3,11 +3,13 @@ package com.example.fashionapp.uix
 import androidx.fragment.app.Fragment
 import android.os.Bundle
 import android.util.Log
+import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.os.bundleOf
 import androidx.lifecycle.lifecycleScope
 import com.example.fashionapp.R
 import androidx.navigation.fragment.findNavController
@@ -16,7 +18,9 @@ import com.example.fashionapp.GoogleOAuth2UserInfo
 import com.example.fashionapp.GoogleSignInManager
 import com.example.fashionapp.databinding.ActivitySignInBinding
 import com.example.fashionapp.data.UserManager
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class SignInFragment : Fragment() {
     private var _binding: ActivitySignInBinding? = null
@@ -81,14 +85,59 @@ class SignInFragment : Fragment() {
             findNavController().navigate(R.id.action_signInFragment_to_registerFragment)
         }
 
+        // Forgot password - validate email/Gmail first
         binding.forgetPassword.setOnClickListener {
-            findNavController().navigate(R.id.action_signInFragment_to_forgotPasswordFragment)
+            handleForgotPassword()
         }
 
         // Google Sign-In button
         binding.buttonSignInGoogle.setOnClickListener {
             signInWithGoogle()
         }
+    }
+
+    private fun handleForgotPassword() {
+        val email = binding.etEmail.text.toString().trim()
+
+        // Validate email field is not empty
+        if (email.isEmpty()) {
+            Toast.makeText(
+                requireContext(),
+                "Please enter your email address first",
+                Toast.LENGTH_LONG
+            ).show()
+            binding.etEmail.requestFocus()
+            return
+        }
+
+        // Validate email format
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            Toast.makeText(
+                requireContext(),
+                "Please enter a valid email address",
+                Toast.LENGTH_LONG
+            ).show()
+            binding.etEmail.requestFocus()
+            return
+        }
+
+        // Validate Gmail specifically
+        if (!email.lowercase().endsWith("@gmail.com")) {
+            Toast.makeText(
+                requireContext(),
+                "Please use a Gmail address for password recovery",
+                Toast.LENGTH_LONG
+            ).show()
+            binding.etEmail.requestFocus()
+            return
+        }
+
+        // Email is valid Gmail, navigate to forgot password with email
+        val bundle = bundleOf("email" to email)
+        findNavController().navigate(
+            R.id.action_signInFragment_to_forgotPasswordFragment,
+            bundle
+        )
     }
 
     private fun validateInput(email: String, password: String): Boolean {
@@ -114,7 +163,9 @@ class SignInFragment : Fragment() {
                     username = email,  // Use email as username
                     password = password
                 )
-                val response = AppRoute.auth.login(request)
+                val response = withContext(Dispatchers.IO) {
+                    AppRoute.auth.login(request)
+                }
 
                 if (response.user != null) {
                     // Save user data to SharedPreferences
@@ -175,8 +226,10 @@ class SignInFragment : Fragment() {
 
                 Log.d("SignInFragment", "GoogleOAuth2UserInfo created successfully")
 
-                // Call backend login-gmail endpoint
-                val response = AppRoute.auth.loginWithGoogle(googleUserInfo)
+                // Call backend login-gmail endpoint on IO thread
+                val response = withContext(Dispatchers.IO) {
+                    AppRoute.auth.loginWithGoogle(googleUserInfo)
+                }
 
                 if (response.user != null) {
                     // Save user data to SharedPreferences

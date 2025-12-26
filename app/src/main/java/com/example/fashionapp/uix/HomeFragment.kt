@@ -20,7 +20,9 @@ import com.example.fashionapp.adapter.ReelPagerAdapter
 import com.example.fashionapp.databinding.ActivityHomeBinding
 import com.example.fashionapp.model.Product
 import com.example.fashionapp.model.ReelItem
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.Locale
 
 class HomeFragment : Fragment() {
@@ -117,7 +119,9 @@ class HomeFragment : Fragment() {
     private fun loadProductsFromApi() {
         lifecycleScope.launch {
             try {
-                val products = AppRoute.product.getAllProducts()
+                val products = withContext(Dispatchers.IO) {
+                    AppRoute.product.getAllProducts()
+                }
 
                 allItems.clear()
                 products.forEach { product ->

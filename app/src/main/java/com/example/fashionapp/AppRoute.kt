@@ -65,6 +65,38 @@ data class ApiResponse<T>(
     val user: T?
 )
 
+// Request/Response DTOs for Password Reset
+data class ForgotPasswordRequest(
+    val email: String
+)
+
+data class ForgotPasswordResponse(
+    val message: String,
+    val email: String? = null
+)
+
+data class VerifyOtpRequest(
+    val email: String,
+    val otp: String
+)
+
+data class VerifyOtpResponse(
+    val message: String? = null,
+    val valid: Boolean,
+    val error: String? = null
+)
+
+data class ResetPasswordRequest(
+    val email: String,
+    val otp: String,
+    val newPassword: String
+)
+
+data class ResetPasswordResponse(
+    val message: String? = null,
+    val error: String? = null
+)
+
 // Retrofit API definitions
 interface AuthApi {
     @POST("/api/auth/register")
@@ -78,6 +110,16 @@ interface AuthApi {
 
     @POST("/api/auth/login-gmail")
     suspend fun loginWithGoogle(@Body info: GoogleOAuth2UserInfo): ApiResponse<UserDto>
+
+    // Password Reset endpoints
+    @POST("/api/auth/password/forgot")
+    suspend fun forgotPassword(@Body request: ForgotPasswordRequest): ForgotPasswordResponse
+
+    @POST("/api/auth/password/verify-otp")
+    suspend fun verifyOtp(@Body request: VerifyOtpRequest): VerifyOtpResponse
+
+    @POST("/api/auth/password/reset")
+    suspend fun resetPassword(@Body request: ResetPasswordRequest): ResetPasswordResponse
 }
 
 // AppRoute object to provide an instance of AuthApi and helper functions

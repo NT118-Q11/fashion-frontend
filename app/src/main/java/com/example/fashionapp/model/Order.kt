@@ -1,5 +1,6 @@
 package com.example.fashionapp.model
 
+import com.google.gson.annotations.SerializedName
 
 /**
  * Request to create a new order
@@ -49,12 +50,20 @@ data class OrderResponse(
     val id: String?,
     val userId: String,
     val items: List<OrderItemResponse> = emptyList(),
-    val totalAmount: Double,
+    @SerializedName("totalAmount")
+    val totalAmount: Double? = null,
+    @SerializedName("totalPrice")
+    val totalPrice: Double? = null,
     val shippingAddress: String,
     val paymentMethod: String,
     val status: String,
     val createdAt: String?,
     val updatedAt: String?
-)
+) {
+    /**
+     * Get total - handle both field names from backend
+     */
+    fun getTotal(): Double = totalAmount ?: totalPrice ?: 0.0
+}
 
 

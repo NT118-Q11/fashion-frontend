@@ -45,8 +45,8 @@ class CartAdapter(
 
             // Display size and color if available
             val variantParts = mutableListOf<String>()
-            item.selectedSize?.let { variantParts.add("Size: $it") }
-            item.selectedColor?.let { variantParts.add("Color: $it") }
+            item.getDisplaySize()?.let { variantParts.add("Size: $it") }
+            item.getDisplayColor()?.let { variantParts.add("Color: $it") }
 
             if (variantParts.isNotEmpty()) {
                 tvVariant.text = variantParts.joinToString(" | ")
@@ -140,8 +140,8 @@ class CartAdapter(
             val new = newList[newItemPosition]
             return old.id == new.id &&
                    old.quantity == new.quantity &&
-                   old.selectedSize == new.selectedSize &&
-                   old.selectedColor == new.selectedColor
+                   old.getDisplaySize() == new.getDisplaySize() &&
+                   old.getDisplayColor() == new.getDisplayColor()
         }
     }
 }

@@ -102,7 +102,7 @@ class OrderDetailFragment : Fragment() {
                 binding.tvOrderDate.text = formatDate(order.createdAt)
                 binding.tvShippingAddress.text = order.shippingAddress
                 binding.tvPaymentMethod.text = order.paymentMethod
-                binding.tvTotalAmount.text = "$${String.format("%.2f", order.totalAmount)}"
+                binding.tvTotalAmount.text = "$${String.format("%.2f", order.getTotal())}"
 
                 adapter.updateItems(orderItems)
 

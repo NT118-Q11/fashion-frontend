@@ -39,7 +39,9 @@
             android:text="Recycle Boucle Knit Cardigan Pink"
             android:fontFamily="@font/tenorsans"
             android:textSize="14sp"
-            android:textColor="#666" />
+            android:textColor="#666"
+            android:maxLines="1"
+            android:ellipsize="end" />
 
         <!-- Size and Color info -->
         <TextView

@@ -2,6 +2,7 @@ package com.example.fashionapp.adapter
 
 import android.graphics.BitmapFactory
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fashionapp.databinding.ItemConfirmProductBinding
@@ -37,6 +38,18 @@ class ConfirmAdapter(private val items: List<CartItemResponse>) :
             tvQuantity.text = item.quantity.toString()
             tvPrice.text = "$${String.format("%.2f", product?.price ?: 0.0)}"
             
+            // Display size and color if available
+            val variantParts = mutableListOf<String>()
+            item.getDisplaySize()?.let { variantParts.add("Size: $it") }
+            item.getDisplayColor()?.let { variantParts.add("Color: $it") }
+
+            if (variantParts.isNotEmpty()) {
+                tvVariant.text = variantParts.joinToString(" | ")
+                tvVariant.visibility = View.VISIBLE
+            } else {
+                tvVariant.visibility = View.GONE
+            }
+
             // Set placeholder initially
             imgProduct.setImageResource(R.drawable.sample_woman)
 

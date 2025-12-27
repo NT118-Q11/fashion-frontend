@@ -107,6 +107,10 @@ class CartFragment : Fragment() {
             val cart = CartManager.getCart(userId)
             
             if (cart != null) {
+                // Debug: Log cart items to see what backend returns
+                cart.items.forEach { item ->
+                    android.util.Log.d("CartFragment", "CartItem: id=${item.id}, size=${item.selectedSize ?: item.size}, color=${item.selectedColor ?: item.color}")
+                }
                 updateUI(cart)
             } else {
                 Toast.makeText(context, "Failed to load cart", Toast.LENGTH_SHORT).show()

@@ -43,7 +43,7 @@ class OrderHistoryAdapter(
         holder.tvOrderId.text = "#${order.id?.take(8) ?: "N/A"}"
         holder.tvOrderDate.text = formatDate(order.createdAt)
         holder.tvOrderStatus.text = order.status
-        holder.tvOrderTotal.text = "$${String.format("%.2f", order.totalAmount)}"
+        holder.tvOrderTotal.text = "$${String.format("%.2f", order.getTotal())}"
 
         // Set status color based on status
         val context = holder.itemView.context

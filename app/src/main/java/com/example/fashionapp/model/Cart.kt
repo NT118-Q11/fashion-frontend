@@ -28,10 +28,26 @@ data class CartItemResponse(
     val id: String,
     val productId: String,
     val quantity: Int,
+    @SerializedName("selectedSize")
     val selectedSize: String? = null,
+    @SerializedName("selectedColor")
     val selectedColor: String? = null,
+    @SerializedName("size")
+    val size: String? = null,
+    @SerializedName("color")
+    val color: String? = null,
     val product: Product?
-)
+) {
+    /**
+     * Get selected size - only return the size user selected, not all available sizes
+     */
+    fun getDisplaySize(): String? = selectedSize ?: size
+
+    /**
+     * Get selected color - only return the color user selected, not all available colors
+     */
+    fun getDisplayColor(): String? = selectedColor ?: color
+}
 
 /**
  * Represents the user's cart

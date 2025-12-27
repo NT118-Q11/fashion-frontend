@@ -1,14 +1,17 @@
 package com.example.fashionapp.adapter
 
 import android.graphics.BitmapFactory
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.fashionapp.AppRoute
 import com.example.fashionapp.R
 import com.example.fashionapp.model.OrderItemResponse
+import com.example.fashionapp.model.Product
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -17,6 +20,9 @@ import kotlinx.coroutines.withContext
 class OrderItemAdapter(
     private var items: List<OrderItemResponse>
 ) : RecyclerView.Adapter<OrderItemAdapter.OrderItemViewHolder>() {
+
+    // Cache for loaded products
+    private val productCache = mutableMapOf<String, Product>()
 
     inner class OrderItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val ivProductImage: ImageView = itemView.findViewById(R.id.ivProductImage)
@@ -61,8 +67,33 @@ class OrderItemAdapter(
         // Set placeholder initially
         holder.ivProductImage.setImageResource(R.drawable.sample_woman)
 
-        // Load product image from assets asynchronously
-        val imagePath = item.product?.getThumbnailAssetPath()
+        // Try to load image from product or fetch from API
+        val productId = item.productId
+
+        // Check if we have the product in cache or in item
+        val cachedProduct = productCache[productId] ?: item.product
+
+        if (cachedProduct != null) {
+            loadProductImage(holder, cachedProduct)
+        } else {
+            // Fetch product from API
+            CoroutineScope(Dispatchers.Main).launch {
+                try {
+                    val product = withContext(Dispatchers.IO) {
+                        AppRoute.product.getProductById(productId)
+                    }
+                    productCache[productId] = product
+                    loadProductImage(holder, product)
+                } catch (e: Exception) {
+                    Log.e("OrderItemAdapter", "Failed to load product: $productId", e)
+                    holder.ivProductImage.setImageResource(R.drawable.sample_woman)
+                }
+            }
+        }
+    }
+
+    private fun loadProductImage(holder: OrderItemViewHolder, product: Product) {
+        val imagePath = product.getThumbnailAssetPath()
         if (imagePath != null) {
             val context = holder.itemView.context
             CoroutineScope(Dispatchers.Main).launch {
@@ -77,6 +108,8 @@ class OrderItemAdapter(
                     holder.ivProductImage.setImageResource(R.drawable.sample_woman)
                 }
             }
+        } else {
+            holder.ivProductImage.setImageResource(R.drawable.sample_woman)
         }
     }
 

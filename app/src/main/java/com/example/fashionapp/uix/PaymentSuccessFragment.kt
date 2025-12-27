@@ -9,12 +9,17 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.fashionapp.AppRoute
 import com.example.fashionapp.R
+import com.example.fashionapp.adapter.ProductRatingAdapter
+import com.example.fashionapp.adapter.ProductRatingItem
 import com.example.fashionapp.data.CartManager
 import com.example.fashionapp.data.UserManager
 import com.example.fashionapp.databinding.ActivityPaymentSuccessBinding
 import com.example.fashionapp.model.RatingRequest
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -27,8 +32,9 @@ class PaymentSuccessFragment : Fragment() {
     private var orderId: String? = null
     private lateinit var userManager: UserManager
 
-    // Store product IDs from the order to rate
-    private var productIds: List<String> = emptyList()
+    // Adapter for product ratings
+    private var productRatingAdapter: ProductRatingAdapter? = null
+    private var productRatingItems: MutableList<ProductRatingItem> = mutableListOf()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,9 +45,20 @@ class PaymentSuccessFragment : Fragment() {
         // Initialize UserManager
         userManager = UserManager.getInstance(requireContext())
 
-        // Get orderId and productIds from arguments
+        // Get orderId and product rating items from arguments
         orderId = arguments?.getString("orderId")
-        productIds = arguments?.getStringArray("productIds")?.toList() ?: emptyList()
+
+        // Parse product rating items from JSON
+        val productRatingItemsJson = arguments?.getString("productRatingItemsJson")
+        if (!productRatingItemsJson.isNullOrEmpty()) {
+            try {
+                val type = object : TypeToken<List<ProductRatingItem>>() {}.type
+                val items: List<ProductRatingItem> = Gson().fromJson(productRatingItemsJson, type)
+                productRatingItems = items.toMutableList()
+            } catch (e: Exception) {
+                Log.e("PaymentSuccessFragment", "Error parsing product rating items", e)
+            }
+        }
 
         return binding.root
     }
@@ -54,39 +71,49 @@ class PaymentSuccessFragment : Fragment() {
             binding.tvPaymentId.text = "Order ID: $it"
         }
 
-        Log.d("PaymentSuccessFragment", "Received ${productIds.size} products to rate")
+        Log.d("PaymentSuccessFragment", "Received ${productRatingItems.size} products to rate")
 
-        // Set default rating to prevent crashes
-        binding.ratingBar.rating = 0f
-
-        // Fix EditText to prevent crashes
-        binding.etComment.setText("")
-        binding.etComment.hint = "Write your comment..."
+        // Setup RecyclerView for product ratings
+        setupProductRatingsRecyclerView()
 
         // Submit rating button
         binding.btnSubmit.setOnClickListener {
-            submitRating()
+            submitRatings()
         }
 
-        // Back to home button
+        // Skip/Back to home button
         binding.btnBackHome.setOnClickListener {
             navigateToHome()
         }
     }
 
-
-    private fun submitRating() {
-        val rating = binding.ratingBar.rating
-        val comment = binding.etComment.text?.toString()?.trim() ?: ""
-
-        // Validate rating
-        if (rating == 0f) {
-            Toast.makeText(requireContext(), "Please select a rating", Toast.LENGTH_SHORT).show()
+    private fun setupProductRatingsRecyclerView() {
+        if (productRatingItems.isEmpty()) {
+            binding.rvProductRatings.visibility = View.GONE
+            binding.layoutEmpty.visibility = View.VISIBLE
+            binding.tvRateTitle.visibility = View.GONE
             return
         }
 
-        if (productIds.isEmpty()) {
-            Toast.makeText(requireContext(), "No products found to rate", Toast.LENGTH_SHORT).show()
+        binding.rvProductRatings.visibility = View.VISIBLE
+        binding.layoutEmpty.visibility = View.GONE
+
+        productRatingAdapter = ProductRatingAdapter(productRatingItems)
+        binding.rvProductRatings.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = productRatingAdapter
+        }
+    }
+
+    private fun submitRatings() {
+        val ratedProducts = productRatingAdapter?.getRatedProducts() ?: emptyList()
+
+        if (ratedProducts.isEmpty()) {
+            Toast.makeText(
+                requireContext(),
+                "Please rate at least one product",
+                Toast.LENGTH_SHORT
+            ).show()
             return
         }
 
@@ -102,54 +129,42 @@ class PaymentSuccessFragment : Fragment() {
         binding.btnSubmit.text = "Submitting..."
 
         lifecycleScope.launch {
-            try {
-                // Submit rating for the first product (or all products if you want)
-                // For simplicity, we'll rate the first product in the order
-                val productId = productIds.firstOrNull()
+            var successCount = 0
+            var failCount = 0
 
-                if (productId.isNullOrEmpty()) {
-                    Toast.makeText(
-                        requireContext(),
-                        "No product found to rate",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    binding.btnSubmit.isEnabled = true
-                    binding.btnSubmit.text = "SUBMIT"
-                    return@launch
+            for (item in ratedProducts) {
+                try {
+                    val ratingRequest = RatingRequest(
+                        productId = item.productId,
+                        userId = userId,
+                        rateStars = item.rating,
+                        comment = item.comment.ifEmpty { null }
+                    )
+
+                    withContext(Dispatchers.IO) {
+                        AppRoute.rating.createRating(ratingRequest)
+                    }
+
+                    successCount++
+                    Log.d("PaymentSuccessFragment", "Rating submitted for product: ${item.productName}")
+
+                } catch (e: Exception) {
+                    failCount++
+                    Log.e("PaymentSuccessFragment", "Error submitting rating for ${item.productName}", e)
                 }
-
-                val ratingRequest = RatingRequest(
-                    productId = productId,
-                    userId = userId,
-                    rateStars = rating.toInt(),
-                    comment = comment.ifEmpty { null }
-                )
-
-                withContext(Dispatchers.IO) {
-                    AppRoute.rating.createRating(ratingRequest)
-                }
-
-                Toast.makeText(
-                    requireContext(),
-                    "Thank you for your feedback!",
-                    Toast.LENGTH_SHORT
-                ).show()
-
-                // Navigate to home after successful submission
-                navigateToHome()
-
-            } catch (e: Exception) {
-                Log.e("PaymentSuccessFragment", "Error submitting rating", e)
-                Toast.makeText(
-                    requireContext(),
-                    "Failed to submit rating. Please try again later.",
-                    Toast.LENGTH_LONG
-                ).show()
-
-                // Enable button again
-                binding.btnSubmit.isEnabled = true
-                binding.btnSubmit.text = "SUBMIT"
             }
+
+            // Show result message
+            val message = when {
+                failCount == 0 -> "Thank you! All ${successCount} ratings submitted successfully!"
+                successCount == 0 -> "Failed to submit ratings. Please try again later."
+                else -> "Submitted $successCount rating(s). $failCount failed."
+            }
+
+            Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show()
+
+            // Navigate to home
+            navigateToHome()
         }
     }
 

@@ -7,13 +7,13 @@
     android:background="#F4f1ec"
     android:fitsSystemWindows="true">
 
+    <!-- Success Header Card -->
     <androidx.cardview.widget.CardView
         android:id="@+id/cardSuccess"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="30dp"
-        android:layout_marginTop="100dp"
-        android:layout_marginBottom="40dp"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="40dp"
         app:cardElevation="4dp"
         app:cardCornerRadius="12dp"
         android:backgroundTint="#FFFFFF"
@@ -26,26 +26,25 @@
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:orientation="vertical"
-            android:padding="24dp">
+            android:padding="20dp">
 
             <!-- Title -->
             <TextView
                 android:id="@+id/tvTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
                 android:fontFamily="@font/tenorsans"
                 android:letterSpacing="0.12"
                 android:text="PAYMENT SUCCESS"
                 android:textColor="#2D2D2D"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
 
             <!-- Check icon -->
             <ImageView
                 android:id="@+id/imgCheck"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:layout_marginTop="14dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
                 android:contentDescription="success"
                 android:src="@drawable/ic_success" />
 
@@ -54,83 +53,90 @@
                 android:id="@+id/tvSuccessMsg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="8dp"
                 android:fontFamily="@font/tenorsans"
-                android:text="Your payment was success"
+                android:text="Your payment was successful"
                 android:textColor="#3A3A3A"
-                android:textSize="17sp" />
+                android:textSize="15sp" />
 
             <!-- Payment ID -->
             <TextView
                 android:id="@+id/tvPaymentId"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
+                android:layout_marginTop="4dp"
                 android:fontFamily="@font/tenorsans"
-                android:text="Payment ID   15263541"
+                android:text="Order ID: 15263541"
                 android:textColor="#6F6F6F"
-                android:textSize="14sp" />
-
-            <View
-                android:layout_width="80dp"
-                android:layout_height="1dp"
-                android:layout_marginTop="6dp"
-                android:background="#D9D4CB" />
-
-            <!-- Rate your purchase -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:fontFamily="@font/tenorsans"
-                android:text="Rate your purchase"
-                android:textColor="#3A3A3A"
-                android:textSize="17sp" />
-
-            <!-- Rating icons -->
-            <RatingBar
-                android:id="@+id/ratingBar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:numStars="5"
-                android:stepSize="1"
-                android:rating="0"
-                android:progressTint="#FFD700"
-                android:secondaryProgressTint="#FFD700" />
-
-            <!-- Comment Input -->
-            <EditText
-                android:id="@+id/etComment"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:background="@drawable/box_border"
-                android:hint="Write your comment..."
-                android:padding="12dp"
-                android:gravity="top|start"
-                android:minLines="3"
-                android:maxLines="5"
-                android:maxLength="500"
-                android:scrollbars="vertical"
-                android:inputType="textMultiLine|textCapSentences"
-                android:imeOptions="actionDone"
-                android:textColor="#3A3A3A"
-                android:fontFamily="@font/tenorsans"
-                android:textSize="14sp"
-                android:importantForAutofill="no" />
+                android:textSize="13sp" />
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
+    <!-- Rate Products Title -->
+    <TextView
+        android:id="@+id/tvRateTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="24dp"
+        android:fontFamily="@font/tenorsans"
+        android:text="Rate your purchased products"
+        android:textColor="#3A3A3A"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/cardSuccess"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <!-- Products Rating List -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvProductRatings"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:clipToPadding="false"
+        android:paddingBottom="8dp"
+        app:layout_constraintTop_toBottomOf="@id/tvRateTitle"
+        app:layout_constraintBottom_toTopOf="@id/layoutButtons"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:listitem="@layout/item_product_rating" />
+
+    <!-- Empty State (when no products to rate) -->
+    <LinearLayout
+        android:id="@+id/layoutEmpty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/tvRateTitle"
+        app:layout_constraintBottom_toTopOf="@id/layoutButtons"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="No products to rate"
+            android:textColor="#6F6F6F"
+            android:textSize="14sp"
+            android:fontFamily="@font/tenorsans" />
+
+    </LinearLayout>
+
     <!-- BUTTONS -->
     <LinearLayout
+        android:id="@+id/layoutButtons"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center"
         android:layout_marginHorizontal="24dp"
-        android:layout_marginBottom="100dp"
+        android:layout_marginBottom="24dp"
+        android:paddingTop="8dp"
+        android:background="#F4f1ec"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
@@ -140,7 +146,7 @@
             android:layout_width="0dp"
             android:layout_height="48dp"
             android:layout_weight="1"
-            android:text="SUBMIT"
+            android:text="SUBMIT RATINGS"
             android:textStyle="bold"
             android:textAllCaps="false"
             android:textColor="#FFFFFF"
@@ -152,7 +158,7 @@
             android:layout_width="0dp"
             android:layout_height="48dp"
             android:layout_weight="1"
-            android:text="BACK TO HOME"
+            android:text="SKIP"
             android:textStyle="bold"
             android:textAllCaps="false"
             android:textColor="#2D2D2D"

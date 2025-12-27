@@ -14,11 +14,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.fashionapp.AppRoute
 import com.example.fashionapp.R
 import com.example.fashionapp.adapter.ConfirmAdapter
+import com.example.fashionapp.adapter.ProductRatingItem
 import com.example.fashionapp.data.CartManager
 import com.example.fashionapp.data.UpdateAddressRequest
 import com.example.fashionapp.data.UpdateNameRequest
 import com.example.fashionapp.data.UpdatePhoneRequest
 import com.example.fashionapp.data.UserManager
+import com.google.gson.Gson
 import com.example.fashionapp.databinding.ActivityConfirmBinding
 import com.example.fashionapp.databinding.DialogEditAddressBinding
 import com.example.fashionapp.model.OrderItemRequest
@@ -211,13 +213,29 @@ class ConfirmFragment : Fragment() {
                     // Still proceed to success screen, but log the error
                 }
 
-                // Extract product IDs from cart items for rating
-                val productIds = cartItemsData.map { it.productId }.toTypedArray()
+                // Prepare product rating items with full info for rating each product
+                val productRatingItems = cart.items.mapNotNull { cartItem ->
+                    val product = cartItem.product
+                    if (product != null) {
+                        ProductRatingItem(
+                            productId = product.id,
+                            productName = product.name,
+                            thumbnail = product.thumbnail,
+                            size = cartItem.getDisplaySize() ?: product.sizes?.firstOrNull(),
+                            color = cartItem.getDisplayColor() ?: product.colors?.firstOrNull()
+                        )
+                    } else {
+                        null
+                    }
+                }
 
-                // Navigate to payment success with order ID and product IDs
+                // Serialize product rating items to JSON
+                val productRatingItemsJson = Gson().toJson(productRatingItems)
+
+                // Navigate to payment success with order ID and product rating items
                 val bundle = bundleOf(
                     "orderId" to orderResponse.id,
-                    "productIds" to productIds
+                    "productRatingItemsJson" to productRatingItemsJson
                 )
                 findNavController().navigate(
                     R.id.action_confirmFragment_to_paymentSuccessFragment,

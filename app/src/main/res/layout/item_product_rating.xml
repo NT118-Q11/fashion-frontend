@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginVertical="8dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="2dp"
+    android:backgroundTint="#FFFFFF">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Product Info Row -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <!-- Product Image -->
+            <ImageView
+                android:id="@+id/imgProduct"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/sample_woman"
+                android:contentDescription="Product image" />
+
+            <!-- Product Details -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:layout_marginStart="12dp">
+
+                <TextView
+                    android:id="@+id/tvProductName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Product Name"
+                    android:textColor="#2D2D2D"
+                    android:textSize="15sp"
+                    android:fontFamily="@font/tenorsans"
+                    android:maxLines="2"
+                    android:ellipsize="end" />
+
+                <TextView
+                    android:id="@+id/tvProductVariant"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:text="Size: M | Color: Black"
+                    android:textColor="#6F6F6F"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/tenorsans"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+
+            <!-- Rating Status Icon -->
+            <ImageView
+                android:id="@+id/imgRatingStatus"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/uncolor_star"
+                android:contentDescription="Rating status"
+                android:visibility="gone" />
+
+        </LinearLayout>
+
+        <!-- Divider -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="12dp"
+            android:background="#E0E0E0" />
+
+        <!-- Rating Section -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="12dp"
+            android:gravity="center_horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Rate this product"
+                android:textColor="#3A3A3A"
+                android:textSize="13sp"
+                android:fontFamily="@font/tenorsans" />
+
+            <RatingBar
+                android:id="@+id/ratingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:numStars="5"
+                android:stepSize="1"
+                android:rating="0"
+                android:isIndicator="false"
+                android:progressTint="#FFD700"
+                android:progressBackgroundTint="#BDBDBD"
+                android:secondaryProgressTint="#FFD700"
+                style="?android:attr/ratingBarStyle" />
+
+            <!-- Comment Input -->
+            <EditText
+                android:id="@+id/etComment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/box_border"
+                android:hint="Write your comment (optional)..."
+                android:padding="10dp"
+                android:gravity="top|start"
+                android:minLines="2"
+                android:maxLines="3"
+                android:maxLength="300"
+                android:inputType="textMultiLine|textCapSentences"
+                android:textColor="#3A3A3A"
+                android:textColorHint="#9E9E9E"
+                android:fontFamily="@font/tenorsans"
+                android:textSize="13sp"
+                android:importantForAutofill="no" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
+

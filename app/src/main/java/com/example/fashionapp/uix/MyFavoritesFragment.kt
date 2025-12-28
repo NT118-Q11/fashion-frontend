@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -253,8 +254,11 @@ class MyFavoritesFragment : Fragment() {
             onRemoveClick = { itemToRemove ->
                 favoritesManager.removeFavorite(itemToRemove) { success ->
                     if (success) {
+                        Toast.makeText(context, "Removed from favorites", Toast.LENGTH_SHORT).show()
                         loadFavorites()
                         updatePageUI()
+                    } else {
+                        Toast.makeText(context, "Failed to remove from favorites", Toast.LENGTH_SHORT).show()
                     }
                 }
             },

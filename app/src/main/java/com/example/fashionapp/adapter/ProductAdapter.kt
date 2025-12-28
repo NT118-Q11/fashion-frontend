@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fashionapp.R
 import com.example.fashionapp.data.FavoritesManager
@@ -83,7 +84,10 @@ class ProductAdapter(
                 favoritesManager.toggleFavorite(favItem) { isFavorite, success ->
                     if (success) {
                         updateFavoriteIcon()
+                        val message = if (isFavorite) "Added to favorites" else "Removed from favorites"
+                        Toast.makeText(itemView.context, message, Toast.LENGTH_SHORT).show()
                     } else {
+                        Toast.makeText(itemView.context, "Failed to update favorites", Toast.LENGTH_SHORT).show()
                         Log.e("ProductAdapter", "Failed to toggle favorite")
                     }
                 }

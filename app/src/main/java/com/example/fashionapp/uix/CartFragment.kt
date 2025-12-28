@@ -132,6 +132,7 @@ class CartFragment : Fragment() {
         lifecycleScope.launch {
             val success = CartManager.updateQuantity(itemId, userId, newQuantity)
             if (success) {
+                Toast.makeText(context, "Quantity updated", Toast.LENGTH_SHORT).show()
                 loadCartData() 
             } else {
                 Toast.makeText(context, "Failed to update quantity", Toast.LENGTH_SHORT).show()
@@ -144,6 +145,7 @@ class CartFragment : Fragment() {
         lifecycleScope.launch {
             val success = CartManager.removeItem(itemId, userId)
             if (success) {
+                Toast.makeText(context, "Item removed from cart", Toast.LENGTH_SHORT).show()
                 loadCartData()
             } else {
                 Toast.makeText(context, "Failed to remove item", Toast.LENGTH_SHORT).show()

@@ -7,6 +7,7 @@ import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.palette.graphics.Palette
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fashionapp.R
@@ -148,7 +149,10 @@ class ReelPagerAdapter(
             favoritesManager.toggleFavorite(favItem) { isFavorite, success ->
                 if (success) {
                     updateFavoriteIcon()
+                    val message = if (isFavorite) "Added to favorites" else "Removed from favorites"
+                    Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
                 } else {
+                    Toast.makeText(context, "Failed to update favorites", Toast.LENGTH_SHORT).show()
                     Log.e("ReelPagerAdapter", "Failed to toggle favorite")
                 }
             }

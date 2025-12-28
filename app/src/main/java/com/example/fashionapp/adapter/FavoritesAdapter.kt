@@ -14,7 +14,8 @@ import kotlinx.coroutines.withContext
 
 class FavoritesAdapter(
     private val items: List<FavoriteItem>,
-    private val onRemoveClick: (FavoriteItem) -> Unit
+    private val onRemoveClick: (FavoriteItem) -> Unit,
+    private val onItemClick: (FavoriteItem) -> Unit = {}
 ) : RecyclerView.Adapter<FavoritesAdapter.ViewHolder>() {
 
     inner class ViewHolder(val binding: ItemFavoriteBinding) : RecyclerView.ViewHolder(binding.root)
@@ -50,6 +51,11 @@ class FavoritesAdapter(
                         e.printStackTrace()
                     }
                 }
+            }
+
+            // Click on item to navigate to product detail
+            root.setOnClickListener {
+                onItemClick(item)
             }
 
             ivLike.setOnClickListener {

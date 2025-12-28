@@ -90,7 +90,16 @@ class CartFragment : Fragment() {
                     removeItem(item.id)
                 }
             },
-            onRemove = { item -> removeItem(item.id) }
+            onRemove = { item -> removeItem(item.id) },
+            onItemClick = { item ->
+                // Navigate to product detail
+                item.product?.id?.let { productId ->
+                    val bundle = Bundle().apply {
+                        putString("productId", productId)
+                    }
+                    findNavController().navigate(R.id.action_cartFragment_to_detailsFragment, bundle)
+                }
+            }
         )
 
         binding.rvCart.apply {

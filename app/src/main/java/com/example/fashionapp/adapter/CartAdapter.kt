@@ -19,7 +19,8 @@ class CartAdapter(
     private val items: MutableList<CartItemResponse>,
     private val onIncrease: (CartItemResponse) -> Unit,
     private val onDecrease: (CartItemResponse) -> Unit,
-    private val onRemove: (CartItemResponse) -> Unit
+    private val onRemove: (CartItemResponse) -> Unit,
+    private val onItemClick: (CartItemResponse) -> Unit = {}
 ) : RecyclerView.Adapter<CartAdapter.CartViewHolder>() {
 
     // Cache for product images to prevent flickering
@@ -82,6 +83,11 @@ class CartAdapter(
                 }
             } else {
                 imgProduct.setImageResource(R.drawable.sample_woman)
+            }
+
+            // Click on item to navigate to product detail
+            root.setOnClickListener {
+                onItemClick(item)
             }
 
             // Nút tăng

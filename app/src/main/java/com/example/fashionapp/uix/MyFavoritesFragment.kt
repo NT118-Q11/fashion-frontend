@@ -248,14 +248,24 @@ class MyFavoritesFragment : Fragment() {
             emptyList()
         }
 
-        binding.rvFavorites.adapter = FavoritesAdapter(pageItems) { itemToRemove ->
-            favoritesManager.removeFavorite(itemToRemove) { success ->
-                if (success) {
-                    loadFavorites()
-                    updatePageUI()
+        binding.rvFavorites.adapter = FavoritesAdapter(
+            items = pageItems,
+            onRemoveClick = { itemToRemove ->
+                favoritesManager.removeFavorite(itemToRemove) { success ->
+                    if (success) {
+                        loadFavorites()
+                        updatePageUI()
+                    }
                 }
+            },
+            onItemClick = { item ->
+                // Navigate to product detail
+                val bundle = Bundle().apply {
+                    putString("productId", item.id)
+                }
+                findNavController().navigate(R.id.action_MyFavoritesFragment_to_detailsFragment, bundle)
             }
-        }
+        )
 
         // Update pagination buttons
         updatePaginationButtons()

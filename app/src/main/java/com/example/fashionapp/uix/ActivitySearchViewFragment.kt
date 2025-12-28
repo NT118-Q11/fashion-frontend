@@ -11,6 +11,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -18,6 +19,8 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.fashionapp.AppRoute
 import com.example.fashionapp.R
+import com.example.fashionapp.data.FavoritesManager
+import com.example.fashionapp.model.FavoriteItem
 import com.example.fashionapp.model.Product
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -335,6 +338,8 @@ class ActivitySearchViewFragment : Fragment() {
         private val onClick: (Product) -> Unit
     ) : RecyclerView.Adapter<SearchResultAdapter.VH>() {
 
+        private val favoritesManager = FavoritesManager.getInstance(requireContext())
+
         inner class VH(itemView: View) : RecyclerView.ViewHolder(itemView) {
             private val imgProduct: ImageView = itemView.findViewById(R.id.imgProduct)
             private val title: TextView = itemView.findViewById(R.id.txtTitle)
@@ -366,9 +371,36 @@ class ActivitySearchViewFragment : Fragment() {
                     }
                 }
 
-                // Handle favorite button (optional - implement favorite logic if needed)
+                // Create favorite item from product
+                val favItem = FavoriteItem(
+                    id = product.id,
+                    name = product.name,
+                    desc = product.description ?: product.brand ?: "",
+                    price = "$${String.format("%.2f", product.price)}",
+                    imagePath = product.getThumbnailAssetPath() ?: ""
+                )
+
+                // Update favorite button icon
+                fun updateFavoriteIcon() {
+                    val isFav = favoritesManager.isFavorite(favItem)
+                    btnFavorite.setImageResource(
+                        if (isFav) R.drawable.ic_favorite_filled else R.drawable.ic_favorite_border
+                    )
+                }
+
+                updateFavoriteIcon()
+
+                // Handle favorite button click
                 btnFavorite.setOnClickListener {
-                    // TODO: Add to favorites
+                    favoritesManager.toggleFavorite(favItem) { isFavorite, success ->
+                        if (success) {
+                            updateFavoriteIcon()
+                            val message = if (isFavorite) "Added to favorites" else "Removed from favorites"
+                            Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+                        } else {
+                            Toast.makeText(context, "Failed to update favorites", Toast.LENGTH_SHORT).show()
+                        }
+                    }
                 }
 
                 itemView.setOnClickListener { onClick(product) }

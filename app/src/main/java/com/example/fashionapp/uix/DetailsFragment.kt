@@ -616,6 +616,12 @@ class DetailsFragment : Fragment() {
             return
         }
 
+        // Validate color selection if product has colors
+        if (!product?.colors.isNullOrEmpty() && selectedColor == null) {
+            Toast.makeText(context, "Please select a color", Toast.LENGTH_SHORT).show()
+            return
+        }
+
         // Log selected variant for debugging
         Log.d("DetailsFragment", "Adding to cart - Color: $selectedColor, Size: $selectedSize")
 
